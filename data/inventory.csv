@@ -1,0 +1,68 @@
+Inventory ID,Name,Type,Weight,Price,Quantity,Measurement Unit
+1,100% Cocoa,Scoop,,,,Scoop
+2,Almond Butter,Scoop,,,,Scoop
+3,Almonds,Scoop,,,,Scoop
+4,Apple Blueberry Juice Blend,Liquid,,,,Cup
+5,Apple Juice Blend,Liquid,,,,Cup
+6,Apple Pineapple Juice Blend,Liquid,,,,Cup
+7,Bananas,Whole,,,,Whole
+8,Blueberries,Scoop,,,,Scoop
+9,Butter Pecan Ice Cream,Scoop,,,,Scoop
+10,Califia Farms Almond Milk,Liquid,,,,Cup
+11,Carrots,Scoop,,,,Scoop
+12,Cinnamon,Scoop,,,,Scoop
+13,Coconut Water,Liquid,,,,Cup
+14,Cold Brew Coffee,Liquid,,,,Cup
+15,Dairy Whey Blend,Scoop,,,,Scoop
+16,Dates,Whole,,,,Whole
+17,Diet Down Enhancer,Scoop,,,,Scoop
+18,Electrolyte Blend,Scoop,,,,Scoop
+19,Energy Boost Enhancer,Scoop,,,,Scoop
+20,Espresso,Scoop,,,,Scoop
+21,Fiber Blend Enhancer,Scoop,,,,Scoop
+22,FITAID + Paleo Protein Enhancer,Scoop,,,,Scoop
+23,Ginger,Whole,,,,Whole
+24,Gladiator Protein Chocolate,Scoop,,,,Scoop
+25,Gladiator Protein Strawberry,Scoop,,,,Scoop
+26,Gladiator Protein Vanilla,Scoop,,,,Scoop
+27,Greek Nonfat Yogurt,Scoop,,,,Scoop
+28,Gut Health Enhancer,Scoop,,,,Scoop
+29,Hulk Blend,Scoop,,,,Scoop
+30,Immune Support Enhancer,Scoop,,,,Scoop
+31,Joint Health Enhancer with Collagen,Scoop,,,,Scoop
+32,Kale,Scoop,,,,Scoop
+33,Keto Protein Blend,Scoop,,,,Scoop
+34,Kiwi Apple Juice Blend,Liquid,,,,Cup
+35,Lean1 Chocolate Protein,Scoop,,,,Scoop
+36,Lean1 Vanilla Protein,Scoop,,,,Scoop
+37,Mangoes,Whole,,,,Whole
+38,Matcha Green Tea,Liquid,,,,Cup
+39,Metabolism Boost Enhancer,Scoop,,,,Scoop
+40,Multivitamin Enhancer,Scoop,,,,Scoop
+41,Muscle Builder Enhancer,Scoop,,,,Scoop
+42,Nonfat Milk,Liquid,,,,Cup
+43,Nutrient Blend,Scoop,,,,Scoop
+44,Oatmilk by Califia Farms,Liquid,,,,Cup
+45,Orange Juice Blend,Liquid,,,,Cup
+46,Papaya Juice Blend,Liquid,,,,Cup
+47,Peanut Butter,Scoop,,,,Scoop
+48,Pear Juice Blend,Liquid,,,,Cup
+49,Pear Passion Fruit Juice Blend,Liquid,,,,Cup
+50,Pineapples,Whole,,,,Whole
+51,Probiotic Powder Enhancer,Scoop,,,,Scoop
+52,Protein Blend,Scoop,,,,Scoop
+53,Pumpkin,Scoop,,,,Scoop
+54,Pure Recharge Enhancer,Scoop,,,,Scoop
+55,Raspberries,Scoop,,,,Scoop
+56,Spice Blend,Scoop,,,,Scoop
+57,Spinach,Scoop,,,,Scoop
+58,Stevia Plant-Based Sweetener,Scoop,,,,Scoop
+59,Strawberries,Scoop,,,,Scoop
+60,Strawberries (with sugar),Scoop,,,,Scoop
+61,Sunwarrior Organic Plant-Based Protein,Scoop,,,,Scoop
+62,Super Grains Enhancer,Scoop,,,,Scoop
+63,Tart Cherries,Scoop,,,,Scoop
+64,Turbinado,Scoop,,,,Scoop
+65,Vanilla Frozen Yogurt,Scoop,,,,Scoop
+66,Whey Protein,Scoop,,,,Scoop
+67,White Grape Lemon Juice Blend,Liquid,,,,Cup
