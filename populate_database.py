@@ -2,12 +2,20 @@ import csv
 import os
 import random
 import names
+import string
 from datetime import datetime
 from datetime import timedelta
 
 os.chdir('data')
 
+#generate seed for rng
 seed = random.seed(int)
+
+#generate set of random names
+def randName(length):
+    # choose from all lowercase letter
+    letters = string.ascii_lowercase
+    return ''.join(random.choice(letters) for i in range(length))
 
 #menu item list (format is [PK,Name,Price,Ingredient_Amount,Type])
 menu_item = []
@@ -18,10 +26,10 @@ with open('menu_item.csv', newline='') as menuItem:
 
 #print(menu_item)
 #create writers and open files
-transaction = open('transaction.csv', 'w')
-transactionItem = open('transaction_item.csv', 'w')
-inventory = open('inventory.csv', 'w')
-order = open('order.csv', 'w')
+transaction = open('transaction.csv', 'w', newline='')
+transactionItem = open('transaction_item.csv', 'w', newline='')
+inventory = open('inventory.csv', 'w', newline='')
+order = open('order.csv', 'w', newline='')
 
 transactionWriter = csv.writer(transaction)
 transactionItemWriter = csv.writer(transactionItem)
@@ -32,17 +40,17 @@ timeInc = timedelta(days=1)
 
 #for 1 day in 1 year
 dt = datetime(2022,1,1,1,1,1,0) #first day/time
+totalRevenue = 0
 for i in range(0,365):
     transID = 0
     #generate transactions (format is [ID, employee_ID, name, price, time])
-    maxDailyTransactions = 275
+    maxDailyTransactions = 75
     for j in range(0,maxDailyTransactions):
         trans = []
         trans.append(transID)
         trans.append(random.randrange(0,2))
-        #trans.append(names.get_full_name())
-        trans.append("karen")
-        numberItems = random.randrange(1,4)
+        trans.append(randName(random.randrange(1,10)))
+        numberItems = random.randrange(1,2)
         costTransaction = 0
         #pick random line from menu_item, add cost to transaction, decrement inventory
         for k in range(numberItems):
@@ -50,6 +58,7 @@ for i in range(0,365):
             costTransaction += float(item[2]) * float(item[3])
             #TODO: subtract from inventory
         trans.append(costTransaction)
+        totalRevenue += costTransaction
         #timestamp transaction
         trans.append(dt)
         dt += timeInc/maxDailyTransactions
@@ -62,6 +71,9 @@ for i in range(0,365):
     #update inventory at end of day
 
     #place order if needed at end of day
+
+#prove total revenue exceeds 1,000,000
+print("total revenue: ", totalRevenue)
 
 #close files
 transaction.close()
