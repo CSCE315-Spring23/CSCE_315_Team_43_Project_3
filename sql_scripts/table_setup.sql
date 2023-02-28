@@ -35,6 +35,7 @@ CREATE TABLE Order_List (
 CREATE TABLE Menu_Item (
     Menu_ID INT PRIMARY KEY,
     Name VARCHAR(255),
+    Type VARCHAR(255),
     Price FLOAT,
     Ingredient_Amount INT
 );
