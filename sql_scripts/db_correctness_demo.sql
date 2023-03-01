@@ -22,12 +22,12 @@ WHERE Inventory_ID = 1;
 /* Get all orders placed in the last week */
 SELECT *
 FROM order_item
-WHERE date_placed >= CURRENT_DATE - INTERVAL '7 day';
+WHERE date_placed >= CURRENT_DATE - INTERVAL '97 day';
 
 /* Get all transactions from the last week */
 SELECT *
 FROM Transaction
-WHERE Time_Of_Purchase >= CURRENT_DATE - INTERVAL '7 day';
+WHERE Time_Of_Purchase >= CURRENT_DATE - INTERVAL '97 day';
 
 /* Get all menu items names */
 SELECT

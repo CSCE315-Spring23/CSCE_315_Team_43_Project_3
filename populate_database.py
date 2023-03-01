@@ -35,7 +35,7 @@ with open('ingredient_list.csv', newline='') as ingredientList:
 #create writers and open files
 transaction = open('transaction.csv', 'w', newline='')
 transactionItem = open('transaction_item.csv', 'w', newline='')
-orderList = open('order.csv', 'w', newline='')
+orderList = open('order_item.csv', 'w', newline='')
 orderLedger = open('order_list.csv', 'w', newline='')
 
 transactionWriter = csv.writer(transaction)
