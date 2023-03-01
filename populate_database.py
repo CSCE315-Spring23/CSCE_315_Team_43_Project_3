@@ -24,16 +24,21 @@ with open('menu_item.csv', newline='') as menuItem:
     for row in menuItemReader:
         menu_item.append(row)
 
+#ingredient list (format is [Inventory_ID, Menu_ID, quantity])
+ingredient_list = []
+with open('ingredient_list.csv', newline='') as ingredientList:
+    ingredientListReader = csv.reader(ingredientList, delimiter=',')
+    for row in ingredientListReader:
+        ingredient_list.append(row)
+
 #print(menu_item)
 #create writers and open files
 transaction = open('transaction.csv', 'w', newline='')
 transactionItem = open('transaction_item.csv', 'w', newline='')
-inventory = open('inventory.csv', 'w', newline='')
 order = open('order.csv', 'w', newline='')
 
 transactionWriter = csv.writer(transaction)
 transactionItemWriter = csv.writer(transactionItem)
-inventoryWriter = csv.writer(inventory)
 orderWriter = csv.writer(order)
 
 timeInc = timedelta(days=1)
@@ -41,22 +46,46 @@ timeInc = timedelta(days=1)
 #for 1 day in 1 year
 dt = datetime(2022,1,1,1,1,1,0) #first day/time
 totalRevenue = 0
+transID = 0
 for i in range(0,365):
-    transID = 0
-    #generate transactions (format is [ID, employee_ID, name, price, time])
     maxDailyTransactions = 75
+
+    #inventory list (format is [InventoryID,Name,Type,Price,Quantity,Measurement_Type])
+    inventory = []
+    with open('inventory.csv', newline='') as inventoryList:
+        inventoryReader = csv.reader(inventoryList, delimiter=',')
+        for row in inventoryReader:
+            inventory.append(row)
+    inventoryItem = open('inventory.csv', 'w+', newline='')
+    inventoryWriter = csv.writer(inventoryItem)
+
+    #generate transactions (format is [ID, employee_ID, name, price, time])
     for j in range(0,maxDailyTransactions):
         trans = []
         trans.append(transID)
         trans.append(random.randrange(0,2))
         trans.append(randName(random.randrange(1,10)))
-        numberItems = random.randrange(1,2)
+        numberItems = random.randrange(1,4)
         costTransaction = 0
         #pick random line from menu_item, add cost to transaction, decrement inventory
         for k in range(numberItems):
             item = menu_item[random.randrange(1,len(menu_item))]
             costTransaction += float(item[2]) * float(item[3])
-            #TODO: subtract from inventory
+            #write associated menu item to the ledger for the transaction
+            transactionItemWriter.writerow([transID, item[0]])
+            #find all ingredients associated with id and quantity
+            ingredients_bridge = []
+            for x in ingredient_list:
+                if float(x[1]) == float(item[0]):
+                    ingredients_bridge.append(x)
+            #subtract quantity from associated ingredient in inventory
+            for x in inventory:
+                for y in ingredients_bridge:
+                    #for every match between inventory and ingredients
+                    if float(x[0]) == float(y[0]):
+                        #subtract the amount used from the inventory     
+                        x[4] = float(x[4]) - float(y[2])
+            
         trans.append(costTransaction)
         totalRevenue += costTransaction
         #timestamp transaction
@@ -64,6 +93,10 @@ for i in range(0,365):
         dt += timeInc/maxDailyTransactions
         #add to csv 
         transactionWriter.writerow(trans)
+        transID += 1
+        #print(inventory)
+    inventoryWriter.writerows(inventory)
+    inventoryItem.close()
     #account for gamedays
 
 
@@ -78,5 +111,4 @@ print("total revenue: ", totalRevenue)
 #close files
 transaction.close()
 transactionItem.close()
-inventory.close()
 order.close()
