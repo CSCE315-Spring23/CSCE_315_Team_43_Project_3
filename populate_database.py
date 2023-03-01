@@ -51,7 +51,10 @@ totalRevenue = 0
 transID = 0
 orderID = 0
 for i in range(0,365):
-    maxDailyTransactions = 75
+    if(i == 10 or i == 287):
+        maxDailyTransactions = 150
+    else:
+        maxDailyTransactions = 75
 
     #inventory list (format is [InventoryID,Name,Type,Price,Quantity,Measurement_Type])
     inventory = []
