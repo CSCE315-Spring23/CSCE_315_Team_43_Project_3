@@ -80,3 +80,13 @@ WHERE Order_ID = 1;
 SELECT SUM(Cost)
 FROM Order_Item
 WHERE Date_Placed >= CURRENT_DATE - INTERVAL '120 day';
+
+/* 16) Get all transactions on gameday 1 */
+SELECT *
+FROM Transaction
+WHERE Time_Of_Purchase = MAKE_DATE(2022, 1, 1) + INTERVAL '9 day';
+
+/* 17) Get all transactions on gameday 2 */
+SELECT *
+FROM Transaction
+WHERE Time_Of_Purchase = MAKE_DATE(2022, 1, 1) + INTERVAL '287 day';
