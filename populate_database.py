@@ -35,11 +35,13 @@ with open('ingredient_list.csv', newline='') as ingredientList:
 #create writers and open files
 transaction = open('transaction.csv', 'w', newline='')
 transactionItem = open('transaction_item.csv', 'w', newline='')
-order = open('order.csv', 'w', newline='')
+orderList = open('order.csv', 'w', newline='')
+orderLedger = open('order_list.csv', 'w', newline='')
 
 transactionWriter = csv.writer(transaction)
 transactionItemWriter = csv.writer(transactionItem)
-orderWriter = csv.writer(order)
+orderWriter = csv.writer(orderList)
+orderLedgerWriter = csv.writer(orderLedger)
 
 timeInc = timedelta(days=1)
 
@@ -47,6 +49,7 @@ timeInc = timedelta(days=1)
 dt = datetime(2022,1,1,1,1,1,0) #first day/time
 totalRevenue = 0
 transID = 0
+orderID = 0
 for i in range(0,365):
     maxDailyTransactions = 75
 
@@ -73,6 +76,8 @@ for i in range(0,365):
             costTransaction += float(item[2]) * float(item[3])
             #write associated menu item to the ledger for the transaction
             transactionItemWriter.writerow([transID, item[0]])
+
+            #UPDATE INVENTORY
             #find all ingredients associated with id and quantity
             ingredients_bridge = []
             for x in ingredient_list:
@@ -94,14 +99,28 @@ for i in range(0,365):
         #add to csv 
         transactionWriter.writerow(trans)
         transID += 1
-        #print(inventory)
+    #order list (format is [OrderID, Date_Placed, Price_of_Order])
+    #order ledger (format is [inventoryID, orderID, quantity])
+    order_ledger = []
+    orderNeeded = False
+    orderSum = 0
+    for x in inventory:
+        #arbitrary threshold to establish reorders
+        if float(x[4]) <= 100:
+            orderNeeded = True
+            order_ledger.append([int(x[0]), orderID, 1500])
+            orderSum += 1500 * float(x[3])
+            #refill stock since order has been placed
+            x[4] = 1500
+    if orderNeeded:
+        orderWriter.writerow([orderID, dt, orderSum])
+        orderLedgerWriter.writerows(order_ledger)
+        orderID += 1
     inventoryWriter.writerows(inventory)
     inventoryItem.close()
     #account for gamedays
 
 
-
-    #update inventory at end of day
 
     #place order if needed at end of day
 
@@ -111,4 +130,5 @@ print("total revenue: ", totalRevenue)
 #close files
 transaction.close()
 transactionItem.close()
-order.close()
+orderList.close()
+orderLedger.close()
