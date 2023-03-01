@@ -71,11 +71,15 @@ for i in range(0,365):
         numberItems = random.randrange(1,4)
         costTransaction = 0
         #pick random line from menu_item, add cost to transaction, decrement inventory
+        alreadySelectedItems = []
         for k in range(numberItems):
             item = menu_item[random.randrange(1,len(menu_item))]
-            costTransaction += float(item[2]) * float(item[3])
+            while item[0] in alreadySelectedItems:
+                item = menu_item[random.randrange(1,len(menu_item))]
+            alreadySelectedItems.append(item[0])
+            costTransaction += float(item[3]) * int(item[4])
             #write associated menu item to the ledger for the transaction
-            transactionItemWriter.writerow([transID, item[0]])
+            transactionItemWriter.writerow([item[0], transID])
 
             #UPDATE INVENTORY
             #find all ingredients associated with id and quantity
@@ -89,7 +93,7 @@ for i in range(0,365):
                     #for every match between inventory and ingredients
                     if float(x[0]) == float(y[0]):
                         #subtract the amount used from the inventory     
-                        x[4] = float(x[4]) - float(y[2])
+                        x[3] = int(x[3]) - int(y[2])
             
         trans.append(costTransaction)
         totalRevenue += costTransaction
@@ -106,12 +110,12 @@ for i in range(0,365):
     orderSum = 0
     for x in inventory:
         #arbitrary threshold to establish reorders
-        if float(x[4]) <= 100:
+        if int(x[3]) <= 100:
             orderNeeded = True
             order_ledger.append([int(x[0]), orderID, 1500])
-            orderSum += 1500 * float(x[3])
+            orderSum += 1500 * float(x[2])
             #refill stock since order has been placed
-            x[4] = 1500
+            x[3] = 1500
     if orderNeeded:
         orderWriter.writerow([orderID, dt, orderSum])
         orderLedgerWriter.writerows(order_ledger)

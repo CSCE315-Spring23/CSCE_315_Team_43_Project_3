@@ -7,12 +7,12 @@ SELECT
     Time_Of_Purchase,
     Price_Of_Transaction
 FROM Transaction
-WHERE Date_Placed = GETDATE();
+WHERE Time_Of_Purchase = CURRENT_DATE - INTERVAL '200 day';
 
 /* Get all transaction items for a transaction */
 SELECT *
 FROM Transaction_Item
-WHERE FK_Transaction_ID = 1;
+WHERE Transaction_ID = 1;
 
 /* Get the quantity of an inventory item */
 SELECT Quantity
@@ -21,13 +21,13 @@ WHERE Inventory_ID = 1;
 
 /* Get all orders placed in the last week */
 SELECT *
-FROM Order_Item
-WHERE Date_Placed >= DATEADD(day, -7, GETDATE());
+FROM order_item
+WHERE date_placed >= CURRENT_DATE - INTERVAL '7 day';
 
 /* Get all transactions from the last week */
 SELECT *
 FROM Transaction
-WHERE Time_Of_Purchase >= DATEADD(day, -7, GETDATE());
+WHERE Time_Of_Purchase >= CURRENT_DATE - INTERVAL '7 day';
 
 /* Get all menu items names */
 SELECT
@@ -79,4 +79,4 @@ WHERE Order_ID = 1;
 /* Sum the costs of all orders in the past month */
 SELECT SUM(Cost)
 FROM Order_Item
-WHERE Date_Placed >= DATEADD(month, -1, GETDATE());
+WHERE Date_Placed >= CURRENT_DATE - INTERVAL '120 day';
