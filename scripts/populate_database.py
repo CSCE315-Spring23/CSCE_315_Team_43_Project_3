@@ -6,7 +6,7 @@ import string
 from datetime import datetime
 from datetime import timedelta
 
-os.chdir('data')
+os.chdir('..\data')
 
 #generate seed for rng
 seed = random.seed(int)
@@ -58,10 +58,14 @@ for i in range(0,365):
 
     #inventory list (format is [InventoryID,Name,Type,Price,Quantity,Measurement_Type])
     inventory = []
+    inventoryEndRows = []
     with open('inventory.csv', newline='') as inventoryList:
         inventoryReader = csv.reader(inventoryList, delimiter=',')
         for row in inventoryReader:
-            inventory.append(row)
+            if inventoryReader.line_num < 68:
+                inventory.append(row)
+            else:
+                inventoryEndRows.append(row)
     inventoryItem = open('inventory.csv', 'w+', newline='')
     inventoryWriter = csv.writer(inventoryItem)
 
@@ -95,8 +99,13 @@ for i in range(0,365):
                 for y in ingredients_bridge:
                     #for every match between inventory and ingredients
                     if float(x[0]) == float(y[0]):
-                        #subtract the amount used from the inventory     
-                        x[3] = int(x[3]) - int(y[2])
+                        #subtract the amount used from the inventory if not dummy
+                        if x[0] == 74:  
+                            tempIngredient = inventory[0]
+                        else:
+                            tempIngredient = x
+                        tempIngredient[3] = int(tempIngredient[3]) - int(y[2])
+                        x = tempIngredient
             
         trans.append(costTransaction)
         totalRevenue += costTransaction
@@ -124,6 +133,7 @@ for i in range(0,365):
         orderLedgerWriter.writerows(order_ledger)
         orderID += 1
     inventoryWriter.writerows(inventory)
+    inventoryWriter.writerows(inventoryEndRows)
     inventoryItem.close()
     #account for gamedays
 
