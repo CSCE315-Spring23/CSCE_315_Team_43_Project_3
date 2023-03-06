@@ -2,17 +2,24 @@ package com.team43.app.frontend.manager;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.FlowLayout;
 
 import javax.swing.JButton;
-import javax.swing.JFrame;
+import javax.swing.JPanel;
 
-public class ManagerFrame extends JFrame implements ActionListener {
+public class ManagerPanel extends JPanel implements ActionListener {
     JButton endOfDayButton = new JButton("End of Day");
     JButton orderInventoryButton = new JButton("Order Inventory");
     JButton viewEditInventoryButton = new JButton("View / Edit Inventory");
 
-    ManagerFrame() {
-        // TODO: make these constant?
+    public ManagerPanel() {
+        setLayout(new FlowLayout());
+
+        endOfDayButton.setBounds(100, 50, 100, 20);
+        add(endOfDayButton);
+        add(orderInventoryButton);
+        add(viewEditInventoryButton);
+
         endOfDayButton.setActionCommand("endOfDay");
         orderInventoryButton.setActionCommand("orderInventory");
         viewEditInventoryButton.setActionCommand("viewEditInventory");

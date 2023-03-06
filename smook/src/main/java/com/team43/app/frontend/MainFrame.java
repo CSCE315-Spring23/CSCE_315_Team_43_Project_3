@@ -1,66 +1,45 @@
 package com.team43.app.frontend;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.GridLayout;
-
-import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.JTextField;
 import javax.swing.JPanel;
-import javax.swing.JPasswordField;
-import javax.swing.JLabel;
+import java.awt.BorderLayout;
 
-
-import com.team43.app.frontend.manager.ManagerFrame;
+import com.team43.app.LoginPanel;
+import com.team43.app.frontend.manager.ManagerPanel;
 import com.team43.app.frontend.server.ServerFrame;
-public class MainFrame extends JFrame {
-    JTextField usernameField = new JTextField();
-    JPasswordField passwordField = new JPasswordField();
-    JButton loginButton = new JButton("Login");
 
-    ManagerFrame managerFrame;
+public class MainFrame extends JFrame {
+    LoginPanel loginPanel;
+    ManagerPanel managerPanel;
     ServerFrame serverFrame;
 
     public MainFrame(int width, int height) {
         super();
-        setLayout(new GridLayout(3, 2));
-        // usernameField.setBounds(50, 50, 150, 20);
-        add(new JLabel("Username: ", JLabel.TRAILING));
-        add(usernameField);
-        // passwordField.setBounds(50, 50, 150, 20);
-        add(new JLabel("Password: ", JLabel.TRAILING));
-        add(passwordField);
-        // loginButton.setBounds(50, 100, 95, 30);
-        add(loginButton);
-        loginButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                loginClicked();
-            }
-        });
-
+        setLayout(new BorderLayout());
+        loginPanel = new LoginPanel(this);
+        add(loginPanel);
         setSize(width, height);
         setVisible(true);
     }
 
-    void loginClicked() {
-        System.out.println(usernameField.getText());
-        System.out.println(passwordField.getPassword());
-        // String role = Backend.login(usernameField.getText(), passwordField.getText());
-        String role = new String("manager");
+    // Hides the login panel and shows panel provided
+    void showPanel(JPanel panel) {
+        loginPanel.setVisible(false);
+        panel.setVisible(true);
+    }
+
+    // Shows the panel according to the role
+    public void showPanelFromRole(String role) {
         if (role == null) {
             // Login failure; show red text error
-        } else if (role == "manager") {
+        } else if (role.equals("manager")) {
             // Show manager frame
-            // managerFrame = new ManagerFrame();
-            // TODO: set a better layout
-            managerFrame.setLayout(null);
-            managerFrame.setVisible(true);
-        } else if (role == "employee") {
+            managerPanel = new ManagerPanel();
+            showPanel(managerPanel);
+        } else if (role.equals("employee")) {
             // Show employee frame
             serverFrame = new ServerFrame();
-            serverFrame.setLayout(null);
-            serverFrame.setVisible(true);
+            // showPanel(serverFrame);
         }
     }
 }
