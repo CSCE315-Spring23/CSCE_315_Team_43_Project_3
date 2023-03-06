@@ -23,7 +23,6 @@ public class MainFrame extends JFrame{
     ServerFrame serverFrame;
 
     public MainFrame(int width, int height) {
-        System.out.println("fml");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         setSize(width, height);
