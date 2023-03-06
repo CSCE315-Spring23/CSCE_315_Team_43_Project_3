@@ -33,7 +33,7 @@ public class jdbcpostgreSQL {
       Statement stmt = conn.createStatement();
 
       // Running a query
-      String sqlStatement = "SELECT * FROM inventory";
+      String sqlStatement = "SELECT * FROM inventory ORDER BY inventory_id ASC";
 
       // send statement to DBMS
       ResultSet result = stmt.executeQuery(sqlStatement);
@@ -56,6 +56,24 @@ public class jdbcpostgreSQL {
     }
     return table;
   }
+  public List<String> edit_inventory_item(int inventory_id, String name, double price, double quantity, String measurement_type){
+    List<String> elements = new ArrayList<String>();
+    try {
+      // create a statement object
+      Statement stmt = conn.createStatement();
+
+      // Running a query
+      String sqlStatement = "UPDATE inventory SET name = \'" + name + "\', price = " + price + ", quantity = " + quantity + ", measurement_type = \'" + measurement_type + "\' WHERE inventory_id = " + inventory_id + ";";
+
+      int result = stmt.executeUpdate(sqlStatement);
+    } catch (Exception e) {
+      e.printStackTrace();
+      System.err.println(e.getClass().getName() + ": " + e.getMessage());
+      System.exit(0);
+    }
+    return elements;
+  }
+
   public boolean close_connection(){
     // closing the connection
     try {

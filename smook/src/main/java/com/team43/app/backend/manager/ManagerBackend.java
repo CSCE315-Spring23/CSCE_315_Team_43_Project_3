@@ -5,6 +5,7 @@ public class ManagerBackend {
 
   public static void main(String args[]) {
     jdbcpostgreSQL data = new jdbcpostgreSQL();
+    data.edit_inventory_item(64, "Turbinado", 1, 135, "oz");
     List<List<String>> inventory = data.view_inventory();
     data.close_connection();
 
