@@ -56,6 +56,36 @@ public class jdbcpostgreSQL {
     }
     return table;
   }
+  public List<List<String>> view_menu_items(){
+    List<List<String>> table = new ArrayList<List<String>>();
+    try {
+      // create a statement object
+      Statement stmt = conn.createStatement();
+
+      // Running a query
+      String sqlStatement = "SELECT * FROM menu_item ORDER BY menu_id ASC";
+
+      // send statement to DBMS
+      ResultSet result = stmt.executeQuery(sqlStatement);
+
+
+      // OUTPUT
+      while (result.next()) {
+        List<String> elements = new ArrayList<String>();
+        elements.add(result.getString("menu_id"));
+        elements.add(result.getString("name"));
+        elements.add(result.getString("type"));
+        elements.add(result.getString("price"));
+        elements.add(result.getString("ingredient_amount"));
+        table.add(elements);
+      }
+    } catch (Exception e) {
+      e.printStackTrace();
+      System.err.println(e.getClass().getName() + ": " + e.getMessage());
+      System.exit(0);
+    }
+    return table;
+  }
   public List<String> edit_inventory_item(int inventory_id, String name, double price, double quantity, String measurement_type){
     List<String> elements = new ArrayList<String>();
     try {
@@ -72,6 +102,43 @@ public class jdbcpostgreSQL {
       System.exit(0);
     }
     return elements;
+  }
+  public List<String> add_menu_item(int menu_id, String name, String type, double price, int ingredient_amount){
+    List<String> elements = new ArrayList<String>();
+    try {
+      // create a statement object
+      Statement stmt = conn.createStatement();
+
+      // Running a query
+      String sqlStatement = "INSERT INTO menu_item (menu_id, name, type, price, ingredient_amount) VALUES (" + menu_id + ", \'" + name + "\', \'" + type + "\', " + price + "," + ingredient_amount + ");";
+
+      int result = stmt.executeUpdate(sqlStatement);
+    } catch (Exception e) {
+      e.printStackTrace();
+      System.err.println(e.getClass().getName() + ": " + e.getMessage());
+      System.exit(0);
+    }
+    return elements;
+  }
+  public List<String> update_menu_item(int menu_id, String name, String type, double price, int ingredient_amount){
+    List<String> elements = new ArrayList<String>();
+    try {
+      // create a statement object
+      Statement stmt = conn.createStatement();
+
+      // Running a query
+      String sqlStatement = "UPDATE menu_item SET name = \'" + name + "\', type = \'" + type + "\', price = " + price + ", ingredient_amount = " + ingredient_amount + " WHERE menu_id = " + menu_id + ";";
+
+      int result = stmt.executeUpdate(sqlStatement);
+    } catch (Exception e) {
+      e.printStackTrace();
+      System.err.println(e.getClass().getName() + ": " + e.getMessage());
+      System.exit(0);
+    }
+    return elements;
+  }
+  public void order_items(List<OrderList> orders){
+    
   }
 
   public boolean close_connection(){
