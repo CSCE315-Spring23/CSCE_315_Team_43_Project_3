@@ -21,15 +21,16 @@ public class ManagerFrame extends JFrame implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         String command = e.getActionCommand();
+        System.out.println(command);
         if (command == "endOfDay") {
             // Static Class that records all inventory subtractions for a given day
-            ManagerBackend.endOfDay();
+            // ManagerBackend.endOfDay();
         } else if (command == "orderInventory") {
             // Show "Order Inventory" frame
-            ManagerBackend.orderInventory();
+            // ManagerBackend.orderInventory();
         } else if (command == "viewEditInventory") {
             // Show "View/Edit Inventory" frame
-            ManagerBackend.viewEditInventory();
+            // ManagerBackend.viewEditInventory();
         }
     }
 }
