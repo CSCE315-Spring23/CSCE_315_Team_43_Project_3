@@ -12,7 +12,7 @@ import javax.swing.border.*;
 import java.awt.Font;
 import java.util.ArrayList;
 
-import com.team43.app.frontend.server.Back;
+import com.team43.app.frontend.server.*;
 
 public class ServerPanel extends JPanel {
     JButton b1;
@@ -24,16 +24,21 @@ public class ServerPanel extends JPanel {
     JLabel ItemsL;
     int width =1200;
     int height=800;
-    JScrollPane lister;
+    JPanel lister;
     Back backend;
     ArrayList<JButton> item_t;
     ArrayList<JButton> smoothiesB;
+    ArrayList<JLabel> items_ordered;
     String stage;
+    ArrayList<Order> cOrder;
+    JLabel header;
     public ServerPanel() {
         System.out.println("Hola");
         setLayout(new GridLayout(1,0));
         item_t = new ArrayList<JButton>();
         smoothiesB = new ArrayList<JButton>();
+        cOrder = new ArrayList<Order>();
+        items_ordered = new ArrayList<JLabel>();
         Transaction = new JPanel();
 		add(Transaction);
 
@@ -42,12 +47,16 @@ public class ServerPanel extends JPanel {
         Items.setBorder(new LineBorder(getBackground(), 3));
 		add(Items);
 
-        lister = new JScrollPane();
+        lister = new JPanel();
+        lister.setLayout(new BoxLayout(lister, BoxLayout.PAGE_AXIS));
+        lister.setBorder(new LineBorder(getBackground(), 3));
         //First labels
         Order = new JLabel("Input");
         Order.setFont(new Font("Tahoma", Font.PLAIN, 30));
 		Transaction.add(Order,BorderLayout.PAGE_START);
         Transaction.add(lister,BorderLayout.CENTER);
+        header = new JLabel("Smoothie name|Quantity|Price|AddOns");
+        lister.add(header);
 
 
         addItemTitle();
@@ -92,12 +101,31 @@ public class ServerPanel extends JPanel {
             final String name = smoothies.get(i);
             toAdd.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
-                    System.out.println(name);
+                    addSmoothie(name);
                 }
             });
             Items.add(toAdd);
             smoothiesB.add(toAdd);
         }
+        validate();
+    }
+    public void addSmoothie(String str){
+        cOrder.add(new Order(str));
+        displayOrder();
+    }
+    public void displayOrder() {
+        for (int i = 0; i<items_ordered.size(); i++){
+            lister.remove(items_ordered.get(i));
+        }
+        items_ordered.clear();
+        for (int i = 0; i<cOrder.size(); i++){
+            JLabel toAdd = new JLabel(cOrder.get(i).toString());
+            items_ordered.add(toAdd);
+            lister.add(toAdd);
+        }
+        System.out.println(cOrder.toString());
+        lister.validate();
+        Transaction.validate();
         validate();
     }
 }
