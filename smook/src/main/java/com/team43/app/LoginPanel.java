@@ -8,6 +8,7 @@ import javax.swing.JPanel;
 import javax.swing.JButton;
 import javax.swing.JTextField;
 
+import com.team43.app.frontend.Controller;
 import com.team43.app.frontend.MainFrame;
 
 import javax.swing.JPasswordField;
@@ -19,9 +20,10 @@ public class LoginPanel extends JPanel {
     JButton loginButton = new JButton("Login");
 
     MainFrame parent;
+    Controller controller;
 
-    public LoginPanel(MainFrame parent) {
-        this.parent = parent;
+    public LoginPanel(Controller controller) {
+        this.controller = controller;
         setLayout(new GridLayout(3, 2));
 
         add(new JLabel("Username: ", JLabel.TRAILING));
@@ -40,11 +42,10 @@ public class LoginPanel extends JPanel {
     }
 
     void loginClicked() {
-        System.out.println(usernameField.getText());
-        System.out.println(passwordField.getPassword());
         // String role = Backend.login(usernameField.getText(), passwordField.getText());
         String role = new String("manager");
-        parent.showPanelFromRole(role);
+        controller.showPageFromRole(role);
+        // parent.showPanelFromRole(role);
     }
 
 }

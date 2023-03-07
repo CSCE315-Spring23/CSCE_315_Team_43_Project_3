@@ -9,38 +9,21 @@ import com.team43.app.frontend.manager.ManagerPanel;
 import com.team43.app.frontend.server.ServerFrame;
 
 public class MainFrame extends JFrame {
-    LoginPanel loginPanel;
-    ManagerPanel managerPanel;
-    ServerFrame serverFrame;
+    // LoginPanel loginPanel;
+    // ManagerPanel managerPanel;
+    // ServerFrame serverFrame;
+
+    Controller controller;
 
     public MainFrame(int width, int height) {
         super();
         setLayout(new BorderLayout());
-        loginPanel = new LoginPanel(this);
-        add(loginPanel);
+        controller = new Controller(this);
+        controller.add("LoginPanel", new LoginPanel(controller));
+        controller.add("ManagerPanel", new ManagerPanel(controller));
+        controller.navigatePage("LoginPanel");
+        // controller.add("ServerFrame", new ServerFrame(controller));
         setSize(width, height);
         setVisible(true);
-    }
-
-    // Hides the login panel and shows panel provided
-    void showPanel(JPanel panel) {
-        loginPanel.setVisible(false);
-        add(panel);
-        panel.setVisible(true);
-    }
-
-    // Shows the panel according to the role
-    public void showPanelFromRole(String role) {
-        if (role == null) {
-            // Login failure; show red text error
-        } else if (role.equals("manager")) {
-            // Show manager frame
-            managerPanel = new ManagerPanel();
-            showPanel(managerPanel);
-        } else if (role.equals("employee")) {
-            // Show employee frame
-            serverFrame = new ServerFrame();
-            // showPanel(serverFrame);
-        }
     }
 }

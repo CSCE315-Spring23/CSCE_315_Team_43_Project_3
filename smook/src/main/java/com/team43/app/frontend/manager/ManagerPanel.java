@@ -7,12 +7,18 @@ import java.awt.FlowLayout;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
+import com.team43.app.frontend.Controller;
+
 public class ManagerPanel extends JPanel implements ActionListener {
     JButton endOfDayButton = new JButton("End of Day");
     JButton orderInventoryButton = new JButton("Order Inventory");
     JButton viewEditInventoryButton = new JButton("View / Edit Inventory");
 
-    public ManagerPanel() {
+    ViewEditInventoryPanel viewEditInventoryPanel;
+    Controller controller;
+
+    public ManagerPanel(Controller controller) {
+        this.controller = controller;
         setLayout(new FlowLayout());
 
         endOfDayButton.setBounds(100, 50, 100, 20);
@@ -35,8 +41,13 @@ public class ManagerPanel extends JPanel implements ActionListener {
         } else if (command == "orderInventory") {
             // Show "Order Inventory" frame
             // ManagerBackend.orderInventory();
+
         } else if (command == "viewEditInventory") {
             // Show "View/Edit Inventory" frame
+            // viewEditInventoryPanel = new ViewEditInventoryPanel();
+            System.out.print("command");
+            controller.add("ViewEditInventoryPanel", new ViewEditInventoryPanel());
+            controller.navigatePage("ViewEditInventoryPanel");
             // ManagerBackend.viewEditInventory();
         }
     }
