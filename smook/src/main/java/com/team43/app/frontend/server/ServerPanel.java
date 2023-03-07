@@ -11,6 +11,7 @@ import javax.swing.*;
 import javax.swing.border.*;
 import java.awt.Font;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import com.team43.app.frontend.server.*;
 
@@ -41,7 +42,7 @@ public class ServerPanel extends JPanel {
         items_ordered = new ArrayList<JLabel>();
         Transaction = new JPanel();
 		add(Transaction);
-
+        stage = "";
         Items = new JPanel();
         Items.setLayout(new BoxLayout(Items, BoxLayout.PAGE_AXIS));
         Items.setBorder(new LineBorder(getBackground(), 3));
@@ -51,7 +52,7 @@ public class ServerPanel extends JPanel {
         lister.setLayout(new BoxLayout(lister, BoxLayout.PAGE_AXIS));
         lister.setBorder(new LineBorder(getBackground(), 3));
         //First labels
-        Order = new JLabel("Input");
+        Order = new JLabel("Current Transaction");
         Order.setFont(new Font("Tahoma", Font.PLAIN, 30));
 		Transaction.add(Order,BorderLayout.PAGE_START);
         Transaction.add(lister,BorderLayout.CENTER);
@@ -65,6 +66,11 @@ public class ServerPanel extends JPanel {
     }
     //Add a function to add an item for controller
     public void setUpTypes() {
+        stage = "type";
+        addItemTitle();
+        for (int i = 0; i<smoothiesB.size(); i++){
+            smoothiesB.get(i).setVisible(false);
+        }
         backend = new Back();
         ArrayList<String> str = backend.getCategories();
         stage = "type";
@@ -83,7 +89,14 @@ public class ServerPanel extends JPanel {
     }
 
     public void addItemTitle() {
-        ItemsL = new JLabel("Items");
+        if (stage.equals("smoothie")){
+            ItemsL.setText("Pick a smoothie");
+        }
+        else if (stage.equals("type")){
+            ItemsL.setText("Pick Category");
+        }
+        else 
+        ItemsL = new JLabel("Pick Category");
         ItemsL.setFont(new Font("Tahoma", Font.PLAIN, 30));
         // ItemsL.setHorizontalAlignment(SwingConstants.CENTER);
 		// ItemsL.setSize(width/2,20);
@@ -96,12 +109,14 @@ public class ServerPanel extends JPanel {
             item_t.get(i).setVisible(false);
         }
         stage = "smoothie";
+        addItemTitle();
         for (int i = 0; i<smoothies.size(); i++){
             JButton toAdd = new JButton(smoothies.get(i));
             final String name = smoothies.get(i);
             toAdd.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     addSmoothie(name);
+                    setSize();
                 }
             });
             Items.add(toAdd);
@@ -113,6 +128,37 @@ public class ServerPanel extends JPanel {
         cOrder.add(new Order(str));
         displayOrder();
     }
+    public void setSize() {
+        ArrayList<String> sizes = new ArrayList<String>(Arrays.asList("Small","Medium","Large","Cancel"));
+        for (int i = 0; i<smoothiesB.size(); i++){
+            smoothiesB.get(i).setVisible(false);
+        }
+        ItemsL.setText(cOrder.get(cOrder.size()-1).getName() + ": Choose a size");
+        for (int i = 0; i<sizes.size(); i++){
+            JButton toAdd = new JButton(sizes.get(i));
+            final String name = sizes.get(i);
+            toAdd.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    getSize(name);
+                }
+            });
+            Items.add(toAdd);
+            smoothiesB.add(toAdd);
+        }
+        validate();
+    }
+    public void getSize(String size){
+        if (size.equals("Cancel")){
+            if (cOrder.size()>0)
+            cOrder.remove(cOrder.size()-1);
+        }
+        else
+        cOrder.get(cOrder.size()-1).setSize(size);
+        displayOrder();
+        if (items_ordered.size()>0)
+        items_ordered.get(items_ordered.size()-1).setForeground(Color.black);
+        setUpTypes();
+    }
     public void displayOrder() {
         for (int i = 0; i<items_ordered.size(); i++){
             lister.remove(items_ordered.get(i));
@@ -120,9 +166,12 @@ public class ServerPanel extends JPanel {
         items_ordered.clear();
         for (int i = 0; i<cOrder.size(); i++){
             JLabel toAdd = new JLabel(cOrder.get(i).toString());
+            if (i == cOrder.size()-1)
+            toAdd.setForeground(Color.red);
             items_ordered.add(toAdd);
             lister.add(toAdd);
         }
+        if (cOrder.size()>0)
         System.out.println(cOrder.toString());
         lister.validate();
         Transaction.validate();

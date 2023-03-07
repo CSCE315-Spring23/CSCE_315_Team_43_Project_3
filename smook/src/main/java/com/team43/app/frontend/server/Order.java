@@ -3,16 +3,19 @@ import java.util.ArrayList;
 import com.team43.app.frontend.server.Back;
 public class Order {
     private String smoothie;
-    private char size;
+    private String size;
     private double price;
     private ArrayList<String> subsitutions;
     public Order(String s){
         smoothie = s;
-        size = '?';
+        size = "unkown";
         price = Back.getPrice(smoothie);
         subsitutions = new ArrayList<String>();
     }
-    public void setSize(char s){
+    public String getName() {
+        return smoothie;
+    }
+    public void setSize(String s){
         size = s;
     }
     public void addSub(String s){
@@ -25,6 +28,22 @@ public class Order {
         return "\n\t" + subsitutions.toString();
     }
     public String toString() {
-        return smoothie + "|" + size + "|" + price;
+        String sub = subsitutions.size()>0 ? disSub() : "";
+        String s = "";
+        switch (size) {
+            case "Small":
+                s += "S";
+                break;
+            case "Medium":
+                s += "M";
+                break;
+            case "Large":
+                s += "L";
+                break;
+            default:
+                s+= "?";
+                break;
+        }
+        return smoothie + "|" + s + "|" + price + "|" + sub;
     }
 }
