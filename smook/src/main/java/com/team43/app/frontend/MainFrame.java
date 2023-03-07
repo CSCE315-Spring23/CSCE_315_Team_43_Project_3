@@ -27,6 +27,7 @@ public class MainFrame extends JFrame {
         loginPanel.setVisible(false);
         revalidate();
         repaint();
+        add(panel);
         panel.setVisible(true);
     }
 
