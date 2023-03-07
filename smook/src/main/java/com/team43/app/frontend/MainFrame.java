@@ -25,6 +25,7 @@ public class MainFrame extends JFrame {
     // Hides the login panel and shows panel provided
     void showPanel(JPanel panel) {
         loginPanel.setVisible(false);
+        add(panel);
         panel.setVisible(true);
     }
 
