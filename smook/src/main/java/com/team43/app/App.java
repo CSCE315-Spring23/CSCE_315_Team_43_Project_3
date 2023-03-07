@@ -9,6 +9,6 @@ class App {
 
 	public static void main(String[] args)
 	{
-		MainFrame mainFrame = new MainFrame(720, 480);
+		MainFrame mainFrame = new MainFrame(1200, 800);
 	}
 }

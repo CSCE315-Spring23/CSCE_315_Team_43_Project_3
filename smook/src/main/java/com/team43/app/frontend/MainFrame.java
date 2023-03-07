@@ -6,15 +6,16 @@ import java.awt.BorderLayout;
 
 import com.team43.app.LoginPanel;
 import com.team43.app.frontend.manager.ManagerPanel;
-import com.team43.app.frontend.server.ServerFrame;
+import com.team43.app.frontend.server.ServerController;
+import com.team43.app.frontend.server.ServerPanel;
 
 public class MainFrame extends JFrame {
     LoginPanel loginPanel;
     ManagerPanel managerPanel;
-    ServerFrame serverFrame;
+    ServerPanel serverPanel;
 
     public MainFrame(int width, int height) {
-        super();
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(new BorderLayout());
         loginPanel = new LoginPanel(this);
         add(loginPanel);
@@ -25,6 +26,8 @@ public class MainFrame extends JFrame {
     // Hides the login panel and shows panel provided
     void showPanel(JPanel panel) {
         loginPanel.setVisible(false);
+        revalidate();
+        repaint();
         panel.setVisible(true);
     }
 
@@ -38,8 +41,9 @@ public class MainFrame extends JFrame {
             showPanel(managerPanel);
         } else if (role.equals("employee")) {
             // Show employee frame
-            serverFrame = new ServerFrame();
-            // showPanel(serverFrame);
+            serverPanel = new ServerPanel();
+            add(serverPanel);
+            showPanel(serverPanel);
         }
     }
 }

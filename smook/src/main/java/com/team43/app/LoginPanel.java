@@ -43,7 +43,7 @@ public class LoginPanel extends JPanel {
         System.out.println(usernameField.getText());
         System.out.println(passwordField.getPassword());
         // String role = Backend.login(usernameField.getText(), passwordField.getText());
-        String role = new String("manager");
+        String role = usernameField.getText();
         parent.showPanelFromRole(role);
     }
 
