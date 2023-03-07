@@ -1,27 +1,57 @@
 package com.team43.app.frontend;
 
+import java.util.HashMap;
 import java.util.Stack;
+
+import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-public class Controller {
-    Stack pages;
-    JPanel currentPage;
+import com.team43.app.frontend.manager.ManagerPanel;
 
-    Controller() {
-        pages = new Stack<JPanel>();
+public class Controller {
+    Stack<JPanel> pageStack;
+    HashMap<String, JPanel> pages;
+    JPanel currentPage;
+    JFrame mainFrame;
+
+    Controller(JFrame mainFrame) {
+        this.mainFrame = mainFrame;
+        pageStack = new Stack<JPanel>();
+        pages = new HashMap<String, JPanel>();
     }
 
-    public void navigatePage(JPanel panel) {
+    public void add(String name, JPanel panel) {
+        pages.put(name, panel);
+    }
+
+    public void navigatePage(String name) {
         if (currentPage != null) {
             // Hide this page and push it
             currentPage.setVisible(false);
-            pages.push(currentPage);
+            pageStack.push(currentPage);
         }
-        currentPage = panel;
+        currentPage = pages.get(name);
         currentPage.setVisible(true);
     }
 
-    public JPanel navigatePageBack() {
-        pages.pop().setVisible(true);
+    public void navigatePageBack() {
+        currentPage.setVisible(false);
+        JPanel panel = pageStack.pop();
+        panel.setVisible(true);
+    }
+
+    // Shows the panel according to the role
+    public void showPageFromRole(String role) {
+        if (role == null) {
+            // Login failure; show red text error
+        } else if (role.equals("manager")) {
+            // Show manager frame
+            // pages.put("ManagerPanel", new ManagerPanel(this));
+            // navigatePage("ManagerPanel");
+        } else if (role.equals("employee")) {
+            // Show employee frame
+            // serverFrame = new ServerFrame();
+            // showPanel(serverFrame);
+        }
     }
 }

@@ -9,15 +9,20 @@ import com.team43.app.frontend.manager.ManagerPanel;
 import com.team43.app.frontend.server.ServerPanel;
 
 public class MainFrame extends JFrame {
-    LoginPanel loginPanel;
-    ManagerPanel managerPanel;
-    ServerPanel serverPanel;
+    // LoginPanel loginPanel;
+    // ManagerPanel managerPanel;
+    // ServerFrame serverFrame;
+
+    Controller controller;
 
     public MainFrame(int width, int height) {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(new BorderLayout());
-        loginPanel = new LoginPanel(this);
-        add(loginPanel);
+        controller = new Controller(this);
+        controller.add("LoginPanel", new LoginPanel(controller));
+        controller.add("ManagerPanel", new ManagerPanel(controller));
+        controller.navigatePage("LoginPanel");
+        // controller.add("ServerFrame", new ServerFrame(controller));
         setSize(width, height);
         setVisible(true);
     }
