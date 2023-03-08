@@ -9,7 +9,6 @@ import javax.swing.JButton;
 import javax.swing.JTextField;
 
 import com.team43.app.frontend.Controller;
-import com.team43.app.frontend.MainFrame;
 
 import javax.swing.JPasswordField;
 import javax.swing.JLabel;
@@ -19,7 +18,6 @@ public class LoginPanel extends JPanel {
     JPasswordField passwordField = new JPasswordField();
     JButton loginButton = new JButton("Login");
 
-    MainFrame parent;
     Controller controller;
 
     public LoginPanel(Controller controller) {
@@ -37,15 +35,12 @@ public class LoginPanel extends JPanel {
                 loginClicked();
             }
         });
-
-        setVisible(true);
     }
 
     void loginClicked() {
         // String role = Backend.login(usernameField.getText(), passwordField.getText());
-        String role = new String("manager");
+        String role = usernameField.getText();
         controller.showPageFromRole(role);
-        // parent.showPanelFromRole(role);
     }
 
 }
