@@ -108,7 +108,7 @@ public class jdbcpostgreSQL {
     return items;
   }
 
-  // TODO
+  // retrieves desired menu item from the database
   public MenuItem getMenuItem(String menu_item) {
     MenuItem item = null;
     try {
@@ -182,7 +182,7 @@ public class jdbcpostgreSQL {
     return num_items;
   }
 
-  // TODO
+  // updates transaction and transaction_item tables based on given transaction
   public void writeTransactionData(Transaction trans, int emp_id) {
     try {
       // create a statement object
