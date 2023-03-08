@@ -3,6 +3,7 @@ package com.team43.app.frontend;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Stack;
+import java.util.jar.Attributes.Name;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -62,5 +63,9 @@ public class Controller {
 
     public List<List<String>> getInventory() {
         return model.db.view_inventory();
+    }
+
+    public void editInventoryItem(int inventoryId, String name, double price, double quantity, String measurementType) {
+        model.db.edit_inventory_item(inventoryId, name, price, quantity, measurementType);
     }
 }
