@@ -2,12 +2,17 @@ package com.team43.app.frontend.manager;
 
 import javax.swing.JPanel;
 import javax.swing.JTable;
+
+import com.team43.app.frontend.Controller;
+
 import java.awt.BorderLayout;
 
 public class ViewEditInventoryPanel extends JPanel {
+    Controller controller;
     JTable table;
 
-    public ViewEditInventoryPanel() {
+    public ViewEditInventoryPanel(Controller controller) {
+        this.controller = controller;
         String[] colNames = {
             "inventory_id",
             "name",
@@ -16,11 +21,7 @@ public class ViewEditInventoryPanel extends JPanel {
             "measurement_type",
         };
 
-        Object[][] data = {
-            {1, "Oranges", 12, 100, "units"},
-            {2, "Pears", 30, 80, "units"},
-            {3, "Apples", 3, 50, "units"},
-        };
+        Object[][] data = controller.getInventory();
 
         table = new JTable(data, colNames);
 

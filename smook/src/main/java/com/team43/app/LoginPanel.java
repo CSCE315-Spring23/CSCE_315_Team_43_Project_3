@@ -9,7 +9,6 @@ import javax.swing.JButton;
 import javax.swing.JTextField;
 
 import com.team43.app.frontend.Controller;
-import com.team43.app.frontend.MainFrame;
 
 import javax.swing.JPasswordField;
 import javax.swing.JLabel;

@@ -1,6 +1,7 @@
 package com.team43.app.frontend;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Stack;
 
 import javax.swing.JFrame;
@@ -13,11 +14,13 @@ public class Controller {
     HashMap<String, JPanel> pages;
     JPanel currentPage;
     JFrame mainFrame;
+    Model model;
 
     Controller(JFrame mainFrame) {
         this.mainFrame = mainFrame;
         pageStack = new Stack<JPanel>();
         pages = new HashMap<String, JPanel>();
+        model = new Model();
     }
 
     public void add(String name, JPanel panel) {
@@ -55,5 +58,9 @@ public class Controller {
             // serverFrame = new ServerFrame();
             // showPanel(serverFrame);
         }
+    }
+
+    public List<List<String>> getInventory() {
+        return model.db.view_inventory();
     }
 }
