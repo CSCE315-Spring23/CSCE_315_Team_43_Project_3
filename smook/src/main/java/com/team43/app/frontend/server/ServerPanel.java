@@ -13,7 +13,7 @@ import java.awt.Font;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-//import com.team43.app.frontend.server.*;
+import com.team43.app.backend.server.*;
 import com.team43.app.frontend.MainFrame;
 
 public class ServerPanel extends JPanel {
@@ -25,7 +25,8 @@ public class ServerPanel extends JPanel {
     JLabel Order;
     JLabel ItemsL;
     JPanel lister;
-    Back backend;
+    //Back backend;
+    ServerBackend backend;
     ArrayList<JButton> item_t;
     ArrayList<JButton> smoothiesB;
     ArrayList<JLabel> items_ordered;
@@ -70,7 +71,7 @@ public class ServerPanel extends JPanel {
         for (int i = 0; i<smoothiesB.size(); i++){
             smoothiesB.get(i).setVisible(false);
         }
-        backend = new Back();
+        backend = new ServerBackend();
         ArrayList<String> str = backend.getCategories();
         stage = "type";
         for (int i = 0; i<str.size(); i++){
@@ -124,7 +125,8 @@ public class ServerPanel extends JPanel {
         validate();
     }
     public void addSmoothie(String str){
-        cOrder.add(new Order(str));
+        backend.addItem(str);
+        cOrder.add(new Order(str,backend.getItemPrice(cOrder.size())));
         displayOrder();
     }
     public void setSize() {

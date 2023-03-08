@@ -6,10 +6,10 @@ public class Order {
     private String size;
     private double price;
     private ArrayList<String> subsitutions;
-    public Order(String s){
+    public Order(String s, double p){
         smoothie = s;
         size = "unkown";
-        price = Back.getPrice(smoothie);
+        price = p;
         subsitutions = new ArrayList<String>();
     }
     public String getName() {
