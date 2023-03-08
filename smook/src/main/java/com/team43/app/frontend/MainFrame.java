@@ -8,10 +8,6 @@ import com.team43.app.frontend.manager.ManagerPanel;
 import com.team43.app.frontend.server.ServerPanel;
 
 public class MainFrame extends JFrame {
-    // LoginPanel loginPanel;
-    // ManagerPanel managerPanel;
-    // ServerFrame serverFrame;
-
     Model model;
     Controller controller;
 

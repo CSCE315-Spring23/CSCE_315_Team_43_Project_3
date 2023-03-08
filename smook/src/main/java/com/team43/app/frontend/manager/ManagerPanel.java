@@ -50,13 +50,12 @@ public class ManagerPanel extends JPanel {
             // ManagerBackend.endOfDay();
         } else if (name == "orderInventory") {
             // Show "Order Inventory" frame
-            // ManagerBackend.orderInventory();
+            controller.add("OrderInventoryPanel", new OrderInventoryPanel());
+            controller.navigatePage("OrderInventoryPanel");
         } else if (name == "viewEditInventory") {
             // Show "View/Edit Inventory" frame
-            // viewEditInventoryPanel = new ViewEditInventoryPanel();
             controller.add("ViewEditInventoryPanel", new ViewEditInventoryPanel());
             controller.navigatePage("ViewEditInventoryPanel");
-            // ManagerBackend.viewEditInventory();
         }
     }
 }
