@@ -138,7 +138,35 @@ public class jdbcpostgreSQL {
     return elements;
   }
   public void order_items(List<OrderList> orders){
-    
+    List<List<String>> ingredients = view_inventory();
+    try {
+      // create a statement object
+      Statement stmt = conn.createStatement();
+
+      // Add a new Order_Item
+      // Calculate total cost
+      double total_cost = 0;
+      for (OrderList order: orders){
+        for (List<String> ingredient: ingredients){
+          if (Integer.parseInt(ingredient.get(0)) == order.inventory_id)
+            total_cost += Integer.parseInt(ingredient.get(2)) * order.quantity;
+        }
+      }
+      int last_index_order = Integer.parseInt(ingredients.get(ingredients.size()-1).get(0));
+      String add_order_item = "INSERT INTO order_item (order_id, cost) VALUES (" + 100 + ", " + total_cost + ");";
+      System.out.println(add_order_item);
+
+      // Running a query
+      String sqlStatement;
+      for (OrderList order: orders){
+        sqlStatement = "INSERT INTO order_list (inventory_id, order_id, quantity) VALUES (" + order.inventory_id + "," + order.order_id + ", " + order.quantity + ");";
+        stmt.executeUpdate(sqlStatement);
+      }
+    } catch (Exception e) {
+      e.printStackTrace();
+      System.err.println(e.getClass().getName() + ": " + e.getMessage());
+      System.exit(0);
+    }
   }
 
   public boolean close_connection(){
