@@ -182,7 +182,7 @@ public class ServerPanel extends JPanel {
         for (int i = 0; i<cOrder.size(); i++){
             price += cOrder.get(i).getPrice();
         }
-        transaction.changePrice(price);
+        transaction.changePrice(Math.round(price*100.0)/100.0);
     }
     public void submitOrder() {
         if (stage.equals("size")){
