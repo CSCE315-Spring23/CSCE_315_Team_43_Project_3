@@ -3,13 +3,11 @@ package com.team43.app.frontend;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Stack;
-import java.util.jar.Attributes.Name;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import com.team43.app.backend.manager.OrderList;
-import com.team43.app.frontend.manager.ManagerPanel;
 
 public class Controller {
     Stack<JPanel> pageStack;
@@ -81,7 +79,7 @@ public class Controller {
     * @param    orderList   a provided list of orders
     */
     public void orderItems(List<OrderList> orderList) {
-        model.db.order_items(orderList);
+        model.db.orderItems(orderList);
     }
 
     /**
@@ -89,7 +87,7 @@ public class Controller {
     * @return a list containing every inventory item, with each item being represented by a list of strings
     */
     public List<List<String>> getInventory() {
-        return model.db.view_inventory();
+        return model.db.viewInventory();
     }
 
     /**
@@ -101,6 +99,6 @@ public class Controller {
     * @param    measurementType the type of measurement used to measure the quantity
     */
     public void editInventoryItem(int inventoryId, String name, double price, double quantity, String measurementType) {
-        model.db.edit_inventory_item(inventoryId, name, price, quantity, measurementType);
+        model.db.editInventoryItem(inventoryId, name, price, quantity, measurementType);
     }
 }

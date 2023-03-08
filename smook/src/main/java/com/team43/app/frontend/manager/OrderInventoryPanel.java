@@ -15,7 +15,6 @@ import java.awt.GridLayout;
 
 public class OrderInventoryPanel extends JPanel {
     JTextField inventoryIdField = new JTextField();
-    JTextField orderIdField = new JTextField();
     JTextField quantityField = new JTextField();
 
     ArrayList<OrderList> orderCart = new ArrayList<OrderList>();
@@ -26,12 +25,10 @@ public class OrderInventoryPanel extends JPanel {
 
     public OrderInventoryPanel(Controller controller) {
         this.controller = controller;
-        setLayout(new GridLayout(4, 2));
+        setLayout(new GridLayout(3, 2));
 
         add(new JLabel("inventory_id: ", JLabel.TRAILING));
         add(inventoryIdField);
-        add(new JLabel("order_id: ", JLabel.TRAILING));
-        add(orderIdField);
         add(new JLabel("quantity: ", JLabel.TRAILING));
         add(quantityField);
         add(addOrderButton);
@@ -54,11 +51,9 @@ public class OrderInventoryPanel extends JPanel {
     void addOrderClicked() {
         OrderList orderList = new OrderList(
             Integer.parseInt(inventoryIdField.getText()),
-            Integer.parseInt(orderIdField.getText()),
             Double.parseDouble(quantityField.getText())
         );
         inventoryIdField.setText(null);
-        orderIdField.setText(null);
         quantityField.setText(null);
         System.out.println(orderList);
         orderCart.add(orderList);
