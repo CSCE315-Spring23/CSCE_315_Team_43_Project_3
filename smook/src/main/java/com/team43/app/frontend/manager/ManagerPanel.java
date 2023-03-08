@@ -7,37 +7,62 @@ import java.awt.FlowLayout;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
-public class ManagerPanel extends JPanel implements ActionListener {
+import com.team43.app.frontend.Controller;
+
+public class ManagerPanel extends JPanel {
     JButton endOfDayButton = new JButton("End of Day");
     JButton orderInventoryButton = new JButton("Order Inventory");
     JButton viewEditInventoryButton = new JButton("View / Edit Inventory");
+    JButton logout;
+    ViewEditInventoryPanel viewEditInventoryPanel;
+    Controller controller;
 
-    public ManagerPanel() {
+    public ManagerPanel(Controller control) {
+        this.controller = control;
         setLayout(new FlowLayout());
 
-        endOfDayButton.setBounds(100, 50, 100, 20);
         add(endOfDayButton);
         add(orderInventoryButton);
         add(viewEditInventoryButton);
+        // logout = new JButton("Logout");
+        // add(logout);
+        // logout.addActionListener(new ActionListener() {
+        //     public void actionPerformed(ActionEvent e) {
+        //         controller.navigatePageBack();
+        //     }
+        // });
 
-        endOfDayButton.setActionCommand("endOfDay");
-        orderInventoryButton.setActionCommand("orderInventory");
-        viewEditInventoryButton.setActionCommand("viewEditInventory");
+        endOfDayButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                inventorySelectionClicked("endOfDay");
+            }
+        });
+
+        orderInventoryButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                inventorySelectionClicked("orderInventory");
+            }
+        });
+
+        viewEditInventoryButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                inventorySelectionClicked("viewEditInventory");
+            }
+        });
     }
 
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        String command = e.getActionCommand();
-        System.out.println(command);
-        if (command == "endOfDay") {
+    public void inventorySelectionClicked(String name) {
+        if (name == "endOfDay") {
             // Static Class that records all inventory subtractions for a given day
             // ManagerBackend.endOfDay();
-        } else if (command == "orderInventory") {
+        } else if (name == "orderInventory") {
             // Show "Order Inventory" frame
-            // ManagerBackend.orderInventory();
-        } else if (command == "viewEditInventory") {
+            controller.add("OrderInventoryPanel", new OrderInventoryPanel(controller));
+            controller.navigatePage("OrderInventoryPanel");
+        } else if (name == "viewEditInventory") {
             // Show "View/Edit Inventory" frame
-            // ManagerBackend.viewEditInventory();
+            controller.add("ViewEditInventoryPanel", new ViewEditInventoryPanel(controller));
+            controller.navigatePage("ViewEditInventoryPanel");
         }
     }
 }
