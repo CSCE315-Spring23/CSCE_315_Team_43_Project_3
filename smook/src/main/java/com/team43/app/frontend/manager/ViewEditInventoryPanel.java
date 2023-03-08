@@ -6,6 +6,7 @@ import javax.swing.JTable;
 import com.team43.app.frontend.Controller;
 
 import java.awt.BorderLayout;
+import java.util.List;
 
 public class ViewEditInventoryPanel extends JPanel {
     Controller controller;
@@ -21,7 +22,11 @@ public class ViewEditInventoryPanel extends JPanel {
             "measurement_type",
         };
 
-        Object[][] data = controller.getInventory();
+        List<List<String>> invenList = controller.getInventory();
+        Object[][] data = new Object[invenList.size()][5];
+        for (int i = 0; i < invenList.size(); ++i) {
+            data[i] = invenList.get(i).toArray();
+        }
 
         table = new JTable(data, colNames);
 
