@@ -35,9 +35,11 @@ public class ServerPanel extends JPanel {
     JLabel header;
     JButton submit;
     MainFrame parent;
+
     public ServerPanel(MainFrame p) {
+
+        //initialization
         parent = p;
-        System.out.println("Hola");
         setLayout(new GridLayout(1,0));
         item_t = new ArrayList<JButton>();
         smoothiesB = new ArrayList<JButton>();
@@ -125,8 +127,7 @@ public class ServerPanel extends JPanel {
         validate();
     }
     public void addSmoothie(String str){
-        backend.addItem(str);
-        cOrder.add(new Order(str,backend.getItemPrice(cOrder.size())));
+        cOrder.add(new Order(str));
         displayOrder();
     }
     public void setSize() {
@@ -154,8 +155,12 @@ public class ServerPanel extends JPanel {
             if (cOrder.size()>0)
             cOrder.remove(cOrder.size()-1);
         }
-        else
+        else{
         cOrder.get(cOrder.size()-1).setSize(size);
+        backend.addItem(cOrder.get(cOrder.size()-1).getName());
+        cOrder.get(cOrder.size()-1).setPrice(backend.getItemPrice(cOrder.size()-1));
+        backend.completeItem();
+        }
         displayOrder();
         if (items_ordered.size()>0)
         items_ordered.get(items_ordered.size()-1).setForeground(Color.black);
@@ -193,6 +198,8 @@ public class ServerPanel extends JPanel {
         }
         String name = JOptionPane.showInputDialog(this,
                         "Customer name?", null);
+        backend.completeTransaction(name);
+                
         parent.newServer();
     }
 }
