@@ -6,7 +6,6 @@ import java.awt.BorderLayout;
 
 import com.team43.app.LoginPanel;
 import com.team43.app.frontend.manager.ManagerPanel;
-import com.team43.app.frontend.server.ServerController;
 import com.team43.app.frontend.server.ServerPanel;
 
 public class MainFrame extends JFrame {
@@ -41,9 +40,15 @@ public class MainFrame extends JFrame {
             showPanel(managerPanel);
         } else if (role.equals("employee")) {
             // Show employee frame
-            serverPanel = new ServerPanel();
+            serverPanel = new ServerPanel(this);
             add(serverPanel);
             showPanel(serverPanel);
         }
+    }
+    public void newServer() {
+        remove(serverPanel);
+        serverPanel = new ServerPanel(this);
+        add(serverPanel);
+        showPanel(serverPanel);
     }
 }

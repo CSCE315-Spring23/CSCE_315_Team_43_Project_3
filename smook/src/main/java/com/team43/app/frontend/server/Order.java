@@ -1,6 +1,6 @@
 package com.team43.app.frontend.server;
 import java.util.ArrayList;
-import com.team43.app.frontend.server.Back;
+//import com.team43.app.frontend.server.Back;
 public class Order {
     private String smoothie;
     private String size;
@@ -26,6 +26,9 @@ public class Order {
     }
     private String disSub(){
         return "\n\t" + subsitutions.toString();
+    }
+    public double getPrice() {
+        return price;
     }
     public String toString() {
         String sub = subsitutions.size()>0 ? disSub() : "";
