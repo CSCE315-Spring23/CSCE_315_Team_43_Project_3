@@ -28,6 +28,10 @@ public class jdbcpostgreSQL {
     }
   }
 
+  /**
+   * Views the inventory
+   * @return A 2D array of all Inventory objects
+   */
   public List<List<String>> view_inventory(){
     List<List<String>> table = new ArrayList<List<String>>();
     try {
@@ -58,6 +62,11 @@ public class jdbcpostgreSQL {
     }
     return table;
   }
+
+  /**
+   * Views the menu items
+   * @return A 2D array of MenuItem objects
+   */
   public List<List<String>> view_menu_items(){
     List<List<String>> table = new ArrayList<List<String>>();
     try {
@@ -122,6 +131,16 @@ public class jdbcpostgreSQL {
     }
     return elements;
   }
+  
+  /**
+   * Updates the MenuItem ()
+   * @param menu_id MenuItem identifier
+   * @param name Name of menu item
+   * @param type Type of menu item
+   * @param price Cost of menu item
+   * @param ingredient_amount Amount of menu item
+   * @return Updated menu item
+   */
   public List<String> update_menu_item(int menu_id, String name, String type, double price, int ingredient_amount){
     List<String> elements = new ArrayList<String>();
     try {
@@ -139,6 +158,11 @@ public class jdbcpostgreSQL {
     }
     return elements;
   }
+
+  /**
+   * Add orders to the database
+   * @param orders All orders to add
+   */
   public void order_items(List<OrderList> orders){
     List<List<String>> ingredients = view_inventory();
     try {
@@ -171,6 +195,10 @@ public class jdbcpostgreSQL {
     }
   }
 
+  /**
+   * Ends the psql connection
+   * @return A boolean true if the connection was correctly closed. Undefined if errors are present.
+   */
   public boolean close_connection(){
     // closing the connection
     try {

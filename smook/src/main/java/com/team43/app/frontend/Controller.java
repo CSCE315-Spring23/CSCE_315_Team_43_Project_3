@@ -25,12 +25,21 @@ public class Controller {
         model = new Model();
     }
 
+    /**
+    * Adds a panel to the list of pages
+    * @param    name    the name of the key for the panel
+    * @param    panel   the panel we are adding to
+    */
     public void add(String name, JPanel panel) {
         if (!pages.containsKey(name)) {
             pages.put(name, panel);
         }
     }
 
+    /**
+    * Set the current page to the page matching the key provided
+    * @param    name    the name of the key for the panel
+    */
     public void navigatePage(String name) {
         if (currentPage != null) {
             // Hide this page and push it
@@ -42,13 +51,19 @@ public class Controller {
         currentPage.setVisible(true);
     }
 
+    /**
+    * Navigate backwards in the page stack
+    */
     public void navigatePageBack() {
         currentPage.setVisible(false);
         JPanel panel = pageStack.pop();
         panel.setVisible(true);
     }
 
-    // Shows the panel according to the role
+    /**
+    * Shows the panel according to the role
+    * @param    role    the role we are pulling the panels from
+    */
     public void showPageFromRole(String role) {
         if (role == null) {
             // Login failure; show red text error
@@ -61,15 +76,30 @@ public class Controller {
             // showPanel(serverFrame);
         }
     }
-
+    /**
+    * Add a list of orders to the database
+    * @param    orderList   a provided list of orders
+    */
     public void orderItems(List<OrderList> orderList) {
         model.db.order_items(orderList);
     }
 
+    /**
+    * Pull inventory from the database
+    * @return a list containing every inventory item, with each item being represented by a list of strings
+    */
     public List<List<String>> getInventory() {
         return model.db.view_inventory();
     }
 
+    /**
+    * Update an inventory item based on variable parameters
+    * @param    inventoryId     the id of the item we are modifying
+    * @param    name            the name of the item
+    * @param    price           the price of the item
+    * @param    quantity        the amount of the item in the inventory
+    * @param    measurementType the type of measurement used to measure the quantity
+    */
     public void editInventoryItem(int inventoryId, String name, double price, double quantity, String measurementType) {
         model.db.edit_inventory_item(inventoryId, name, price, quantity, measurementType);
     }
