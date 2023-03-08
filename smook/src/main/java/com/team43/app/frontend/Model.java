@@ -6,6 +6,6 @@ public class Model {
     jdbcpostgreSQL db;
 
     public Model() {
-        // db = new jdbcpostgreSQL();
+        db = new jdbcpostgreSQL();
     }
 }
