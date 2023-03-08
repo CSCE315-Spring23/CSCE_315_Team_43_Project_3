@@ -159,29 +159,59 @@ public class jdbcpostgreSQL {
   }
 
   // returns number of different items in the inventory
-  public int getNumInventoryItems() {
-    int num_items = 0;
+  // public int getNumInventoryItems() {
+  //   int num_items = 0;
+  //   try {
+  //     // create a statement object
+  //     Statement stmt = conn.createStatement();
+
+  //     // Running a query
+  //     Statement pstat = conn.prepareStatement("SELECT COUNT(inventory_id) FROM inventory;", ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
+
+  //     // send statement to DBMS
+  //     ResultSet result = pstat.executeQuery("SELECT COUNT(inventory_id) FROM inventory;");
+
+  //     // OUTPUT
+  //     result.first();
+  //     num_items = result.getInt("count");
+  //   } catch (Exception e) {
+  //     e.printStackTrace();
+  //     System.err.println(e.getClass().getName() + ": " + e.getMessage());
+  //     System.exit(0);
+  //   }
+  //   return num_items;
+  // }
+
+  public int getNumInventoryItems(){
+    List<List<String>> table = new ArrayList<List<String>>();
     try {
       // create a statement object
       Statement stmt = conn.createStatement();
 
       // Running a query
-      String sqlStatement = "SELECT COUNT(inventory_id) FROM inventory";
+      String sqlStatement = "SELECT * FROM inventory ORDER BY inventory_id ASC";
 
       // send statement to DBMS
       ResultSet result = stmt.executeQuery(sqlStatement);
 
+
       // OUTPUT
-      result.first();
-      num_items = result.getInt("count");
+      while (result.next()) {
+        List<String> elements = new ArrayList<String>();
+        elements.add(result.getString("inventory_id"));
+        elements.add(result.getString("name"));
+        elements.add(result.getString("price"));
+        elements.add(result.getString("quantity"));
+        elements.add(result.getString("measurement_type"));
+        table.add(elements);
+      }
     } catch (Exception e) {
       e.printStackTrace();
       System.err.println(e.getClass().getName() + ": " + e.getMessage());
       System.exit(0);
     }
-    return num_items;
+    return table.size();
   }
-
   // updates transaction and transaction_item tables based on given transaction
   public void writeTransactionData(Transaction trans, int emp_id) {
     try {
