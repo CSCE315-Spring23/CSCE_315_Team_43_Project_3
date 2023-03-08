@@ -21,10 +21,10 @@ public class MainFrame extends JFrame {
         controller = new Controller(this);
         controller.add("LoginPanel", new LoginPanel(controller));
         controller.add("ManagerPanel", new ManagerPanel(controller));
-        controller.navigatePage("LoginPanel");
         // controller.add("ServerFrame", new ServerFrame(controller));
         setSize(width, height);
         setVisible(true);
+        controller.navigatePage("LoginPanel");
     }
 
     // Hides the login panel and shows panel provided

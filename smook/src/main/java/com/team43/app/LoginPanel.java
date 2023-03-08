@@ -19,7 +19,6 @@ public class LoginPanel extends JPanel {
     JPasswordField passwordField = new JPasswordField();
     JButton loginButton = new JButton("Login");
 
-    MainFrame parent;
     Controller controller;
 
     public LoginPanel(Controller controller) {
@@ -37,8 +36,6 @@ public class LoginPanel extends JPanel {
                 loginClicked();
             }
         });
-
-        setVisible(true);
     }
 
     void loginClicked() {

@@ -21,7 +21,9 @@ public class Controller {
     }
 
     public void add(String name, JPanel panel) {
-        pages.put(name, panel);
+        if (!pages.containsKey(name)) {
+            pages.put(name, panel);
+        }
     }
 
     public void navigatePage(String name) {
@@ -31,6 +33,7 @@ public class Controller {
             pageStack.push(currentPage);
         }
         currentPage = pages.get(name);
+        mainFrame.add(currentPage);
         currentPage.setVisible(true);
     }
 
@@ -46,8 +49,7 @@ public class Controller {
             // Login failure; show red text error
         } else if (role.equals("manager")) {
             // Show manager frame
-            // pages.put("ManagerPanel", new ManagerPanel(this));
-            // navigatePage("ManagerPanel");
+            navigatePage("ManagerPanel");
         } else if (role.equals("employee")) {
             // Show employee frame
             // serverFrame = new ServerFrame();
