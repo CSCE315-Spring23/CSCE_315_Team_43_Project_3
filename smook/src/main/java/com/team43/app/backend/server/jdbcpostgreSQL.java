@@ -1,6 +1,9 @@
+package com.team43.app.backend.server;
+
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import com.team43.app.backend.server.*; // important
 
 public class jdbcpostgreSQL {
 
