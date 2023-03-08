@@ -9,11 +9,11 @@ public class ViewEditInventoryPanel extends JPanel {
 
     public ViewEditInventoryPanel() {
         String[] colNames = {
-            "Inventory_ID",
-            "Name",
-            "Price",
-            "Quantity",
-            "Measurement_Type",
+            "inventory_id",
+            "name",
+            "price",
+            "quantity",
+            "measurement_type",
         };
 
         Object[][] data = {

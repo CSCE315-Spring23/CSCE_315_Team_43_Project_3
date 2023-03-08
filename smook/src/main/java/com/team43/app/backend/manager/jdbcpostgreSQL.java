@@ -1,3 +1,5 @@
+package com.team43.app.backend.manager;
+
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
