@@ -237,6 +237,7 @@ public class jdbcpostgreSQL {
     return trans_id;
   }
 
+  // returns current inventory quantities
   private HashMap<Integer, Float> getCurrentInventory() {
     HashMap<Integer, Float> inventory = new HashMap<Integer, Float>();
     try {
@@ -262,10 +263,8 @@ public class jdbcpostgreSQL {
     return inventory;
   }
 
-  // TODO
+  // updates inventory based on given usage stats
   public void updateInventory(HashMap<Integer, Float> usage) {
-    // TODO
-    // TODO
     HashMap<Integer, Float> inventory = getCurrentInventory();
     try {
       // create a statement object
