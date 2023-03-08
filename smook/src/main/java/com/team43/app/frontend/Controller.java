@@ -8,6 +8,7 @@ import java.util.jar.Attributes.Name;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+import com.team43.app.backend.manager.OrderList;
 import com.team43.app.frontend.manager.ManagerPanel;
 
 public class Controller {
@@ -59,6 +60,10 @@ public class Controller {
             // serverFrame = new ServerFrame();
             // showPanel(serverFrame);
         }
+    }
+
+    public void orderItems(List<OrderList> orderList) {
+        model.db.order_items(orderList);
     }
 
     public List<List<String>> getInventory() {

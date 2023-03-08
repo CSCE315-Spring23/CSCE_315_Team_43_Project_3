@@ -66,7 +66,8 @@ public class OrderInventoryPanel extends JPanel {
 
     // Order all items from the cart and empty the cart
     void orderClicked() {
-        // Backend.order_items(olist);
+        controller.orderItems(orderCart);
+        System.out.println("Order placed: " + orderCart);
         orderCart.clear();
     }
 }
