@@ -25,8 +25,6 @@ public class MenuItem {
 
   public String getName() { return name; }
 
-  public void setName(String n) { name = n; }
-
   public ArrayList<InventoryItem> getIngredients() { return ingredients; }
 
   public float getPrice() { return price; }

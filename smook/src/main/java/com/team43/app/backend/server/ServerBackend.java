@@ -78,7 +78,7 @@ public class ServerBackend {
   public void completeTransaction(String purchaser_name) {
     curr_trans.completeTransaction();
     curr_trans.setPurchaserName(purchaser_name);
-    db.writeTransactionData(curr_trans);
+    db.writeTransactionData(curr_trans, employee_id);
   }
 
   // adds or removes given ingredient to current item

@@ -65,7 +65,7 @@ public class jdbcpostgreSQL {
 
       // Running a query
       String sqlStatement =
-          "SELECT name FROM menu_item WHERE type='" + category + "'";
+          "SELECT name FROM menu_item WHERE type=\'" + category + "\'";
 
       // send statement to DBMS
       ResultSet result = stmt.executeQuery(sqlStatement);
@@ -109,7 +109,54 @@ public class jdbcpostgreSQL {
   }
 
   // TODO
-  public MenuItem getMenuItem(String menu_item) {}
+  public MenuItem getMenuItem(String menu_item) {
+    MenuItem item = null;
+    try {
+      // create a statement object
+      Statement stmt = conn.createStatement();
+
+      // Running a query
+      String sqlStatement =
+          "SELECT * FROM menu_item WHERE name=\'" + menu_item + "\'";
+
+      // send statement to DBMS
+      ResultSet result = stmt.executeQuery(sqlStatement);
+
+      // set up initial menu item
+      result.first();
+      item = new MenuItem(
+          result.getInt("menu_id"), result.getString("name"),
+          new ArrayList<InventoryItem>(), result.getFloat("price"),
+          result.getInt("ingredient_count"), result.getString("type"));
+
+      // build ingredient list
+      sqlStatement =
+          "SELECT * FROM ingredient_list WHERE menu_id=" + item.getID();
+      result = stmt.executeQuery(sqlStatement);
+
+      ArrayList<InventoryItem> ingredients = item.getIngredients();
+      while (result.next()) {
+        ingredients.add(new InventoryItem(result.getInt("inventory_id"), "", 0,
+                                          result.getFloat("quantity")));
+      }
+
+      for (InventoryItem ingredient : ingredients) {
+        sqlStatement = "SELECT name, price FROM inventory WHERE inventory_id=" +
+                       ingredient.getID();
+        result = stmt.executeQuery(sqlStatement);
+
+        result.first();
+        ingredient.setName(result.getString("name"));
+        ingredient.setPrice(result.getFloat("price"));
+      }
+
+    } catch (Exception e) {
+      e.printStackTrace();
+      System.err.println(e.getClass().getName() + ": " + e.getMessage());
+      System.exit(0);
+    }
+    return item;
+  }
 
   // returns number of different items in the inventory
   public int getNumInventoryItems() {
@@ -125,6 +172,7 @@ public class jdbcpostgreSQL {
       ResultSet result = stmt.executeQuery(sqlStatement);
 
       // OUTPUT
+      result.first();
       num_items = result.getInt("count");
     } catch (Exception e) {
       e.printStackTrace();
@@ -135,7 +183,34 @@ public class jdbcpostgreSQL {
   }
 
   // TODO
-  public void writeTransactionData(Transaction trans) {}
+  public void writeTransactionData(Transaction trans, int emp_id) {
+    try {
+      // create a statement object
+      Statement stmt = conn.createStatement();
+
+      // Running a query
+      String sqlStatement =
+          "INSERT INTO transaction (transaction_id, employee_id, purchaser_name, price_of_transaction, time_of_purchase) VALUES (" +
+          trans.getID() + ", " + emp_id + ", \'" + trans.getPurchaserName() +
+          "\', " + trans.getPrice() + ", DEFAULT)";
+
+      // send statement to DBMS
+      stmt.executeQuery(sqlStatement);
+
+      for (Integer menu_id : trans.getMenuItemIDs()) {
+        sqlStatement =
+            "INSERT INTO transaction_item (menu_id, transaction_id) VALUES (" +
+            menu_id + ", " + trans.getID() + ")";
+        stmt.executeQuery(sqlStatement);
+
+        // build single insert then execute instead?
+      }
+    } catch (Exception e) {
+      e.printStackTrace();
+      System.err.println(e.getClass().getName() + ": " + e.getMessage());
+      System.exit(0);
+    }
+  }
 
   // returns id of most recent transaction
   public int getLastTransactionID() {
@@ -151,6 +226,7 @@ public class jdbcpostgreSQL {
       ResultSet result = stmt.executeQuery(sqlStatement);
 
       // OUTPUT
+      result.first();
       trans_id = result.getInt("max");
     } catch (Exception e) {
       e.printStackTrace();
