@@ -2,10 +2,12 @@ package com.team43.app.backend.server;
 
 import com.team43.app.backend.server.jdbcpostgreSQL;
 import com.team43.app.backend.shared.InventoryTracker;
+import com.team43.app.backend.server.Transaction;
 import java.util.ArrayList;
 
 public class ServerBackend {
   private int employee_id;
+  private int currItemCount;
   private Transaction curr_trans;
   private jdbcpostgreSQL db;
 
@@ -13,13 +15,22 @@ public class ServerBackend {
 
   public ServerBackend(int emp_id) {
     employee_id = emp_id;
-    curr_trans = null;
 
     db = new jdbcpostgreSQL();
+
+    currItemCount = 0;
+
+    startTransaction();
 
     if (!InventoryTracker.is_initialized) {
       InventoryTracker.initializeTracker(db.getNumInventoryItems());
     }
+  }
+
+  // starts new transaction
+  public void startTransaction() {
+    curr_trans = new Transaction(db.getLastTransactionID() + currItemCount);
+    currItemCount = 0;
   }
 
   // returns all categories in database
@@ -68,17 +79,22 @@ public class ServerBackend {
 
   // adds new item to transaction, returning its index
   public int addItem(String name) {
+    currItemCount += 1;
     return curr_trans.addItem(db.getMenuItem(name));
   }
 
   // removes item at given index, updating current item index if necessary
-  public void removeItem(int index) { curr_trans.removeItem(index); }
+  public void removeItem(int index) { 
+    currItemCount -= 1;
+    curr_trans.removeItem(index); 
+  }
 
   // completes current transaction and updates database
   public void completeTransaction(String purchaser_name) {
     curr_trans.completeTransaction();
     curr_trans.setPurchaserName(purchaser_name);
     db.writeTransactionData(curr_trans, employee_id);
+    startTransaction();
   }
 
   // adds or removes given ingredient to current item

@@ -124,11 +124,11 @@ public class jdbcpostgreSQL {
       ResultSet result = stmt.executeQuery(sqlStatement);
 
       // set up initial menu item
-      result.first();
+      result.next();
       item = new MenuItem(
           result.getInt("menu_id"), result.getString("name"),
           new ArrayList<InventoryItem>(), result.getFloat("price"),
-          result.getInt("ingredient_count"), result.getString("type"));
+          result.getInt("ingredient_amount"), result.getString("type"));
 
       // build ingredient list
       sqlStatement =
@@ -146,7 +146,7 @@ public class jdbcpostgreSQL {
                        ingredient.getID();
         result = stmt.executeQuery(sqlStatement);
 
-        result.first();
+        result.next();
         ingredient.setName(result.getString("name"));
         ingredient.setPrice(result.getFloat("price"));
       }
@@ -226,13 +226,13 @@ public class jdbcpostgreSQL {
           "\', " + trans.getPrice() + ", DEFAULT)";
 
       // send statement to DBMS
-      stmt.executeQuery(sqlStatement);
+      stmt.executeUpdate(sqlStatement);
 
       for (Integer menu_id : trans.getMenuItemIDs()) {
         sqlStatement =
             "INSERT INTO transaction_item (menu_id, transaction_id) VALUES (" +
             menu_id + ", " + trans.getID() + ")";
-        stmt.executeQuery(sqlStatement);
+        stmt.executeUpdate(sqlStatement);
 
         // build single insert then execute instead?
       }
@@ -257,8 +257,8 @@ public class jdbcpostgreSQL {
       ResultSet result = stmt.executeQuery(sqlStatement);
 
       // OUTPUT
-      result.first();
-      trans_id = result.getInt("max");
+      result.next();
+      trans_id = result.getInt("max") + 1;
     } catch (Exception e) {
       e.printStackTrace();
       System.err.println(e.getClass().getName() + ": " + e.getMessage());
@@ -308,7 +308,7 @@ public class jdbcpostgreSQL {
         String sqlStatement = "UPDATE inventory SET quantity=" +
                               (inventory.get(id) - usage.get(id)) +
                               " WHERE inventory_id=" + id;
-        stmt.executeQuery(sqlStatement);
+        stmt.executeUpdate(sqlStatement);
       }
     } catch (Exception e) {
       e.printStackTrace();

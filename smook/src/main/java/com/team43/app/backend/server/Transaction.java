@@ -10,6 +10,14 @@ public class Transaction {
   private int curr_item;
   private float price;
 
+  public Transaction() {
+    transaction_id = -1;
+    purchaser_name = "mystery man";
+    items = new ArrayList<TransactionItem>();
+    curr_item = -1;
+    price = 0;
+  }
+
   public Transaction(int id) {
     transaction_id = id;
     purchaser_name = "mystery man";

@@ -47,6 +47,7 @@ public class ServerPanel extends JPanel {
         items_ordered = new ArrayList<JLabel>();
         transaction = new Transaction();
 		add(transaction);
+        backend = new ServerBackend();
 
         stage = "";
 
@@ -73,7 +74,6 @@ public class ServerPanel extends JPanel {
         for (int i = 0; i<smoothiesB.size(); i++){
             smoothiesB.get(i).setVisible(false);
         }
-        backend = new ServerBackend();
         ArrayList<String> str = backend.getCategories();
         stage = "type";
         for (int i = 0; i<str.size(); i++){
@@ -158,8 +158,9 @@ public class ServerPanel extends JPanel {
         else{
         cOrder.get(cOrder.size()-1).setSize(size);
         backend.addItem(cOrder.get(cOrder.size()-1).getName());
-        cOrder.get(cOrder.size()-1).setPrice(backend.getItemPrice(cOrder.size()-1));
+        backend.setSize(size);
         backend.completeItem();
+        cOrder.get(cOrder.size()-1).setPrice(backend.getItemPrice(cOrder.size()-1));
         }
         displayOrder();
         if (items_ordered.size()>0)
