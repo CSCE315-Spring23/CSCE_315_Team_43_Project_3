@@ -111,5 +111,11 @@ public class ServerBackend {
   }
 
   // closes connection to database after all transactions are completed
-  public void finishTransactions() { db.close_connection(); }
+  // updates the inventory based on used items
+  public void finishTransactions() {
+    // TODO: update inventory
+    db.updateInventory(InventoryTracker.inventoryUsage);
+    InventoryTracker.resetTracker();
+    db.close_connection();
+  }
 }

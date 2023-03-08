@@ -3,6 +3,7 @@ package com.team43.app.backend.server;
 import com.team43.app.backend.server.*; // important
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class jdbcpostgreSQL {
@@ -264,6 +265,56 @@ public class jdbcpostgreSQL {
       System.exit(0);
     }
     return trans_id;
+  }
+
+  // returns current inventory quantities
+  private HashMap<Integer, Float> getCurrentInventory() {
+    HashMap<Integer, Float> inventory = new HashMap<Integer, Float>();
+    try {
+      // create a statement object
+      Statement stmt = conn.createStatement();
+
+      // Running a query
+      String sqlStatement = "SELECT inventory_id, quantity FROM inventory";
+
+      // send statement to DBMS
+      ResultSet result = stmt.executeQuery(sqlStatement);
+
+      // OUTPUT
+      while (result.next()) {
+        inventory.put(result.getInt("inventory_id"),
+                      result.getFloat("quantity"));
+      }
+    } catch (Exception e) {
+      e.printStackTrace();
+      System.err.println(e.getClass().getName() + ": " + e.getMessage());
+      System.exit(0);
+    }
+    return inventory;
+  }
+
+  // updates inventory based on given usage stats
+  public void updateInventory(HashMap<Integer, Float> usage) {
+    HashMap<Integer, Float> inventory = getCurrentInventory();
+    try {
+      // create a statement object
+      Statement stmt = conn.createStatement();
+
+      for (Integer id : usage.keySet()) {
+        if (usage.get(id) < 0.0001) {
+          continue;
+        }
+
+        String sqlStatement = "UPDATE inventory SET quantity=" +
+                              (inventory.get(id) - usage.get(id)) +
+                              " WHERE inventory_id=" + id;
+        stmt.executeQuery(sqlStatement);
+      }
+    } catch (Exception e) {
+      e.printStackTrace();
+      System.err.println(e.getClass().getName() + ": " + e.getMessage());
+      System.exit(0);
+    }
   }
 
   public boolean close_connection() {
