@@ -6,10 +6,10 @@ public class Order {
     private String size;
     private double price;
     private ArrayList<String> subsitutions;
-    public Order(String s, double p){
+    public Order(String s){
         smoothie = s;
         size = "unkown";
-        price = p;
+        price = 0;
         subsitutions = new ArrayList<String>();
     }
     public String getName() {
@@ -30,6 +30,9 @@ public class Order {
     public double getPrice() {
         return price;
     }
+    public void setPrice(double d) {
+        price = d;
+    }
     public String toString() {
         String sub = subsitutions.size()>0 ? disSub() : "";
         String s = "";
@@ -47,6 +50,11 @@ public class Order {
                 s+= "?";
                 break;
         }
-        return smoothie + "|" + s + "|" + price + "|" + sub;
+        String priceStr = "";
+        if (price <= 0)
+        priceStr = "?";
+        else
+        priceStr = "" + price;
+        return smoothie + "|" + s + "|" + priceStr + "|" + sub;
     }
 }
