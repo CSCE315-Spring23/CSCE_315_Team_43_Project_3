@@ -13,6 +13,7 @@ public class ManagerPanel extends JPanel {
     JButton endOfDayButton = new JButton("End of Day");
     JButton orderInventoryButton = new JButton("Order Inventory");
     JButton viewEditInventoryButton = new JButton("View / Edit Inventory");
+    JButton viewEditMenuButton = new JButton("View / Edit Menu");
     JButton logout;
     ViewEditInventoryPanel viewEditInventoryPanel;
     Controller controller;
@@ -24,6 +25,7 @@ public class ManagerPanel extends JPanel {
         add(endOfDayButton);
         add(orderInventoryButton);
         add(viewEditInventoryButton);
+        add(viewEditMenuButton);
         // logout = new JButton("Logout");
         // add(logout);
         // logout.addActionListener(new ActionListener() {
@@ -49,6 +51,12 @@ public class ManagerPanel extends JPanel {
                 inventorySelectionClicked("viewEditInventory");
             }
         });
+
+        viewEditMenuButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                inventorySelectionClicked("viewEditMenu");
+            }
+        });
     }
 
     public void inventorySelectionClicked(String name) {
@@ -63,6 +71,10 @@ public class ManagerPanel extends JPanel {
             // Show "View/Edit Inventory" frame
             controller.add("ViewEditInventoryPanel", new ViewEditInventoryPanel(controller));
             controller.navigatePage("ViewEditInventoryPanel");
+        } else if (name == "viewEditMenu") {
+            // Show "View/Edit Inventory" frame
+            controller.add("ViewEditMenuPanel", new ViewEditMenuPanel(controller));
+            controller.navigatePage("ViewEditMenuPanel");
         }
     }
 }

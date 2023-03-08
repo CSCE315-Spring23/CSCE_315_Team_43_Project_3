@@ -102,6 +102,10 @@ public class Controller {
         return model.db.viewInventory();
     }
 
+    public List<List<String>> viewMenuItems() {
+        return model.db.viewMenuItems();
+    }
+
     /**
     * Update an inventory item based on variable parameters
     * @param    inventoryId     the id of the item we are modifying
@@ -112,6 +116,10 @@ public class Controller {
     */
     public void editInventoryItem(int inventoryId, String name, double price, double quantity, String measurementType) {
         model.db.editInventoryItem(inventoryId, name, price, quantity, measurementType);
+    }
+
+    public void editMenuItem(int menuId, String name, String type, double price, int ingredient_amount) {
+        model.db.updateMenuItem(menuId, name, type, price, ingredient_amount);
     }
 
     public void newServer() {
