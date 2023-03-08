@@ -50,6 +50,17 @@ public class Controller {
         currentPage.setVisible(true);
     }
 
+    public void switchTo(String name){
+        // if (currentPage != null) {
+            // Hide this page and push it
+            currentPage.setVisible(false);
+            pageStack.push(currentPage);
+        // }
+        currentPage = pages.get(name);
+        mainFrame.add(currentPage);
+        currentPage.setVisible(true);
+        mainFrame.validate();
+    }
     /**
     * Navigate backwards in the page stack
     */
@@ -57,6 +68,7 @@ public class Controller {
         currentPage.setVisible(false);
         JPanel panel = pageStack.pop();
         panel.setVisible(true);
+        mainFrame.validate();
     }
 
     /**

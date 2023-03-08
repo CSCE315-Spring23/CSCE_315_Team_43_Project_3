@@ -1,11 +1,15 @@
 package com.team43.app.frontend.manager;
 
+import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.TableModel;
+
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import com.team43.app.frontend.Controller;
 
@@ -16,9 +20,9 @@ public class ViewEditInventoryPanel extends JPanel implements TableModelListener
     Controller controller;
     JTable table;
     JScrollPane scrollPane;
-
-    public ViewEditInventoryPanel(Controller controller) {
-        this.controller = controller;
+    //JButton logout;
+    public ViewEditInventoryPanel(Controller control) {
+        this.controller = control;
         String[] colNames = {
             "inventory_id",
             "name",
@@ -40,6 +44,13 @@ public class ViewEditInventoryPanel extends JPanel implements TableModelListener
 
         setLayout(new BorderLayout());
         add(scrollPane);
+        // logout = new JButton("Logout");
+        // add(logout);
+        // logout.addActionListener(new ActionListener() {
+        //     public void actionPerformed(ActionEvent e) {
+        //         controller.navigatePageBack();
+        //     }
+        // });
     }
 
     public void tableChanged(TableModelEvent e) {

@@ -13,17 +13,24 @@ public class ManagerPanel extends JPanel {
     JButton endOfDayButton = new JButton("End of Day");
     JButton orderInventoryButton = new JButton("Order Inventory");
     JButton viewEditInventoryButton = new JButton("View / Edit Inventory");
-
+    JButton logout;
     ViewEditInventoryPanel viewEditInventoryPanel;
     Controller controller;
 
-    public ManagerPanel(Controller controller) {
-        this.controller = controller;
+    public ManagerPanel(Controller control) {
+        this.controller = control;
         setLayout(new FlowLayout());
 
         add(endOfDayButton);
         add(orderInventoryButton);
         add(viewEditInventoryButton);
+        // logout = new JButton("Logout");
+        // add(logout);
+        // logout.addActionListener(new ActionListener() {
+        //     public void actionPerformed(ActionEvent e) {
+        //         controller.navigatePageBack();
+        //     }
+        // });
 
         endOfDayButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {

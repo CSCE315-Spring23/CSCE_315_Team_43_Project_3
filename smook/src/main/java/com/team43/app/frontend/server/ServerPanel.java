@@ -19,6 +19,7 @@ import com.team43.app.frontend.MainFrame;
 
 public class ServerPanel extends JPanel {
     JButton b1;
+    JButton logout;
     // JPanel contentPane;
     JPanel item_type;
     Transaction transaction;
@@ -38,8 +39,8 @@ public class ServerPanel extends JPanel {
     JFrame parent;
     Controller controller;
 
-    public ServerPanel(JFrame p, Controller controller) {
-        this.controller = controller;
+    public ServerPanel(JFrame p, Controller control) {
+        this.controller = control;
 
         //initialization
         parent = p;
@@ -58,7 +59,15 @@ public class ServerPanel extends JPanel {
         Items.setLayout(new BoxLayout(Items, BoxLayout.PAGE_AXIS));
         Items.setBorder(new LineBorder(getBackground(), 3));
 		add(Items);
-
+        logout = new JButton("End Day");
+        add(logout);
+        logout.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                // controller.navigatePageBack();
+                backend.finishTransactions();
+                System.exit(0);
+            }
+        });
         header = new JLabel("<HTML><U>Smoothie name|Size|Price|AddOns</U></HTML>");
         transaction.addOrderToPanel(header);
         addItemTitle();

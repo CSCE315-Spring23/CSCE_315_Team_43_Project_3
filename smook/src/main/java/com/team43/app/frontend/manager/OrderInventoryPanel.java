@@ -20,11 +20,11 @@ public class OrderInventoryPanel extends JPanel {
     ArrayList<OrderList> orderCart = new ArrayList<OrderList>();
     JButton addOrderButton = new JButton("Add order");
     JButton orderButton = new JButton("Order");
-
+    JButton logout;
     Controller controller;
 
-    public OrderInventoryPanel(Controller controller) {
-        this.controller = controller;
+    public OrderInventoryPanel(Controller control) {
+        this.controller = control;
         setLayout(new GridLayout(3, 2));
 
         add(new JLabel("inventory_id: ", JLabel.TRAILING));
@@ -33,6 +33,13 @@ public class OrderInventoryPanel extends JPanel {
         add(quantityField);
         add(addOrderButton);
         add(orderButton);
+        // logout = new JButton("Logout");
+        // add(logout);
+        // logout.addActionListener(new ActionListener() {
+        //     public void actionPerformed(ActionEvent e) {
+        //         controller.navigatePageBack();
+        //     }
+        // });
 
         addOrderButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {

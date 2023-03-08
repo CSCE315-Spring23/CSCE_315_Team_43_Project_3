@@ -1,6 +1,7 @@
 package com.team43.app.frontend;
 
 
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
@@ -13,10 +14,11 @@ import com.team43.app.frontend.server.ServerPanel;
 public class MainFrame extends JFrame {
     Model model;
     Controller controller;
-
+    //JButton logout;
     public MainFrame(int width, int height) {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(new BorderLayout());
+        //logout.setVisible(false);
         controller = new Controller(this);
         model = new Model();
         controller.add("LoginPanel", new LoginPanel(controller));
