@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 import com.team43.app.backend.server.*;
+import com.team43.app.frontend.Controller;
 import com.team43.app.frontend.MainFrame;
 
 public class ServerPanel extends JPanel {
@@ -34,9 +35,11 @@ public class ServerPanel extends JPanel {
     ArrayList<Order> cOrder;
     JLabel header;
     JButton submit;
-    MainFrame parent;
+    JFrame parent;
+    Controller controller;
 
-    public ServerPanel(MainFrame p) {
+    public ServerPanel(JFrame p, Controller controller) {
+        this.controller = controller;
 
         //initialization
         parent = p;
@@ -201,6 +204,6 @@ public class ServerPanel extends JPanel {
                         "Customer name?", null);
         backend.completeTransaction(name);
                 
-        parent.newServer();
+        controller.newServer();
     }
 }

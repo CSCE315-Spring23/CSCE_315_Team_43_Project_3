@@ -8,6 +8,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import com.team43.app.backend.manager.OrderList;
+import com.team43.app.frontend.server.ServerPanel;
 
 public class Controller {
     Stack<JPanel> pageStack;
@@ -70,8 +71,7 @@ public class Controller {
             navigatePage("ManagerPanel");
         } else if (role.equals("employee")) {
             // Show employee frame
-            // serverFrame = new ServerFrame();
-            // showPanel(serverFrame);
+            navigatePage("ServerPanel");
         }
     }
     /**
@@ -100,5 +100,14 @@ public class Controller {
     */
     public void editInventoryItem(int inventoryId, String name, double price, double quantity, String measurementType) {
         model.db.editInventoryItem(inventoryId, name, price, quantity, measurementType);
+    }
+
+    public void newServer() {
+        JPanel serverPanel = pages.get("ServerPanel");
+        mainFrame.remove(serverPanel);
+        serverPanel = new ServerPanel(mainFrame, this);
+        mainFrame.add(serverPanel);
+        //mainFrame.showPanel(serverPanel);
+        mainFrame.revalidate();
     }
 }

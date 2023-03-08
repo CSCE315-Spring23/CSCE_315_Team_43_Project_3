@@ -1,6 +1,9 @@
 package com.team43.app.frontend;
 
+
 import javax.swing.JFrame;
+import javax.swing.JPanel;
+
 import java.awt.BorderLayout;
 
 import com.team43.app.LoginPanel;
@@ -18,7 +21,7 @@ public class MainFrame extends JFrame {
         model = new Model();
         controller.add("LoginPanel", new LoginPanel(controller));
         controller.add("ManagerPanel", new ManagerPanel(controller));
-        // controller.add("ServerFrame", new ServerFrame(controller));
+        controller.add("ServerPanel", new ServerPanel(this, controller));
         setSize(width, height);
         setVisible(true);
         controller.navigatePage("LoginPanel");
@@ -26,11 +29,11 @@ public class MainFrame extends JFrame {
 
     // Hides the login panel and shows panel provided
     void showPanel(JPanel panel) {
-        loginPanel.setVisible(false);
-        revalidate();
-        repaint();
+        // loginPanel.setVisible(false);
         add(panel);
         panel.setVisible(true);
+        revalidate();
+        repaint();
     }
 
     // Shows the panel according to the role
@@ -39,19 +42,14 @@ public class MainFrame extends JFrame {
             // Login failure; show red text error
         } else if (role.equals("manager")) {
             // Show manager frame
-            managerPanel = new ManagerPanel();
-            showPanel(managerPanel);
+            controller.navigatePage("ManagerPanel");
         } else if (role.equals("employee")) {
             // Show employee frame
-            serverPanel = new ServerPanel(this);
-            add(serverPanel);
-            showPanel(serverPanel);
+            controller.navigatePage("ServerPanel");
         }
     }
+
     public void newServer() {
-        remove(serverPanel);
-        serverPanel = new ServerPanel(this);
-        add(serverPanel);
-        showPanel(serverPanel);
+        controller.newServer();
     }
 }
