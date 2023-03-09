@@ -133,16 +133,23 @@ public class jdbcpostgreSQL {
     }
     return elements;
   }
-  public List<String> addMenuItem(int menu_id, String name, String type, double price, int ingredient_amount){
+  public List<String> addMenuItem(String name, String type, double price, int ingredient_amount, ArrayList<Integer> ingredient_ids){
     List<String> elements = new ArrayList<String>();
     try {
+      List<List<String>> inventory = viewMenuItems();
+      int next_index =  Integer.parseInt(inventory.get(inventory.size() - 1).get(0)) + 1;
+
       // create a statement object
       Statement stmt = conn.createStatement();
 
       // Running a query
-      String sqlStatement = "INSERT INTO menu_item (menu_id, name, type, price, ingredient_amount) VALUES (" + menu_id + ", \'" + name + "\', \'" + type + "\', " + price + "," + ingredient_amount + ");";
-
+      String sqlStatement = "INSERT INTO menu_item (menu_id, name, type, price, ingredient_amount) VALUES (" + next_index + ", \'" + name + "\', \'" + type + "\', " + price + "," + ingredient_amount + ");";
       int result = stmt.executeUpdate(sqlStatement);
+
+      for (int id: ingredient_ids){
+        String insertStmt = "INSERT INTO ingredient_list (inventory_id, menu_id, quantity) VALUES (" + id + ", " + next_index + ", 1);";
+        stmt.executeUpdate(insertStmt);
+      }
     } catch (Exception e) {
       e.printStackTrace();
       System.err.println(e.getClass().getName() + ": " + e.getMessage());
