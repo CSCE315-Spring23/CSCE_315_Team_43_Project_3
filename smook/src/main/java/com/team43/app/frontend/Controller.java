@@ -2,6 +2,7 @@ package com.team43.app.frontend;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.ArrayList;
 import java.util.Stack;
 
 import javax.swing.JFrame;
@@ -102,6 +103,10 @@ public class Controller {
         return model.db.viewInventory();
     }
 
+    public List<List<String>> viewMenuItems() {
+        return model.db.viewMenuItems();
+    }
+
     /**
     * Update an inventory item based on variable parameters
     * @param    inventoryId     the id of the item we are modifying
@@ -112,6 +117,14 @@ public class Controller {
     */
     public void editInventoryItem(int inventoryId, String name, double price, double quantity, String measurementType) {
         model.db.editInventoryItem(inventoryId, name, price, quantity, measurementType);
+    }
+
+    public void editMenuItem(int menuId, String name, String type, double price, int ingredient_amount) {
+        model.db.updateMenuItem(menuId, name, type, price, ingredient_amount);
+    }
+
+    public void addMenuItem(String name, String type, double price, int ingredient_amount, ArrayList<Integer> inventoryIds) {
+        model.db.addMenuItem(name, type, price, ingredient_amount, inventoryIds);
     }
 
     public void newServer() {
