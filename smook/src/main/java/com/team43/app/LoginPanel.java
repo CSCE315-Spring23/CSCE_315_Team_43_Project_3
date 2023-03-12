@@ -38,7 +38,6 @@ public class LoginPanel extends JPanel {
     }
 
     void loginClicked() {
-        // String role = Backend.login(usernameField.getText(), passwordField.getText());
         String role = usernameField.getText();
         controller.showPageFromRole(role);
     }
