@@ -150,6 +150,9 @@ public class Substitution extends JPanel {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+			if ((Integer)spins.get(i).getValue()<0)
+			backend.adjustItem(items.get(i), 0);
+			else
 			backend.adjustItem(items.get(i), (Integer)spins.get(i).getValue());
 		}
 		//backend.tester();
