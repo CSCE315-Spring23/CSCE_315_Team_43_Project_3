@@ -131,7 +131,7 @@ public class ManagerPanel extends JPanel {
         } else if (name == "generateSalesReport") {
             // Show "Generate Sales Report" frame
             controller.add("GenerateSalesReportPanel", new GenerateSalesReportPanel(controller));
-            controller.navigatePage("ViewEditMenuPanel");
+            controller.navigatePage("GenerateSalesReportPanel");
         } else if (name == "generateXReport") {
             // Show "View/Edit Inventory" frame
             controller.add("GenerateXReportPanel", new GenerateXReportPanel(controller));
