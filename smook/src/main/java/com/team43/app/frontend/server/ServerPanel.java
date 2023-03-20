@@ -23,7 +23,8 @@ public class ServerPanel extends JPanel {
     // JPanel contentPane;
     JPanel item_type;
     Transaction transaction;
-    JPanel Items;
+    //JPanel Items;
+    Items items;
     JLabel Order;
     JLabel ItemsL;
     JPanel lister;
@@ -38,6 +39,7 @@ public class ServerPanel extends JPanel {
     JButton submit;
     JFrame parent;
     Controller controller;
+    Substitution subs;
 
     public ServerPanel(JFrame p, Controller control) {
         this.controller = control;
@@ -51,13 +53,13 @@ public class ServerPanel extends JPanel {
         items_ordered = new ArrayList<JLabel>();
         transaction = new Transaction(backend);
 		add(transaction);
-
+        subs = null;
         stage = "";
 
-        Items = new JPanel();
-        Items.setLayout(new BoxLayout(Items, BoxLayout.PAGE_AXIS));
-        Items.setBorder(new LineBorder(getBackground(), 3));
-		add(Items);
+        items = new Items(backend,this);
+        //Items.setLayout(new BoxLayout(Items, BoxLayout.PAGE_AXIS));
+        //Items.setBorder(new LineBorder(getBackground(), 3));
+		add(items);
         header = new JLabel("<HTML><U>Smoothie name|Size|Price|AddOns</U></HTML>");
         transaction.addOrderToPanel(header);
         addItemTitle();
@@ -71,6 +73,9 @@ public class ServerPanel extends JPanel {
     }
     //Add a function to add an item for controller
     public void setUpTypes() {
+        if (subs!=null)
+        remove(subs);
+        add(items);
         stage = "type";
         addItemTitle();
         for (int i = 0; i<smoothiesB.size(); i++){
@@ -86,10 +91,10 @@ public class ServerPanel extends JPanel {
                     setUpSmoothies(name);
                 }
             });
-            Items.add(toAdd);
+            items.add(toAdd);
             item_t.add(toAdd);
         }
-        Items.validate();
+        items.validate();
     }
 
     public void addItemTitle() {
@@ -104,7 +109,7 @@ public class ServerPanel extends JPanel {
         ItemsL.setFont(new Font("Tahoma", Font.PLAIN, 30));
         // ItemsL.setHorizontalAlignment(SwingConstants.CENTER);
 		// ItemsL.setSize(width/2,20);
-		Items.add(ItemsL);
+		items.add(ItemsL);
     }
 
     public void setUpSmoothies(String str){
@@ -123,7 +128,7 @@ public class ServerPanel extends JPanel {
                     setSize();
                 }
             });
-            Items.add(toAdd);
+            items.add(toAdd);
             smoothiesB.add(toAdd);
         }
         validate();
@@ -147,7 +152,7 @@ public class ServerPanel extends JPanel {
                     getSize(name);
                 }
             });
-            Items.add(toAdd);
+            items.add(toAdd);
             smoothiesB.add(toAdd);
         }
         validate();
@@ -161,13 +166,14 @@ public class ServerPanel extends JPanel {
         cOrder.get(cOrder.size()-1).setSize(size);
         backend.addItem(cOrder.get(cOrder.size()-1).getName());
         backend.setSize(size);
-        backend.completeItem();
+        //backend.completeItem();
         cOrder.get(cOrder.size()-1).setPrice(backend.getItemPrice(cOrder.size()-1));
         }
         displayOrder();
         if (items_ordered.size()>0)
         items_ordered.get(items_ordered.size()-1).setForeground(Color.black);
-        setUpTypes();
+        //setUpTypes();
+        setUpSubs();
     }
     public void displayOrder() {
         checkPrice();
@@ -204,5 +210,12 @@ public class ServerPanel extends JPanel {
         backend.completeTransaction(name);
                 
         controller.newServer();
+    }
+    public void setUpSubs() {
+        remove(items);
+        //items.setVisible(false);
+        subs = new Substitution(cOrder.get(cOrder.size()-1).getName(), backend, this);
+        add(subs);
+        validate();
     }
 }

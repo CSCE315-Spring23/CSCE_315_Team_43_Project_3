@@ -35,14 +35,14 @@ public class Substitution extends JPanel {
 	JLabel subs_label;
 	JButton submit;
 	ServerBackend backend;
-    ServerPanel main;
+    ServerPanel mainP;
 	private JSpinner spinner;
 	private ArrayList<String> items;
 	private ArrayList<JSpinner> spins;
 	public Substitution(String item, ServerBackend b, ServerPanel m) {
 		//Substitution panel title
 		backend = b;
-        main = m;
+        mainP = m;
 		items = new ArrayList<String>();
 		spins = new ArrayList<JSpinner>();
 		setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
@@ -153,6 +153,9 @@ public class Substitution extends JPanel {
 			backend.adjustItem(items.get(i), (Integer)spins.get(i).getValue());
 		}
 		//backend.tester();
+		backend.completeItem();
+		setVisible(false);
+		mainP.setUpTypes();
 		//Return to Server Panel control for next drink
 	}
 }
