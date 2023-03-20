@@ -73,6 +73,8 @@ public class ServerPanel extends JPanel {
     }
     //Add a function to add an item for controller
     public void setUpTypes() {
+        if (items_ordered.size()>0)
+        items_ordered.get(items_ordered.size()-1).setForeground(Color.black);
         if (subs!=null)
         remove(subs);
         add(items);
@@ -82,7 +84,6 @@ public class ServerPanel extends JPanel {
             smoothiesB.get(i).setVisible(false);
         }
         ArrayList<String> str = backend.getCategories();
-        stage = "type";
         for (int i = 0; i<str.size(); i++){
             JButton toAdd = new JButton(str.get(i));
             final String name = str.get(i);
@@ -170,8 +171,6 @@ public class ServerPanel extends JPanel {
         cOrder.get(cOrder.size()-1).setPrice(backend.getItemPrice(cOrder.size()-1));
         }
         displayOrder();
-        if (items_ordered.size()>0)
-        items_ordered.get(items_ordered.size()-1).setForeground(Color.black);
         //setUpTypes();
         setUpSubs();
     }
