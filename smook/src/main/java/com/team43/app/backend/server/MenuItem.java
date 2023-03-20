@@ -79,7 +79,8 @@ public class MenuItem {
     for (InventoryItem item : ingredients) {
       if (item.getID() == new_item.getID()) {
         int curr_quantity = (int)item.getQuantity();
-        item.setQuantity(curr_quantity + num_add);
+        //item.setQuantity(curr_quantity + num_add);
+        item.setQuantity(num_add);
         return true;
       }
     }

@@ -41,7 +41,7 @@ public class ServerPanel extends JPanel {
 
     public ServerPanel(JFrame p, Controller control) {
         this.controller = control;
-
+        backend = new ServerBackend();
         //initialization
         parent = p;
         setLayout(new GridLayout(1,0));
@@ -49,9 +49,8 @@ public class ServerPanel extends JPanel {
         smoothiesB = new ArrayList<JButton>();
         cOrder = new ArrayList<Order>();
         items_ordered = new ArrayList<JLabel>();
-        transaction = new Transaction();
+        transaction = new Transaction(backend);
 		add(transaction);
-        backend = new ServerBackend();
 
         stage = "";
 
@@ -59,15 +58,6 @@ public class ServerPanel extends JPanel {
         Items.setLayout(new BoxLayout(Items, BoxLayout.PAGE_AXIS));
         Items.setBorder(new LineBorder(getBackground(), 3));
 		add(Items);
-        logout = new JButton("End Day");
-        add(logout);
-        logout.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                // controller.navigatePageBack();
-                backend.finishTransactions();
-                System.exit(0);
-            }
-        });
         header = new JLabel("<HTML><U>Smoothie name|Size|Price|AddOns</U></HTML>");
         transaction.addOrderToPanel(header);
         addItemTitle();
@@ -143,7 +133,7 @@ public class ServerPanel extends JPanel {
         displayOrder();
     }
     public void setSize() {
-        ArrayList<String> sizes = new ArrayList<String>(Arrays.asList("Small","Medium","Large","Cancel"));
+        ArrayList<String> sizes = new ArrayList<String>(Arrays.asList("Small","Medium","Large"));
         for (int i = 0; i<smoothiesB.size(); i++){
             smoothiesB.get(i).setVisible(false);
         }
