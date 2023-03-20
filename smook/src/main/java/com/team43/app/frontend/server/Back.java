@@ -1,7 +1,7 @@
 package com.team43.app.frontend.server;
 
 import java.util.*;
-//This is a local testing version of all server backend functions
+// This is a local testing version of all server backend functions
 public class Back {
     public Back() {
 
