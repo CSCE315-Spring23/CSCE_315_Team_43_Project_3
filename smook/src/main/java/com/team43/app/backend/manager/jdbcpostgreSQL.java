@@ -1,12 +1,15 @@
-// package com.team43.app.backend.manager;
+package com.team43.app.backend.manager;
 
 import java.sql.*;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Date;
 
 
 public class jdbcpostgreSQL {
@@ -16,6 +19,10 @@ public class jdbcpostgreSQL {
     String dbName = "csce315331_" + TEAM_NUMBER;
     String dbConnectionUri = "jdbc:postgresql://csce-315-db.engr.tamu.edu/" + dbName;
 
+    /**
+     * Constructor that creates a new database connection
+     * 
+     */
     public jdbcpostgreSQL() {
         // Connecting to the database
         try {
@@ -57,6 +64,11 @@ public class jdbcpostgreSQL {
         return table;
     }
 
+    /**
+     * Views an inventory item
+     * 
+     * @return An array of the Inventory object
+     */
     public List<String> get_inventory_item(int inventory_id) {
         List<String> elements = new ArrayList<String>();
         try {
@@ -108,6 +120,11 @@ public class jdbcpostgreSQL {
         return table;
     }
 
+    /**
+     * Edits the inventory
+     * 
+     * @return An array of the edited Inventory object
+     */
     public List<String> editInventoryItem(int inventory_id, String name, double price, double quantity,
             String measurement_type) {
         List<String> elements = new ArrayList<String>();
@@ -125,6 +142,11 @@ public class jdbcpostgreSQL {
         return elements;
     }
 
+    /**
+     * Adds a menu item
+     * 
+     * @return An array of all Inventory objects
+     */
     public List<String> addMenuItem(String name, String type, double price, int ingredient_amount,
             ArrayList<Integer> ingredient_ids) {
         List<String> elements = new ArrayList<String>();
@@ -175,6 +197,11 @@ public class jdbcpostgreSQL {
         return elements;
     }
 
+    /**
+     * Views the Items Orders
+     * 
+     * @return A 2D array of all Order objects
+     */
     public List<List<String>> viewOrderItems() {
         List<List<String>> table = new ArrayList<List<String>>();
         try {
@@ -275,6 +302,11 @@ public class jdbcpostgreSQL {
     return null;
   }
 
+    /**
+     * Views the Sales
+     * 
+     * @return A 2D array of all sales objects
+     */
     public List<List<String>> getSalesReport(String startDate, String endDate){
         try {
             Statement stmt = conn.createStatement();
@@ -349,33 +381,53 @@ public class jdbcpostgreSQL {
         return null;
     }
 
-    // public List<List<String>> viewSalesReport(String startDate, String endDate){
-    //     getSalesReport(startDate, endDate);
+    /**
+     * Views the X Report
+     * 
+     * @return A 2D array of all report objects
+     */
+    public List<List<String>> getXReport(){
+        try {
+            Statement stmt = conn.createStatement();
 
-    //     try {
-    //         Statement stmt = conn.createStatement();
-    //         // Return the full table
-    //         List<List<String>> sales_report_table = new ArrayList<List<String>>();
-    //         String sqlStatement3 = "SELECT * FROM sales_report ORDER BY menu_id ASC";
-    //         ResultSet sales_table = stmt.executeQuery(sqlStatement3);
+            // Today
+            Calendar cal = Calendar.getInstance();
+            cal.add(Calendar.DATE, 1);
+            SimpleDateFormat format1 = new SimpleDateFormat("yyyy-MM-dd");
+            String formatted = format1.format(cal.getTime());
 
-    //         while (sales_table.next()) {
-    //             List<String> elements = new ArrayList<String>();
-    //             elements.add(sales_table.getString("menu_id"));
-    //             elements.add(sales_table.getString("name"));
-    //             elements.add(sales_table.getString("type"));
-    //             elements.add(sales_table.getString("price"));
-    //             elements.add(sales_table.getString("ingredient_amount"));
-    //             elements.add(sales_table.getString("amount_ordered"));
-    //             sales_report_table.add(elements);
-    //         }
-    //     }
-    //     catch (Exception e) {
-    //         e.printStackTrace();
-    //         System.err.println(e.getClass().getName() + ": " + e.getMessage());
-    //         System.exit(0);
-    //     }
-    // }
+            return getSalesReport(formatted, formatted);
+            } catch (Exception e) {
+            e.printStackTrace();
+            System.err.println(e.getClass().getName() + ": " + e.getMessage());
+            System.exit(0);
+        }
+        return null;
+    }
+
+    /**
+     * Views the Z Report
+     * 
+     * @return A 2D array of all report objects
+     */
+    public List<List<String>> getZReport(){
+        try {
+            Statement stmt = conn.createStatement();
+
+            // Today
+            Calendar cal = Calendar.getInstance();
+            cal.add(Calendar.DATE, 1);
+            SimpleDateFormat format1 = new SimpleDateFormat("yyyy-MM-dd");
+            String formatted = format1.format(cal.getTime());
+
+            return getSalesReport(formatted, formatted);
+            } catch (Exception e) {
+            e.printStackTrace();
+            System.err.println(e.getClass().getName() + ": " + e.getMessage());
+            System.exit(0);
+        }
+        return null;
+    }
 
     /**
      * Ends the psql connection

@@ -1,4 +1,4 @@
-// package com.team43.app.backend.manager;
+package com.team43.app.backend.manager;
 
 public class OrderList {
     int inventory_id;
