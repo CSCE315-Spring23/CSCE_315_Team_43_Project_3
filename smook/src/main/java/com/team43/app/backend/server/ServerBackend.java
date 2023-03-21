@@ -1,8 +1,8 @@
 package com.team43.app.backend.server;
 
+import com.team43.app.backend.server.Transaction;
 import com.team43.app.backend.server.jdbcpostgreSQL;
 import com.team43.app.backend.shared.InventoryTracker;
-import com.team43.app.backend.server.Transaction;
 import java.util.ArrayList;
 
 public class ServerBackend {
@@ -84,9 +84,9 @@ public class ServerBackend {
   }
 
   // removes item at given index, updating current item index if necessary
-  public void removeItem(int index) { 
+  public void removeItem(int index) {
     currItemCount -= 1;
-    curr_trans.removeItem(index); 
+    curr_trans.removeItem(index);
   }
 
   // completes current transaction and updates database
@@ -129,9 +129,9 @@ public class ServerBackend {
   // closes connection to database after all transactions are completed
   // updates the inventory based on used items
   public void finishTransactions() {
-    // TODO: update inventory
     db.updateInventory(InventoryTracker.inventoryUsage);
     InventoryTracker.resetTracker();
+    InventoryTracker.is_initialized = false;
     db.close_connection();
   }
 }

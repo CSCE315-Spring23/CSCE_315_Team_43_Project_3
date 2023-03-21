@@ -12,6 +12,7 @@ public class InventoryTracker {
 
   // initializes all usage counts to 0
   public static void initializeTracker(int num_inventory_items) {
+    inventoryUsage.clear();
     for (int id = 1; id <= num_inventory_items; ++id) {
       inventoryUsage.put(id, Float.parseFloat("0.0"));
     }
