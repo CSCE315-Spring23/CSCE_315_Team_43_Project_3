@@ -7,6 +7,9 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JButton;
 import javax.swing.JPanel;
+
+import org.w3c.dom.Text;
+
 import javax.swing.JOptionPane;
 import com.team43.app.frontend.Controller;
 
@@ -16,6 +19,7 @@ public class ManagerPanel extends JPanel {
     JButton viewEditInventoryButton = new JButton("View / Edit Inventory");
     JButton viewEditMenuButton = new JButton("View / Edit Menu");
     JButton addMenuItem = new JButton("Add Menu Item");
+    JButton viewPairs = new JButton("View Common Item Pairs");
     JButton logout;
     ViewEditInventoryPanel viewEditInventoryPanel;
     Controller controller;
@@ -29,6 +33,7 @@ public class ManagerPanel extends JPanel {
         add(viewEditInventoryButton);
         add(viewEditMenuButton);
         add(addMenuItem);
+        add(viewPairs);
         // logout = new JButton("Logout");
         // add(logout);
         // logout.addActionListener(new ActionListener() {
@@ -65,6 +70,11 @@ public class ManagerPanel extends JPanel {
                 inventorySelectionClicked("addMenuItem");
             }
         });
+        viewPairs.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                inventorySelectionClicked("viewPairs");
+            }
+        });
     }
 
     public void inventorySelectionClicked(String name) {
@@ -98,6 +108,10 @@ public class ManagerPanel extends JPanel {
             }
             controller.addMenuItem(nameS, type, price, ingredient_amount, ingredient_list);
             
+        } else if (name == "viewPairs") {
+            // Show "View Pairs" frame
+            controller.add("ViewPairs", new ViewPairsPanel(controller));
+            controller.navigatePage("ViewPairs");
         }
     }
 }

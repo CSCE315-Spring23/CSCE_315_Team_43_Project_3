@@ -256,6 +256,39 @@ public class jdbcpostgreSQL {
   }
 
   /**
+   * Finds the most frequent pairs
+   * @return a list of the most frequent pairs 
+   */
+  public List<List<Integer>> findPairs() {
+    List<List<Integer>> table = new ArrayList<List<Integer>>();
+    try {
+      // create a statement object
+      Statement stmt = conn.createStatement();
+
+      // Running a query
+      String sqlStatement = "SELECT O1.menu_id AS menu_id_1, O2.menu_id AS menu_id_2, COUNT(*) AS PurchaseFrequency FROM transaction_item AS O1 INNER JOIN transaction_item AS O2 ON O1.transaction_id = O2.transaction_id AND O1.menu_id < O2.menu_id WHERE O1.transaction_id IN (SELECT transaction_id FROM transaction WHERE transaction.time_of_purchase BETWEEN CAST('2022-05-01' AS DATE) AND CAST('2022-10-05' AS DATE)) AND O2.transaction_id IN (SELECT transaction_id FROM transaction WHERE transaction.time_of_purchase BETWEEN CAST('2022-05-01' AS DATE) AND CAST('2022-10-05' AS DATE)) GROUP BY menu_id_1, menu_id_2 ORDER BY PurchaseFrequency DESC;";
+
+      // send statement to DBMS
+      ResultSet result = stmt.executeQuery(sqlStatement);
+
+      // OUTPUT
+      while (result.next()) {
+        List<Integer> elements = new ArrayList<Integer>();
+        elements.add(result.getInt("menu_id_1"));
+        elements.add(result.getInt("menu_id_2"));
+        elements.add(result.getInt("purchasefrequency"));
+        table.add(elements);
+      }
+      return table;
+    } catch (Exception e) {
+      e.printStackTrace();
+      System.err.println(e.getClass().getName() + ": " + e.getMessage());
+      System.exit(0);
+    }
+    return null;
+  }
+
+  /**
    * Ends the psql connection
    * @return A boolean true if the connection was correctly closed. Undefined if errors are present.
    */

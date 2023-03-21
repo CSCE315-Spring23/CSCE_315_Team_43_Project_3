@@ -135,4 +135,8 @@ public class Controller {
         //mainFrame.showPanel(serverPanel);
         mainFrame.revalidate();
     }
+
+    public List<List<Integer>> getPairs() {
+        return model.db.findPairs();
+    }
 }
