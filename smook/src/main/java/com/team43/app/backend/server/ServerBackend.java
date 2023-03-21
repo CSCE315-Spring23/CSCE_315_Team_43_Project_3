@@ -4,6 +4,7 @@ import com.team43.app.backend.server.Transaction;
 import com.team43.app.backend.server.jdbcpostgreSQL;
 import com.team43.app.backend.shared.InventoryTracker;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class ServerBackend {
   private int employee_id;
@@ -126,10 +127,31 @@ public class ServerBackend {
     }
   }
 
+  // updates the inventory usage based on the current transaction period
+  private void updateInventoryTracking() {
+    // get old and new inventory usage
+    HashMap<Integer, Float> old_usage = db.getCurrentUsage();
+    HashMap<Integer, Float> new_usage = InventoryTracker.inventoryUsage;
+
+    // update inventory usage locally
+    for (Integer inv_id : new_usage.keySet()) {
+      if (old_usage.containsKey(inv_id)) {
+        old_usage.replace(inv_id,
+                          old_usage.get(inv_id) + new_usage.get(inv_id));
+      } else {
+        old_usage.put(inv_id, new_usage.get(inv_id));
+      }
+    }
+
+    // update inventory usage in database
+    db.updateInventoryUsage(old_usage);
+  }
+
   // closes connection to database after all transactions are completed
   // updates the inventory based on used items
   public void finishTransactions() {
     db.updateInventory(InventoryTracker.inventoryUsage);
+    updateInventoryTracking();
     InventoryTracker.resetTracker();
     InventoryTracker.is_initialized = false;
     db.close_connection();
