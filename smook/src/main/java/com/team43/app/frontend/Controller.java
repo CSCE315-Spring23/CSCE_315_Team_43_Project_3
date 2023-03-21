@@ -136,7 +136,7 @@ public class Controller {
         mainFrame.revalidate();
     }
 
-    public List<List<Integer>> getPairs() {
-        return model.db.findPairs();
+    public List<List<Integer>> getPairs(String start, String end) {
+        return model.db.findPairs(start, end);
     }
 }
