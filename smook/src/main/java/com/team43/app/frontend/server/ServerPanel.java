@@ -9,6 +9,9 @@ import java.awt.Color;
 
 import javax.swing.*;
 import javax.swing.border.*;
+
+import org.omg.IOP.CodeSets;
+
 import java.awt.Font;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -73,6 +76,7 @@ public class ServerPanel extends JPanel {
     }
     //Add a function to add an item for controller
     public void setUpTypes() {
+        displayOrder();
         if (items_ordered.size()>0)
         items_ordered.get(items_ordered.size()-1).setForeground(Color.black);
         if (subs!=null)
@@ -216,5 +220,8 @@ public class ServerPanel extends JPanel {
         subs = new Substitution(cOrder.get(cOrder.size()-1).getName(), backend, this);
         add(subs);
         validate();
+    }
+    public void addSubs(String str){
+        cOrder.get(cOrder.size()-1).addSub(str);
     }
 }

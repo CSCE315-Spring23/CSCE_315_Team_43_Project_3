@@ -39,12 +39,14 @@ public class Substitution extends JPanel {
 	private JSpinner spinner;
 	private ArrayList<String> items;
 	private ArrayList<JSpinner> spins;
+	private ArrayList<String> newItems;
 	public Substitution(String item, ServerBackend b, ServerPanel m) {
 		//Substitution panel title
 		backend = b;
         mainP = m;
 		items = new ArrayList<String>();
 		spins = new ArrayList<JSpinner>();
+		newItems = new ArrayList<String>();
 		setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
 		title = new JLabel(item);
 		title.setHorizontalAlignment(SwingConstants.CENTER);
@@ -130,6 +132,7 @@ public class Substitution extends JPanel {
 		JPanel jp = new JPanel();
 		//jp.setBorder(new LineBorder(Color.black));
 //		jp.setLayout(new GridLayout(1,0));
+		newItems.add(str);
 		items.add(str);
 		JLabel l = new JLabel(str);
         spinner = new JSpinner();
@@ -152,9 +155,12 @@ public class Substitution extends JPanel {
 			}
 			if ((Integer)spins.get(i).getValue()<0)
 			backend.adjustItem(items.get(i), 0);
-			else
-			backend.adjustItem(items.get(i), (Integer)spins.get(i).getValue());
+			else{
+				if (newItems.contains(items.get(i)))
+				mainP.addSubs(items.get(i));
+				backend.adjustItem(items.get(i), (Integer)spins.get(i).getValue());
 		}
+	}
 		//backend.tester();
 		backend.completeItem();
 		setVisible(false);

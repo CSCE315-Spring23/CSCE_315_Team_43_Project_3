@@ -28,10 +28,15 @@ public class Order {
         return "\n\t" + subsitutions.toString();
     }
     public double getPrice() {
-        return price;
+        if (smoothie.split(" ")[0].equals("Gladiator")){
+            int subs = subsitutions.size()-2;
+            subs = subs<0 ? 0 : subs;
+            return Math.round((price + .99*subs)*100)/100.0;
+        }
+        return Math.round((price + .99*subsitutions.size())*100)/100.0;
     }
     public void setPrice(double d) {
-        price = d;
+        price = Math.round(d*100)/100.0;
     }
     public String toString() {
         String sub = subsitutions.size()>0 ? disSub() : "";
@@ -54,7 +59,14 @@ public class Order {
         if (price <= 0)
         priceStr = "?";
         else
-        priceStr = "" + price;
-        return smoothie + "|" + s + "|" + priceStr + "|" + sub;
+        priceStr = "" + getPrice();
+        String toPrint = smoothie + "|" + s + "|" + priceStr + "|";
+        if (subsitutions.size() == 0){
+            toPrint += ",";
+        }
+        for (int i = 0; i<subsitutions.size(); i++){
+            toPrint += subsitutions.get(i) + ",";
+        }
+        return toPrint.substring(0,toPrint.length()-1);
     }
 }
