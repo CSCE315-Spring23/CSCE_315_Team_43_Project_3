@@ -111,6 +111,15 @@ public class Controller {
         return model.db.getSalesReport(startDate, endDate);
     }
 
+    public List<List<String>> generateXReport() {
+        return model.db.getXReport();
+    }
+
+    public List<List<String>> generateZReport() {
+        model.serverBackend.finishTransactions();
+        return model.db.getZReport();
+    }
+
     /**
     * Update an inventory item based on variable parameters
     * @param    inventoryId     the id of the item we are modifying

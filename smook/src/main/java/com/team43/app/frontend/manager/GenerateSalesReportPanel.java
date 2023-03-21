@@ -1,7 +1,6 @@
 package com.team43.app.frontend.manager;
 
 import java.awt.BorderLayout;
-import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -12,7 +11,6 @@ import javax.swing.JTable;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
-import javax.swing.table.TableModel;
 import java.util.List;
 
 import com.team43.app.frontend.Controller;
