@@ -87,6 +87,7 @@ public class ServerPanel extends JPanel {
         for (int i = 0; i<smoothiesB.size(); i++){
             smoothiesB.get(i).setVisible(false);
         }
+        stage = "type";
         ArrayList<String> str = backend.getCategories();
         for (int i = 0; i<str.size(); i++){
             JButton toAdd = new JButton(str.get(i));
@@ -172,7 +173,7 @@ public class ServerPanel extends JPanel {
         backend.addItem(cOrder.get(cOrder.size()-1).getName());
         backend.setSize(size);
         //backend.completeItem();
-        cOrder.get(cOrder.size()-1).setPrice(backend.getItemPrice(cOrder.size()-1));
+        //cOrder.get(cOrder.size()-1).setPrice(backend.getItemPrice(cOrder.size()-1));
         }
         displayOrder();
         //setUpTypes();

@@ -218,6 +218,6 @@ public class TransactionItem {
     }
 
     float add_on_price = (float)0.99;
-    price = main_item.getPrice() + add_on_price * count_diff + cup.getPrice();
+    price = main_item.getPrice()/* + add_on_price * count_diff */+ cup.getPrice();
   }
 }
