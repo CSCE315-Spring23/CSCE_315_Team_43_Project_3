@@ -107,6 +107,10 @@ public class Controller {
         return model.db.viewMenuItems();
     }
 
+    public List<List<String>> generateSalesReport() {
+        // return model.db.generateSalesReport();
+    }
+
     /**
     * Update an inventory item based on variable parameters
     * @param    inventoryId     the id of the item we are modifying
