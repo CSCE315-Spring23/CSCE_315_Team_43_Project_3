@@ -107,8 +107,8 @@ public class Controller {
         return model.db.viewMenuItems();
     }
 
-    public List<List<String>> generateSalesReport() {
-        // return model.db.generateSalesReport();
+    public List<List<String>> generateSalesReport(String startDate, String endDate) {
+        return model.db.getSalesReport(startDate, endDate);
     }
 
     /**

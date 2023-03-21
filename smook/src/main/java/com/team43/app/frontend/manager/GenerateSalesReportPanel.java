@@ -29,8 +29,6 @@ public class GenerateSalesReportPanel extends JPanel {
 
     GenerateSalesReportPanel(Controller controller) {
         this.controller = controller;
-        setPreferredSize(new Dimension(600,24));
-
         setLayout(new BorderLayout());
 
         selection.add(new JLabel("Start Date: ", JLabel.TRAILING));
@@ -39,8 +37,8 @@ public class GenerateSalesReportPanel extends JPanel {
         selection.add(endDateField);
         selection.add(new JLabel("Dates must be in YYYY-MM-DD format (e.g. 2023-03-20)", JLabel.TRAILING));
         selection.add(generateSalesReportButton);
-        add(selection, BorderLayout.NORTH);
 
+        add(selection, BorderLayout.NORTH);
         add(tableSlot, BorderLayout.CENTER);
 
         generateSalesReportButton.addActionListener(new ActionListener() {
@@ -60,7 +58,7 @@ public class GenerateSalesReportPanel extends JPanel {
             "number_sales",
         };
 
-        List<List<String>> salesList = controller.generateSalesReport();
+        List<List<String>> salesList = controller.generateSalesReport(startDateField.getText(), endDateField.getText());
         Object[][] data = new Object[salesList.size()][6];
         for (int i = 0; i < salesList.size(); ++i) {
             data[i] = salesList.get(i).toArray();
@@ -69,9 +67,8 @@ public class GenerateSalesReportPanel extends JPanel {
         table = new JTable(data, colNames);
         scrollPane = new JScrollPane(table);
         table.setFillsViewportHeight(true);
-        // setLayout(new BorderLayout());
-        tableSlot.add(table);
+        tableSlot.setLayout(new BorderLayout());
         tableSlot.add(scrollPane);
-        System.out.println("generateSalesReportClicked");
+        tableSlot.validate();
     }
 }
