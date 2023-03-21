@@ -167,10 +167,13 @@ public class jdbcpostgreSQL {
   //     Statement stmt = conn.createStatement();
 
   //     // Running a query
-  //     Statement pstat = conn.prepareStatement("SELECT COUNT(inventory_id) FROM inventory;", ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
+  //     Statement pstat = conn.prepareStatement("SELECT COUNT(inventory_id)
+  //     FROM inventory;", ResultSet.TYPE_SCROLL_SENSITIVE,
+  //     ResultSet.CONCUR_UPDATABLE);
 
   //     // send statement to DBMS
-  //     ResultSet result = pstat.executeQuery("SELECT COUNT(inventory_id) FROM inventory;");
+  //     ResultSet result = pstat.executeQuery("SELECT COUNT(inventory_id) FROM
+  //     inventory;");
 
   //     // OUTPUT
   //     result.first();
@@ -183,7 +186,7 @@ public class jdbcpostgreSQL {
   //   return num_items;
   // }
 
-  public int getNumInventoryItems(){
+  public int getNumInventoryItems() {
     List<List<String>> table = new ArrayList<List<String>>();
     try {
       // create a statement object
@@ -194,7 +197,6 @@ public class jdbcpostgreSQL {
 
       // send statement to DBMS
       ResultSet result = stmt.executeQuery(sqlStatement);
-
 
       // OUTPUT
       while (result.next()) {
@@ -228,13 +230,25 @@ public class jdbcpostgreSQL {
       // send statement to DBMS
       stmt.executeUpdate(sqlStatement);
 
-      for (Integer menu_id : trans.getMenuItemIDs()) {
-        sqlStatement =
-            "INSERT INTO transaction_item (menu_id, transaction_id) VALUES (" +
-            menu_id + ", " + trans.getID() + ")";
-        stmt.executeUpdate(sqlStatement);
+      int item_num = 1;
+      for (TransactionItem trans_item : trans.getItems()) {
+        for (int i = 0; i < trans_item.getQuantity(); ++i) {
+          sqlStatement =
+              "INSERT INTO transaction_item (menu_id, transaction_id, item_num) VALUES (" +
+              trans_item.getMainItem().getID() + ", " + trans.getID() + ", " +
+              item_num + ")";
+          stmt.executeUpdate(sqlStatement);
 
-        // build single insert then execute instead?
+          for (MenuItem menu_item : trans_item.getAddOns()) {
+            sqlStatement =
+                "INSERT INTO transaction_item (menu_id, transaction_id, item_num) VALUES (" +
+                menu_item.getID() + ", " + trans.getID() + ", " + item_num +
+                ")";
+            stmt.executeUpdate(sqlStatement);
+          }
+
+          ++item_num;
+        }
       }
     } catch (Exception e) {
       e.printStackTrace();
