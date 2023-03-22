@@ -72,7 +72,7 @@ for i in range(0,365):
     with open('inventory.csv', newline='') as inventoryList:
         inventoryReader = csv.reader(inventoryList, delimiter=',')
         for row in inventoryReader:
-            if inventoryReader.line_num < 68:
+            if inventoryReader.line_num < 73:
                 inventory.append(row)
             else:
                 inventoryEndRows.append(row)
@@ -90,13 +90,17 @@ for i in range(0,365):
         #pick random line from menu_item, add cost to transaction, decrement inventory
         alreadySelectedItems = []
         for k in range(numberItems):
-            item = menu_item[random.randrange(1,len(menu_item))]
+            item = menu_item[random.randrange(1,68)]
             while item[0] in alreadySelectedItems:
-                item = menu_item[random.randrange(1,len(menu_item))]
+                item = menu_item[random.randrange(1,68)]
             alreadySelectedItems.append(item[0])
             costTransaction += float(item[3]) * int(item[4])
             #write associated menu item to the ledger for the transaction
             transactionItemWriter.writerow([transItemID, item[0], transID])
+            transItemID += 1
+            transactionItemWriter.writerow([transItemID, menu_item[68][0], transID])
+            transItemID += 1
+            transactionItemWriter.writerow([transItemID, menu_item[71][0], transID])
             transItemID += 1
 
             #UPDATE INVENTORY
@@ -104,6 +108,10 @@ for i in range(0,365):
             ingredients_bridge = []
             for x in ingredient_list:
                 if float(x[1]) == float(item[0]):
+                    ingredients_bridge.append(x)
+                if float(x[0]) == 68:
+                    ingredients_bridge.append(x)
+                if float(x[0]) == 71:
                     ingredients_bridge.append(x)
             #subtract quantity from associated ingredient in inventory
             for x in inventory:
@@ -136,10 +144,10 @@ for i in range(0,365):
         #arbitrary threshold to establish reorders
         if int(x[3]) <= 100:
             orderNeeded = True
-            order_ledger.append([int(x[0]), orderID, 1500])
-            orderSum += 1500 * float(x[2])
+            order_ledger.append([int(x[0]), orderID, 500])
+            orderSum += 500 * float(x[2])
             #refill stock since order has been placed
-            x[3] = 1500
+            x[3] = 500
 
     if orderNeeded:
         orderWriter.writerow([orderID, dt, orderSum])
