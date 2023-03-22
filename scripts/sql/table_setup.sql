@@ -83,9 +83,10 @@ CREATE TABLE Transaction (
 
 /* Transaction_Item */
 CREATE TABLE Transaction_Item (
+    Transaction_Item_ID INT,
     Menu_ID INT,
     Transaction_ID INT,
-    PRIMARY KEY(Menu_ID, Transaction_ID),
+    PRIMARY KEY(Transaction_Item_ID, Menu_ID, Transaction_ID),
 
     CONSTRAINT FK_Menu_ID
         FOREIGN KEY(Menu_ID)
@@ -94,4 +95,14 @@ CREATE TABLE Transaction_Item (
     CONSTRAINT FK_Transaction_ID
         FOREIGN KEY(Transaction_ID)
         REFERENCES Transaction(Transaction_ID)
+);
+
+CREATE TABLE Inventory_Usage (
+    Inventory_ID INT,
+    usage FLOAT,
+    Date DATE,
+    PRIMARY KEY(Date, Inventory_ID),
+    CONSTRAINT FK_Inventory_ID
+        FOREIGN KEY(Inventory_ID)
+        REFERENCES Inventory(Inventory_ID)
 );
