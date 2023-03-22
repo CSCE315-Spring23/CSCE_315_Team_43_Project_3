@@ -136,9 +136,9 @@ public class Controller {
         mainFrame.revalidate();
     }
 
-    public List<List<Integer>> getPairs(String start, String end) {
-        return model.db.findPairs(start, end);
-    }
+    // public List<List<Integer>> getPairs(String start, String end) {
+    //     return model.db.findPairs(start, end);
+    // }
     public HashMap<String, Float> getExcess(int month, int day, int year) {
         return model.db.getExcess(month, day, year);
     }
