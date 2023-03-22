@@ -100,7 +100,7 @@ public class ServerBackend {
 
   // adds or removes given ingredient to current item
   public void adjustItem(String ingredient_name, int quantity) {
-    if (quantity < 0) {
+    if (quantity < getIngredientQuantity(ingredient_name)) {
       curr_trans.removeIngredient(ingredient_name, quantity);
     } else {
       curr_trans.addIngredient(db.getMenuItem(ingredient_name), quantity);

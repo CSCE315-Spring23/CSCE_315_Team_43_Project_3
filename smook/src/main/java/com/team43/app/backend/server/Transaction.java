@@ -85,13 +85,18 @@ public class Transaction {
   }
 
   // removes given amount of given ingredient from current item
-  public void removeIngredient(String ingredient_name, int quantity) {
-    items.get(curr_item).removeItem(ingredient_name, quantity);
+  public void removeIngredient(String ingredient_name, int new_quantity) {
+    items.get(curr_item).removeItem(
+        ingredient_name,
+        items.get(curr_item).getIngredientQuantity(ingredient_name) -
+            new_quantity);
   }
 
   // adds given amount of given ingredient to current item
-  public void addIngredient(MenuItem item, int quantity) {
-    items.get(curr_item).addItem(item, quantity);
+  public void addIngredient(MenuItem item, int new_quantity) {
+    items.get(curr_item).addItem(
+        item, new_quantity - items.get(curr_item).getIngredientQuantity(
+                                 item.getIngredients().get(0).getName()));
   }
 
   // computes the price of completed item and updates current item to unselected
