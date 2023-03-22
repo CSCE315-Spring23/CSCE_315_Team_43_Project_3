@@ -92,7 +92,7 @@ public class jdbcpostgreSQL {
 
       // Running a query
       String sqlStatement =
-          "SELECT name FROM menu_item WHERE name NOT IN ('Small Cup', 'Medium Cup', 'Large Cup', 'Small Straw', 'Large Straw', 'Assorted Snacks', 'Dummy Item')";
+          "SELECT name FROM menu_item WHERE name NOT IN ('Small Cup', 'Medium Cup', 'Large Cup', 'Small Straw', 'Large Straw', 'Assorted Snacks', 'Dummy Item') AND type='Enhance'";
 
       // send statement to DBMS
       ResultSet result = stmt.executeQuery(sqlStatement);
@@ -327,7 +327,7 @@ public class jdbcpostgreSQL {
 
       // Running a query
       String sqlStatement =
-          "SELECT inventory_id, usage FROM inventory_usage WHERE date=CURRENT_DATE";
+          "SELECT inventory_id, usage FROM inventory_usage WHERE inventory_usage.date=CURRENT_DATE";
 
       // send statement to DBMS
       ResultSet result = stmt.executeQuery(sqlStatement);
@@ -355,7 +355,9 @@ public class jdbcpostgreSQL {
             "INSERT INTO inventory_usage (inventory_id, usage, date) VALUES (" +
             id + ", " + usage.get(id) +
             ", CURRENT_DATE) ON CONFLICT (date, inventory_id) DO UPDATE SET usage=" +
-            usage.get(id) + " WHERE inventory_usage.date=CURRENT_DATE AND inventory_usage.inventory_id=" + id;
+            usage.get(id) +
+            " WHERE inventory_usage.date=CURRENT_DATE AND inventory_usage.inventory_id=" +
+            id;
         stmt.executeUpdate(sqlStatement);
       }
     } catch (Exception e) {

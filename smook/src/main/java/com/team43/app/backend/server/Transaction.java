@@ -118,6 +118,7 @@ public class Transaction {
     for (TransactionItem item : items) {
       item.computePrice();
       price += item.getPrice();
+      item.printItem();
       item.updateInventoryUsed();
     }
   }

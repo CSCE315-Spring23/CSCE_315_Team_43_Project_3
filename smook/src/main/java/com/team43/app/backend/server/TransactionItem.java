@@ -210,20 +210,32 @@ public class TransactionItem {
   public void computePrice() {
     int curr_item_count = main_item.getItemCount();
     for (MenuItem item : add_ons) {
-      curr_item_count += item.getItemCount();
+      curr_item_count += item.getIngredients().get(0).getQuantity();
     }
 
     int count_diff = 0;
     if (curr_item_count > init_item_count) {
       count_diff = curr_item_count - init_item_count;
     }
-    /*
+    // REMOVE
     System.out.println("Original Item Count: " + init_item_count);
     System.out.println("Main Item Count: " + main_item.getItemCount());
     System.out.println("Overall Item Count: " + curr_item_count);
     System.out.println("Count Difference: " + count_diff);
-    */
     float add_on_price = (float)0.99;
     price = main_item.getPrice() + add_on_price * count_diff + cup.getPrice();
+  }
+
+  // REMOVE
+  public void printItem() {
+    System.out.println("Main Item (" + main_item.getName() + ") Ingredients: ");
+    for (InventoryItem item : main_item.getIngredients()) {
+      System.out.println(item.getName() + ": " + item.getQuantity());
+    }
+    System.out.println("Add-ons:");
+    for (MenuItem item : add_ons) {
+      System.out.println(item.getName() + ": " +
+                         item.getIngredients().get(0).getQuantity());
+    }
   }
 }

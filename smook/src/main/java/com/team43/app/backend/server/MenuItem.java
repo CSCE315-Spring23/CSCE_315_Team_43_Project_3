@@ -70,17 +70,18 @@ public class MenuItem {
 
   // adds given number of desired item to the menu item
   public boolean addItem(InventoryItem new_item, int num_add) {
-    item_count += num_add;
-
-    if (countDummyItems() > 0) {
-      removeDummyItems(num_add);
-    }
-
     for (InventoryItem item : ingredients) {
       if (item.getID() == new_item.getID()) {
         int curr_quantity = (int)item.getQuantity();
-        //item.setQuantity(curr_quantity + num_add);
-        item.setQuantity(num_add);
+        item.setQuantity(curr_quantity + num_add);
+        // item.setQuantity(num_add);
+
+        item_count += num_add;
+
+        if (countDummyItems() > 0) {
+          removeDummyItems(num_add);
+        }
+
         return true;
       }
     }
