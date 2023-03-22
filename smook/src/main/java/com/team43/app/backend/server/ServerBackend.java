@@ -156,4 +156,26 @@ public class ServerBackend {
     InventoryTracker.is_initialized = false;
     db.close_connection();
   }
+
+  // returns map of excess inventory names and the percentage used since the
+  // given date
+  public HashMap<String, Float> getExcess(int month, int day, int year) {
+    // get necessary information from database
+    HashMap<Integer, Float> usage =
+        db.getUsageSinceDate("" + year + "-" + month + "-" + day);
+    HashMap<Integer, Float> curr_inv = db.getCurrentInventory();
+    HashMap<Integer, String> names = db.getInventoryNames();
+
+    // build map of excess inventory
+    HashMap<String, Float> excess = new HashMap<String, Float>();
+    for (Integer id : usage.keySet()) {
+      float percentage =
+          100 * (usage.get(id) / (usage.get(id) + curr_inv.get(id)));
+      if (percentage < 10.0) {
+        excess.put(names.get(id), percentage);
+      }
+    }
+
+    return excess;
+  }
 }
