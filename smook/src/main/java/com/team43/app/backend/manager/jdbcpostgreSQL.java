@@ -326,7 +326,31 @@ public class jdbcpostgreSQL {
     }
     return null;
   }
+ // returns current inventory quantities
+ public HashMap<Integer, Float> getCurrentInventory() {
+  HashMap<Integer, Float> inventory = new HashMap<Integer, Float>();
+  try {
+    // create a statement object
+    Statement stmt = conn.createStatement();
 
+    // Running a query
+    String sqlStatement = "SELECT inventory_id, quantity FROM inventory";
+
+    // send statement to DBMS
+    ResultSet result = stmt.executeQuery(sqlStatement);
+
+    // OUTPUT
+    while (result.next()) {
+      inventory.put(result.getInt("inventory_id"),
+                    result.getFloat("quantity"));
+    }
+  } catch (Exception e) {
+    e.printStackTrace();
+    System.err.println(e.getClass().getName() + ": " + e.getMessage());
+    System.exit(0);
+  }
+  return inventory;
+}
     /**
      * Views the Sales
      * 
