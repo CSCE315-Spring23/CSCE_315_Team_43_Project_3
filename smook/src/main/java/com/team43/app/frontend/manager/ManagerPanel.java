@@ -19,6 +19,9 @@ public class ManagerPanel extends JPanel {
     JButton viewEditInventoryButton = new JButton("View / Edit Inventory");
     JButton viewEditMenuButton = new JButton("View / Edit Menu");
     JButton addMenuItem = new JButton("Add Menu Item");
+    JButton generateSalesReport = new JButton("Generate Sales Report");
+    JButton generateXReport = new JButton("Generate X Report");
+    JButton generateZReport = new JButton("Generate Z Report");
     JButton viewPairs = new JButton("View Common Item Pairs");
     JButton logout;
     ViewEditInventoryPanel viewEditInventoryPanel;
@@ -33,6 +36,9 @@ public class ManagerPanel extends JPanel {
         add(viewEditInventoryButton);
         add(viewEditMenuButton);
         add(addMenuItem);
+        add(generateSalesReport);
+        add(generateXReport);
+        add(generateZReport);
         add(viewPairs);
         // logout = new JButton("Logout");
         // add(logout);
@@ -70,6 +76,21 @@ public class ManagerPanel extends JPanel {
                 inventorySelectionClicked("addMenuItem");
             }
         });
+        generateSalesReport.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                inventorySelectionClicked("generateSalesReport");
+            }
+        });
+        generateXReport.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                inventorySelectionClicked("generateXReport");
+            }
+        });
+        generateZReport.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                inventorySelectionClicked("generateZReport");
+            }
+        });
         viewPairs.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 inventorySelectionClicked("viewPairs");
@@ -79,8 +100,7 @@ public class ManagerPanel extends JPanel {
 
     public void inventorySelectionClicked(String name) {
         if (name == "endOfDay") {
-            // Static Class that records all inventory subtractions for a given day
-            // ManagerBackend.endOfDay();
+            controller.finishTransactions();
         } else if (name == "orderInventory") {
             // Show "Order Inventory" frame
             controller.add("OrderInventoryPanel", new OrderInventoryPanel(controller));
@@ -107,7 +127,18 @@ public class ManagerPanel extends JPanel {
                 ingredient_list.add(Integer.parseInt(attributes[i]));
             }
             controller.addMenuItem(nameS, type, price, ingredient_amount, ingredient_list);
-            
+        } else if (name == "generateSalesReport") {
+            // Show "Generate Sales Report" frame
+            controller.add("GenerateSalesReportPanel", new GenerateSalesReportPanel(controller));
+            controller.navigatePage("GenerateSalesReportPanel");
+        } else if (name == "generateXReport") {
+            // Show "View/Edit Inventory" frame
+            controller.add("GenerateXReportPanel", new GenerateXReportPanel(controller));
+            controller.navigatePage("GenerateXReportPanel");
+        } else if (name == "generateZReport") {
+            // Show "View/Edit Inventory" frame
+            controller.add("GenerateZReportPanel", new GenerateZReportPanel(controller));
+            controller.navigatePage("GenerateZReportPanel");
         } else if (name == "viewPairs") {
             // Show "View Pairs" frame
             controller.add("ViewPairs", new ViewPairsPanel(controller));

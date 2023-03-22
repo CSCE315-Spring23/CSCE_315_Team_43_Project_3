@@ -1,8 +1,16 @@
 package com.team43.app.backend.manager;
 
 import java.sql.*;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Calendar;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
+import java.util.Date;
+
 
 public class jdbcpostgreSQL {
     // Building the connection with your credentials
@@ -11,6 +19,10 @@ public class jdbcpostgreSQL {
     String dbName = "csce315331_" + TEAM_NUMBER;
     String dbConnectionUri = "jdbc:postgresql://csce-315-db.engr.tamu.edu/" + dbName;
 
+    /**
+     * Constructor that creates a new database connection
+     * 
+     */
     public jdbcpostgreSQL() {
         // Connecting to the database
         try {
@@ -52,6 +64,11 @@ public class jdbcpostgreSQL {
         return table;
     }
 
+    /**
+     * Views an inventory item
+     * 
+     * @return An array of the Inventory object
+     */
     public List<String> get_inventory_item(int inventory_id) {
         List<String> elements = new ArrayList<String>();
         try {
@@ -103,6 +120,11 @@ public class jdbcpostgreSQL {
         return table;
     }
 
+    /**
+     * Edits the inventory
+     * 
+     * @return An array of the edited Inventory object
+     */
     public List<String> editInventoryItem(int inventory_id, String name, double price, double quantity,
             String measurement_type) {
         List<String> elements = new ArrayList<String>();
@@ -120,6 +142,11 @@ public class jdbcpostgreSQL {
         return elements;
     }
 
+    /**
+     * Adds a menu item
+     * 
+     * @return An array of all Inventory objects
+     */
     public List<String> addMenuItem(String name, String type, double price, int ingredient_amount,
             ArrayList<Integer> ingredient_ids) {
         List<String> elements = new ArrayList<String>();
@@ -143,6 +170,31 @@ public class jdbcpostgreSQL {
             System.exit(0);
         }
         return elements;
+    }
+
+    /**
+     * Adds an inventory item
+     * 
+     * @return void
+     */
+    public void addInventoryItem(String name, double price, double quantity,
+    String measurement_type){
+        try {
+            List<List<String>> inventory = viewInventory();
+            int next_index = Integer.parseInt(inventory.get(inventory.size() - 1).get(0)) + 1;
+
+            Statement stmt = conn.createStatement();
+            String sqlStatement = "INSERT INTO inventory (inventory_id, name, price, quantity, measurement_type) VALUES ("
+                    + next_index + ", \'" + name + "\', " + price + ", " + quantity + ", \'" + measurement_type + "\');";
+
+            System.out.println(sqlStatement);
+            stmt.executeUpdate(sqlStatement);
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.err.println(e.getClass().getName() + ": " + e.getMessage());
+            System.exit(0);
+        }
+        return;
     }
 
     /**
@@ -170,6 +222,11 @@ public class jdbcpostgreSQL {
         return elements;
     }
 
+    /**
+     * Views the Items Orders
+     * 
+     * @return A 2D array of all Order objects
+     */
     public List<List<String>> viewOrderItems() {
         List<List<String>> table = new ArrayList<List<String>>();
         try {
@@ -269,6 +326,133 @@ public class jdbcpostgreSQL {
     }
     return null;
   }
+
+    /**
+     * Views the Sales
+     * 
+     * @return A 2D array of all sales objects
+     */
+    public List<List<String>> getSalesReport(String startDate, String endDate){
+        try {
+            Statement stmt = conn.createStatement();
+
+            // Find lowest transaction id
+            String sqlStatement = "SELECT * from transaction WHERE time_of_purchase between '" + startDate + "' and '" + startDate + "';";
+            ResultSet start = stmt.executeQuery(sqlStatement);
+            int lowestID = 0;
+            while (start.next()) {
+                if (Integer.parseInt(start.getString("transaction_id")) < lowestID)
+                    lowestID = Integer.parseInt(start.getString("transaction_id"));
+            }
+
+            // Find the highest transaction id
+            String sqlStatement2 = "SELECT * from transaction WHERE time_of_purchase between '" + endDate + "' and '" + endDate + "';";
+            ResultSet end = stmt.executeQuery(sqlStatement);
+            int highestID = 0;
+            while (end.next()) {
+                if (Integer.parseInt(end.getString("transaction_id")) > highestID)
+                    highestID = Integer.parseInt(end.getString("transaction_id"));
+            }
+
+            // Create a new table to hold the sales report
+            String dropTable = "DROP table sales_report;";
+            stmt.executeUpdate(dropTable);
+            String newTable = "CREATE TABLE sales_report AS SELECT menu_id, name, type, price, ingredient_amount, 0 AS amount_ordered FROM menu_item;";
+            stmt.executeUpdate(newTable);
+
+            // Update the amount_ordered value in the sales report table
+            String getTransactionItems = "SELECT * FROM transaction_item WHERE transaction_id BETWEEN " + lowestID + " AND " + highestID + ";";
+            ResultSet getTable = stmt.executeQuery(getTransactionItems);
+            String updateItemCount = "";
+            List<Integer> items = new ArrayList<Integer>();
+            HashMap<Integer, Integer> hm = new HashMap<Integer, Integer>();
+            while(getTable.next()){
+                // Increment the amount_ordered in the sales report table
+                // items.add(Integer.parseInt(getTable.getString("menu_id")));
+                // if the key already exists, increment it
+                if (hm.containsKey(Integer.parseInt(getTable.getString("menu_id"))))
+                    hm.put(Integer.parseInt(getTable.getString("menu_id")), hm.get(Integer.parseInt(getTable.getString("menu_id"))) + 1);
+                // otherwise create the key with a starting value of one
+                else
+                    hm.put(Integer.parseInt(getTable.getString("menu_id")), 1);
+            }
+            // Iterate through the hashmap and update the sales report values
+            for (Map.Entry<Integer,Integer> mapElement : hm.entrySet()) {
+                int key = mapElement.getKey();
+                String increment = "UPDATE sales_report SET amount_ordered = " + mapElement.getValue() + " WHERE menu_id = " + key + ";";
+                stmt.executeUpdate(increment);   
+            }
+            // Return the full table
+            List<List<String>> sales_report_table = new ArrayList<List<String>>();
+            String sqlStatement3 = "SELECT * FROM sales_report ORDER BY menu_id ASC";
+            ResultSet sales_table = stmt.executeQuery(sqlStatement3);
+
+            while (sales_table.next()) {
+                List<String> elements = new ArrayList<String>();
+                elements.add(sales_table.getString("menu_id"));
+                elements.add(sales_table.getString("name"));
+                elements.add(sales_table.getString("type"));
+                elements.add(sales_table.getString("price"));
+                elements.add(sales_table.getString("ingredient_amount"));
+                elements.add(sales_table.getString("amount_ordered"));
+                sales_report_table.add(elements);
+            }
+            return sales_report_table;
+            } catch (Exception e) {
+            e.printStackTrace();
+            System.err.println(e.getClass().getName() + ": " + e.getMessage());
+            System.exit(0);
+        }
+        return null;
+    }
+
+    /**
+     * Views the X Report
+     * 
+     * @return A 2D array of all report objects
+     */
+    public List<List<String>> getXReport(){
+        try {
+            Statement stmt = conn.createStatement();
+
+            // Today
+            Calendar cal = Calendar.getInstance();
+            cal.add(Calendar.DATE, 1);
+            SimpleDateFormat format1 = new SimpleDateFormat("yyyy-MM-dd");
+            String formatted = format1.format(cal.getTime());
+
+            return getSalesReport(formatted, formatted);
+            } catch (Exception e) {
+            e.printStackTrace();
+            System.err.println(e.getClass().getName() + ": " + e.getMessage());
+            System.exit(0);
+        }
+        return null;
+    }
+
+    /**
+     * Views the Z Report
+     * 
+     * @return A 2D array of all report objects
+     */
+    public List<List<String>> getZReport(){
+        try {
+            Statement stmt = conn.createStatement();
+
+            // Today
+            Calendar cal = Calendar.getInstance();
+            cal.add(Calendar.DATE, 1);
+            SimpleDateFormat format1 = new SimpleDateFormat("yyyy-MM-dd");
+            String formatted = format1.format(cal.getTime());
+
+            return getSalesReport(formatted, formatted);
+            } catch (Exception e) {
+            e.printStackTrace();
+            System.err.println(e.getClass().getName() + ": " + e.getMessage());
+            System.exit(0);
+        }
+        return null;
+    }
 
     /**
      * Ends the psql connection
