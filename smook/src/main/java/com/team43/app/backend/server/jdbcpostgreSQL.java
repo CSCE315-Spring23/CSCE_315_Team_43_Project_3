@@ -92,7 +92,7 @@ public class jdbcpostgreSQL {
 
       // Running a query
       String sqlStatement =
-          "SELECT name FROM menu_item WHERE name NOT IN ('Small Cup', 'Medium Cup', 'Large Cup', 'Small Straw', 'Large Straw', 'Assorted Snacks', 'Dummy Item')";
+          "SELECT name FROM menu_item WHERE name NOT IN ('Small Cup', 'Medium Cup', 'Large Cup', 'Small Straw', 'Large Straw', 'Assorted Snacks', 'Dummy Item') AND type=\'Enhance\'";
 
       // send statement to DBMS
       ResultSet result = stmt.executeQuery(sqlStatement);
