@@ -1,4 +1,4 @@
-package com.team43.app.frontend.server;
+// package com.team43.app.frontend.server;
 
 import javax.swing.JPanel;
 import javax.swing.JLabel;

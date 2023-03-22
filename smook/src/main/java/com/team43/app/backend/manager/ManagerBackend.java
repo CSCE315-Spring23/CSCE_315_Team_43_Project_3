@@ -14,6 +14,8 @@ public class ManagerBackend {
   //   List<List<String>> sales_table = data.getSalesReport("2022-01-03", "2022-01-03");
 
   //   List<List<String>> x_Table = data.getZReport();
+
+  //   data.addInventoryItem("test", 1, 1, "oz");
     
   //   data.closeConnection();
 

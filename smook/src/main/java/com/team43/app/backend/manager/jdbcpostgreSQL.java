@@ -173,6 +173,31 @@ public class jdbcpostgreSQL {
     }
 
     /**
+     * Adds an inventory item
+     * 
+     * @return void
+     */
+    public void addInventoryItem(String name, double price, double quantity,
+    String measurement_type){
+        try {
+            List<List<String>> inventory = viewInventory();
+            int next_index = Integer.parseInt(inventory.get(inventory.size() - 1).get(0)) + 1;
+
+            Statement stmt = conn.createStatement();
+            String sqlStatement = "INSERT INTO inventory (inventory_id, name, price, quantity, measurement_type) VALUES ("
+                    + next_index + ", \'" + name + "\', " + price + ", " + quantity + ", \'" + measurement_type + "\');";
+
+            System.out.println(sqlStatement);
+            stmt.executeUpdate(sqlStatement);
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.err.println(e.getClass().getName() + ": " + e.getMessage());
+            System.exit(0);
+        }
+        return;
+    }
+
+    /**
      * Updates the MenuItem
      * 
      * @param menu_id           MenuItem identifier
