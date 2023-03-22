@@ -205,25 +205,12 @@ public class jdbcpostgreSQL {
       // send statement to DBMS
       stmt.executeUpdate(sqlStatement);
 
-      int item_num = 1;
-      for (TransactionItem trans_item : trans.getItems()) {
-        for (int i = 0; i < trans_item.getQuantity(); ++i) {
-          sqlStatement =
-              "INSERT INTO transaction_item (menu_id, transaction_id, item_num) VALUES (" +
-              trans_item.getMainItem().getID() + ", " + trans.getID() + ", " +
-              item_num + ")";
-          stmt.executeUpdate(sqlStatement);
-
-          for (MenuItem menu_item : trans_item.getAddOns()) {
-            sqlStatement =
-                "INSERT INTO transaction_item (menu_id, transaction_id, item_num) VALUES (" +
-                menu_item.getID() + ", " + trans.getID() + ", " + item_num +
-                ")";
-            stmt.executeUpdate(sqlStatement);
-          }
-
-          ++item_num;
-        }
+      int trans_item_id = getNextTransactionItemID();
+      for (Integer menu_id : trans.getMenuItemIDs()) {
+        sqlStatement =
+            "INSERT INTO transaction_item (transaction_item_id, menu_id, transaction_id) VALUES (" +
+            trans_item_id++ + ", " + menu_id + ", " + trans.getID() + ")";
+        stmt.executeUpdate(sqlStatement);
       }
     } catch (Exception e) {
       e.printStackTrace();
@@ -241,6 +228,31 @@ public class jdbcpostgreSQL {
 
       // Running a query
       String sqlStatement = "SELECT MAX(transaction_id) FROM transaction";
+
+      // send statement to DBMS
+      ResultSet result = stmt.executeQuery(sqlStatement);
+
+      // OUTPUT
+      result.next();
+      trans_id = result.getInt("max") + 1;
+    } catch (Exception e) {
+      e.printStackTrace();
+      System.err.println(e.getClass().getName() + ": " + e.getMessage());
+      System.exit(0);
+    }
+    return trans_id;
+  }
+
+  // returns id of next transaction item
+  private int getNextTransactionItemID() {
+    int trans_id = 0;
+    try {
+      // create a statement object
+      Statement stmt = conn.createStatement();
+
+      // Running a query
+      String sqlStatement =
+          "SELECT MAX(transaction_item_id) FROM transaction_item";
 
       // send statement to DBMS
       ResultSet result = stmt.executeQuery(sqlStatement);
