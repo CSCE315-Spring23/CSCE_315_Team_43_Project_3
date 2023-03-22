@@ -92,7 +92,7 @@ public class jdbcpostgreSQL {
 
       // Running a query
       String sqlStatement =
-          "SELECT name FROM menu_item WHERE name NOT IN ('Small Cup', 'Medium Cup', 'Large Cup', 'Small Straw', 'Large Straw', 'Assorted Snacks', 'Dummy Item') AND type=\'Enhance\'";
+          "SELECT name FROM menu_item WHERE name NOT IN ('Small Cup', 'Medium Cup', 'Large Cup', 'Small Straw', 'Large Straw', 'Assorted Snacks', 'Dummy Item')";
 
       // send statement to DBMS
       ResultSet result = stmt.executeQuery(sqlStatement);
@@ -352,9 +352,9 @@ public class jdbcpostgreSQL {
 
       for (Integer id : usage.keySet()) {
         String sqlStatement =
-            "INSERT INTO inventory_usage (date, inventory_id, usage) VALUES (CURRENT_DATE, " +
+            "INSERT INTO inventory_usage (inventory_id, usage, date) VALUES (" +
             id + ", " + usage.get(id) +
-            ") ON CONFLICT (date, inventory_id) DO UPDATE SET usage=" +
+            ", CURRENT_DATE) ON CONFLICT (date, inventory_id) DO UPDATE SET usage=" +
             usage.get(id) + " WHERE date=CURRENT_DATE AND inventory_id=" + id;
         stmt.executeUpdate(sqlStatement);
       }
@@ -363,61 +363,6 @@ public class jdbcpostgreSQL {
       System.err.println(e.getClass().getName() + ": " + e.getMessage());
       System.exit(0);
     }
-  }
-
-  // returns inventory usage of all items currently in the inventory since the
-  // given date
-  public HashMap<Integer, Float> getUsageSinceDate(String date) {
-    HashMap<Integer, Float> usage = new HashMap<Integer, Float>();
-    try {
-      // create a statement object
-      Statement stmt = conn.createStatement();
-
-      // Running a query
-      String sqlStatement =
-          "SELECT inventory_id, SUM (usage) AS total FROM inventory_usage WHERE date BETWEEN CAST(\'" +
-          date +
-          "\') CURRENT_DATE AND inventory_id IN (SELECT inventory_id FROM inventory WHERE inventory.name!=\'Dummy Item\'') GROUP BY inventory_id";
-
-      // send statement to DBMS
-      ResultSet result = stmt.executeQuery(sqlStatement);
-
-      // OUTPUT
-      while (result.next()) {
-        usage.put(result.getInt("inventory_id"), result.getFloat("total"));
-      }
-    } catch (Exception e) {
-      e.printStackTrace();
-      System.err.println(e.getClass().getName() + ": " + e.getMessage());
-      System.exit(0);
-    }
-    return usage;
-  }
-
-  // returns map of id to name for all important inventory items
-  public HashMap<Integer, String> getInventoryNames() {
-    HashMap<Integer, String> names = new HashMap<Integer, String>();
-    try {
-      // create a statement object
-      Statement stmt = conn.createStatement();
-
-      // Running a query
-      String sqlStatement =
-          "SELECT inventory_id, name FROM inventory WHERE name!=\'Dummy Item\'";
-
-      // send statement to DBMS
-      ResultSet result = stmt.executeQuery(sqlStatement);
-
-      // OUTPUT
-      while (result.next()) {
-        names.put(result.getInt("inventory_id"), result.getString("name"));
-      }
-    } catch (Exception e) {
-      e.printStackTrace();
-      System.err.println(e.getClass().getName() + ": " + e.getMessage());
-      System.exit(0);
-    }
-    return names;
   }
 
   public boolean close_connection() {
