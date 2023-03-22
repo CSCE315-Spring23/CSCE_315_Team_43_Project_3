@@ -23,6 +23,8 @@ public class ManagerPanel extends JPanel {
     JButton generateXReport = new JButton("Generate X Report");
     JButton generateZReport = new JButton("Generate Z Report");
     JButton viewPairs = new JButton("View Common Item Pairs");
+    JButton viewExcess = new JButton("Excess Report");
+    JButton viewRestock = new JButton("Restock Report");
     JButton logout;
     ViewEditInventoryPanel viewEditInventoryPanel;
     Controller controller;
@@ -40,6 +42,8 @@ public class ManagerPanel extends JPanel {
         add(generateXReport);
         add(generateZReport);
         add(viewPairs);
+        add(viewExcess);
+        add(viewRestock);
         // logout = new JButton("Logout");
         // add(logout);
         // logout.addActionListener(new ActionListener() {
@@ -96,6 +100,16 @@ public class ManagerPanel extends JPanel {
                 inventorySelectionClicked("viewPairs");
             }
         });
+        viewExcess.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                inventorySelectionClicked("viewExcess");
+            }
+        });
+        viewRestock.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                inventorySelectionClicked("viewRestock");
+            }
+        });
     }
 
     public void inventorySelectionClicked(String name) {
@@ -143,6 +157,14 @@ public class ManagerPanel extends JPanel {
             // Show "View Pairs" frame
             controller.add("ViewPairs", new ViewPairsPanel(controller));
             controller.navigatePage("ViewPairs");
+        }
+        else if (name == "viewExcess"){
+            controller.add("ViewExcess",new ExcessReport(controller));
+            controller.navigatePage("ViewExcess");
+        }
+        else if (name == "viewRestock"){
+            controller.add("ViewRestock",new RestockReport(controller));
+            controller.navigatePage("ViewRestock");
         }
     }
 }

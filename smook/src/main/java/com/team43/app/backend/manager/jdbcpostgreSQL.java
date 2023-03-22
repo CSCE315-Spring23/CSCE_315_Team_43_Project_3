@@ -326,7 +326,31 @@ public class jdbcpostgreSQL {
     }
     return null;
   }
+ // returns current inventory quantities
+ public HashMap<Integer, Float> getCurrentInventory() {
+  HashMap<Integer, Float> inventory = new HashMap<Integer, Float>();
+  try {
+    // create a statement object
+    Statement stmt = conn.createStatement();
 
+    // Running a query
+    String sqlStatement = "SELECT inventory_id, quantity FROM inventory";
+
+    // send statement to DBMS
+    ResultSet result = stmt.executeQuery(sqlStatement);
+
+    // OUTPUT
+    while (result.next()) {
+      inventory.put(result.getInt("inventory_id"),
+                    result.getFloat("quantity"));
+    }
+  } catch (Exception e) {
+    e.printStackTrace();
+    System.err.println(e.getClass().getName() + ": " + e.getMessage());
+    System.exit(0);
+  }
+  return inventory;
+}
     /**
      * Views the Sales
      * 
@@ -405,7 +429,84 @@ public class jdbcpostgreSQL {
         }
         return null;
     }
+      // returns inventory usage of all items currently in the inventory since the
+  // given date
+  public HashMap<Integer, Float> getUsageSinceDate(String date) {
+    HashMap<Integer, Float> usage = new HashMap<Integer, Float>();
+    try {
+      // create a statement object
+      Statement stmt = conn.createStatement();
 
+      // Running a query
+      String sqlStatement =
+          "SELECT inventory_id, SUM (usage) AS total FROM inventory_usage WHERE date BETWEEN CAST(\'" +
+          date +
+          "\' AS DATE) AND CURRENT_DATE AND inventory_id IN (SELECT inventory_id FROM inventory WHERE inventory.name!=\'Dummy Item\') GROUP BY inventory_id";
+
+      // send statement to DBMS
+      ResultSet result = stmt.executeQuery(sqlStatement);
+
+      // OUTPUT
+      while (result.next()) {
+        usage.put(result.getInt("inventory_id"), result.getFloat("total"));
+      }
+    } catch (Exception e) {
+      e.printStackTrace();
+      System.err.println(e.getClass().getName() + ": " + e.getMessage());
+      System.exit(0);
+    }
+    return usage;
+  }
+  // returns map of id to name for all important inventory items
+  public HashMap<Integer, String> getInventoryNames() {
+    HashMap<Integer, String> names = new HashMap<Integer, String>();
+    try {
+      // create a statement object
+      Statement stmt = conn.createStatement();
+
+      // Running a query
+      String sqlStatement =
+          "SELECT inventory_id, name FROM inventory WHERE name!=\'Dummy Item\'";
+
+      // send statement to DBMS
+      ResultSet result = stmt.executeQuery(sqlStatement);
+
+      // OUTPUT
+      while (result.next()) {
+        names.put(result.getInt("inventory_id"), result.getString("name"));
+      }
+    } catch (Exception e) {
+      e.printStackTrace();
+      System.err.println(e.getClass().getName() + ": " + e.getMessage());
+      System.exit(0);
+    }
+    return names;
+  }
+
+  public HashMap<Integer, Float> getAverageUsage() {
+    HashMap<Integer, Float> usage = new HashMap<Integer, Float>();
+    try {
+      // create a statement object
+      Statement stmt = conn.createStatement();
+
+      // Running a query
+      String sqlStatement =
+          "SELECT inventory_id, AVG (usage) AS average FROM inventory_usage WHERE inventory_id IN (SELECT inventory_id FROM inventory WHERE inventory.name!=\'Dummy Item\') GROUP BY inventory_id";
+
+      // send statement to DBMS
+      ResultSet result = stmt.executeQuery(sqlStatement);
+
+      // OUTPUT
+      while (result.next()) {
+        usage.put(result.getInt("inventory_id"), result.getFloat("average"));
+      }
+    } catch (Exception e) {
+      e.printStackTrace();
+      System.err.println(e.getClass().getName() + ": " + e.getMessage());
+      System.exit(0);
+    }
+    return usage;
+  }
     /**
      * Views the X Report
      * 
@@ -453,7 +554,50 @@ public class jdbcpostgreSQL {
         }
         return null;
     }
+      // returns map of excess inventory names and the percentage used since the
+  // given date
+  public HashMap<String, Float> getExcess(int month, int day, int year) {
+    // get necessary information from database
+    HashMap<Integer, Float> usage =
+        getUsageSinceDate("" + year + "-" + month + "-" + day);
+    HashMap<Integer, Float> curr_inv = getCurrentInventory();
+    HashMap<Integer, String> names = getInventoryNames();
 
+    // build map of excess inventory
+    HashMap<String, Float> excess = new HashMap<String, Float>();
+    for (Integer id : usage.keySet()) {
+      float percentage =
+          100 * (usage.get(id) / (usage.get(id) + curr_inv.get(id)));
+      if (percentage < 10.0) {
+        excess.put(names.get(id), percentage);
+      }
+    }
+
+    return excess;
+  }
+
+  // returns map of inventory items that are currently under their average daily
+  // usage. Maps item name to list with current inventory and average usage
+  public HashMap<String, ArrayList<Float>> getRestock() {
+    // get necessary information from database
+    HashMap<Integer, Float> curr_inventory = getCurrentInventory();
+    HashMap<Integer, Float> avg_usage = getAverageUsage();
+    HashMap<Integer, String> names = getInventoryNames();
+
+    // build map of understocked items
+    HashMap<String, ArrayList<Float>> restock =
+        new HashMap<String, ArrayList<Float>>();
+    for (Integer id : curr_inventory.keySet()) {
+      if (avg_usage.containsKey(id) && curr_inventory.get(id) < (7 * avg_usage.get(id))) {
+        ArrayList<Float> value = new ArrayList<Float>();
+        value.add(curr_inventory.get(id));
+        value.add(avg_usage.get(id));
+        restock.put(names.get(id), value);
+      }
+    }
+
+    return restock;
+  }
     /**
      * Ends the psql connection
      * @return If the connection was correctly closed
