@@ -2,6 +2,8 @@ package com.team43.app.backend.manager;
 
 import java.io.Externalizable;
 import java.sql.*;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.*;
 
 public class ManagerBackend {
@@ -9,30 +11,19 @@ public class ManagerBackend {
   //   // Create the object
   //   jdbcpostgreSQL data = new jdbcpostgreSQL();
 
-  //   OrderList order1 = new OrderList(1, 100, 100);
-  //   OrderList order2 = new OrderList(2, 101, 100);
-  //   List<OrderList> orders = new ArrayList<OrderList>();
-  //   data.order_items(orders);
-  //   data.edit_inventory_item(64, "Turbinado", 1, 135, "oz");
-  //   List<List<String>> inventory = data.view_inventory();
-  //   // data.add_menu_item(135, "Snacks3", "Other", 1.49, 1);
-  //   // data.update_menu_item(131, "Snacks-extra", "Other", 0, 0);
-  //   // List<List<String>> menu_items = data.view_menu_items();
+  //   List<List<String>> sales_table = data.getSalesReport("2022-01-03", "2022-01-03");
 
+  //   List<List<String>> x_Table = data.getZReport();
+
+  //   data.addInventoryItem("test", 1, 1, "oz");
     
-  //   data.close_connection();
+  //   data.closeConnection();
 
-  //   // for (List<String> row : inventory) {
-  //   //   for (String item : row) {
-  //   //     System.out.print(item + " ");
-  //   //   }
-  //   //   System.out.println();
-  //   // }
-  //   // for (List<String> row : menu_items) {
-  //   //   for (String item : row) {
-  //   //     System.out.print(item + " ");
-  //   //   }
-  //   //   System.out.println();
-  //   // }
+  //   for (List<String> row : x_Table){
+  //     for (String elem : row){
+  //       System.out.print(elem + " ");
+  //     }
+  //     System.out.println();
+  //   }
   // }
 }
