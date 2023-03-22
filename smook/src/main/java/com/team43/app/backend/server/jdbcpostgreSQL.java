@@ -355,7 +355,7 @@ public class jdbcpostgreSQL {
             "INSERT INTO inventory_usage (inventory_id, usage, date) VALUES (" +
             id + ", " + usage.get(id) +
             ", CURRENT_DATE) ON CONFLICT (date, inventory_id) DO UPDATE SET usage=" +
-            usage.get(id) + " WHERE date=CURRENT_DATE AND inventory_id=" + id;
+            usage.get(id) + " WHERE inventory_usage.date=CURRENT_DATE AND inventory_usage.inventory_id=" + id;
         stmt.executeUpdate(sqlStatement);
       }
     } catch (Exception e) {
