@@ -178,4 +178,7 @@ public class ServerBackend {
 
     return excess;
   }
+
+  // TODO
+  public HashMap<String, Integer> getRestock() { return null; }
 }

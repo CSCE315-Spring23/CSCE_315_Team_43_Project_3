@@ -352,9 +352,9 @@ public class jdbcpostgreSQL {
 
       for (Integer id : usage.keySet()) {
         String sqlStatement =
-            "INSERT INTO inventory_usage (date, inventory_id, usage) VALUES (CURRENT_DATE, " +
+            "INSERT INTO inventory_usage (inventory_id, usage, date) VALUES (" +
             id + ", " + usage.get(id) +
-            ") ON CONFLICT (date, inventory_id) DO UPDATE SET usage=" +
+            ", CURRENT_DATE) ON CONFLICT (date, inventory_id) DO UPDATE SET usage=" +
             usage.get(id) + " WHERE date=CURRENT_DATE AND inventory_id=" + id;
         stmt.executeUpdate(sqlStatement);
       }
