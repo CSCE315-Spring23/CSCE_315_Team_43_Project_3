@@ -405,7 +405,56 @@ public class jdbcpostgreSQL {
         }
         return null;
     }
+  // returns map of id to name for all important inventory items
+  public HashMap<Integer, String> getInventoryNames() {
+    HashMap<Integer, String> names = new HashMap<Integer, String>();
+    try {
+      // create a statement object
+      Statement stmt = conn.createStatement();
 
+      // Running a query
+      String sqlStatement =
+          "SELECT inventory_id, name FROM inventory WHERE name!=\'Dummy Item\'";
+
+      // send statement to DBMS
+      ResultSet result = stmt.executeQuery(sqlStatement);
+
+      // OUTPUT
+      while (result.next()) {
+        names.put(result.getInt("inventory_id"), result.getString("name"));
+      }
+    } catch (Exception e) {
+      e.printStackTrace();
+      System.err.println(e.getClass().getName() + ": " + e.getMessage());
+      System.exit(0);
+    }
+    return names;
+  }
+
+  public HashMap<Integer, Float> getAverageUsage() {
+    HashMap<Integer, Float> usage = new HashMap<Integer, Float>();
+    try {
+      // create a statement object
+      Statement stmt = conn.createStatement();
+
+      // Running a query
+      String sqlStatement =
+          "SELECT inventory_id, AVG (usage) AS average FROM inventory_usage WHERE inventory_id IN (SELECT inventory_id FROM inventory WHERE inventory.name!=\'Dummy Item\') GROUP BY inventory_id";
+
+      // send statement to DBMS
+      ResultSet result = stmt.executeQuery(sqlStatement);
+
+      // OUTPUT
+      while (result.next()) {
+        usage.put(result.getInt("inventory_id"), result.getFloat("average"));
+      }
+    } catch (Exception e) {
+      e.printStackTrace();
+      System.err.println(e.getClass().getName() + ": " + e.getMessage());
+      System.exit(0);
+    }
+    return usage;
+  }
     /**
      * Views the X Report
      * 
