@@ -120,6 +120,10 @@ public class Controller {
         return model.db.getZReport();
     }
 
+    public void finishTransactions() {
+        model.serverBackend.finishTransactions();
+    }
+
     /**
     * Update an inventory item based on variable parameters
     * @param    inventoryId     the id of the item we are modifying

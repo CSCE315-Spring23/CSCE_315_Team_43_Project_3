@@ -100,8 +100,7 @@ public class ManagerPanel extends JPanel {
 
     public void inventorySelectionClicked(String name) {
         if (name == "endOfDay") {
-            // Static Class that records all inventory subtractions for a given day
-            // ManagerBackend.endOfDay();
+            controller.finishTransactions();
         } else if (name == "orderInventory") {
             // Show "Order Inventory" frame
             controller.add("OrderInventoryPanel", new OrderInventoryPanel(controller));
