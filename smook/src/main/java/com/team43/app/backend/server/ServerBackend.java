@@ -180,18 +180,22 @@ public class ServerBackend {
   }
 
   // returns map of inventory items that are currently under their average daily
-  // usage
-  public HashMap<String, Float> getRestock() {
+  // usage. Maps item name to list with current inventory and average usage
+  public HashMap<String, ArrayList<Float>> getRestock() {
     // get necessary information from database
     HashMap<Integer, Float> curr_inventory = db.getCurrentInventory();
     HashMap<Integer, Float> avg_usage = db.getAverageUsage();
     HashMap<Integer, String> names = db.getInventoryNames();
 
     // build map of understocked items
-    HashMap<String, Float> restock = new HashMap<String, Float>();
+    HashMap<String, ArrayList<Float>> restock =
+        new HashMap<String, ArrayList<Float>>();
     for (Integer id : curr_inventory.keySet()) {
       if (curr_inventory.get(id) < avg_usage.get(id)) {
-        restock.put(names.get(id), curr_inventory.get(id));
+        ArrayList<Float> value = new ArrayList<Float>();
+        value.add(curr_inventory.get(id));
+        value.add(avg_usage.get(id));
+        restock.put(names.get(id), value);
       }
     }
 
