@@ -429,6 +429,34 @@ public class jdbcpostgreSQL {
         }
         return null;
     }
+      // returns inventory usage of all items currently in the inventory since the
+  // given date
+  public HashMap<Integer, Float> getUsageSinceDate(String date) {
+    HashMap<Integer, Float> usage = new HashMap<Integer, Float>();
+    try {
+      // create a statement object
+      Statement stmt = conn.createStatement();
+
+      // Running a query
+      String sqlStatement =
+          "SELECT inventory_id, SUM (usage) AS total FROM inventory_usage WHERE date BETWEEN CAST(\'" +
+          date +
+          "\' AS DATE) AND CURRENT_DATE AND inventory_id IN (SELECT inventory_id FROM inventory WHERE inventory.name!=\'Dummy Item\') GROUP BY inventory_id";
+
+      // send statement to DBMS
+      ResultSet result = stmt.executeQuery(sqlStatement);
+
+      // OUTPUT
+      while (result.next()) {
+        usage.put(result.getInt("inventory_id"), result.getFloat("total"));
+      }
+    } catch (Exception e) {
+      e.printStackTrace();
+      System.err.println(e.getClass().getName() + ": " + e.getMessage());
+      System.exit(0);
+    }
+    return usage;
+  }
   // returns map of id to name for all important inventory items
   public HashMap<Integer, String> getInventoryNames() {
     HashMap<Integer, String> names = new HashMap<Integer, String>();
