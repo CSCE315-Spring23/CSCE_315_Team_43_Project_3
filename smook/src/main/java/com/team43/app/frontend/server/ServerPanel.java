@@ -63,8 +63,8 @@ public class ServerPanel extends JPanel {
         //Items.setLayout(new BoxLayout(Items, BoxLayout.PAGE_AXIS));
         //Items.setBorder(new LineBorder(getBackground(), 3));
 		add(items);
-        header = new JLabel("<HTML><U>Smoothie name|Size|Price|AddOns</U></HTML>");
-        transaction.addOrderToPanel(header);
+        // header = new JLabel("<HTML><U>Smoothie name|Size|Price|AddOns</U></HTML>");
+        // transaction.addOrderToPanel(header);
         addItemTitle();
         setUpTypes();
         submit = transaction.getButton();
@@ -181,21 +181,43 @@ public class ServerPanel extends JPanel {
     }
     public void displayOrder() {
         checkPrice();
-        for (int i = 0; i<items_ordered.size(); i++){
-            transaction.removeOrder(items_ordered.get(i));
-        }
+        // for (int i = 0; i<items_ordered.size(); i++){
+        //     transaction.removeOrder(items_ordered.get(i));
+        // }
+        transaction.removeOrders();
         items_ordered.clear();
         for (int i = 0; i<cOrder.size(); i++){
             JLabel toAdd = new JLabel(cOrder.get(i).toString());
-            if (i == cOrder.size()-1)
+            if (i == cOrder.size()-1 && stage != "delete")
             toAdd.setForeground(Color.red);
             items_ordered.add(toAdd);
-            transaction.addOrderToPanel(toAdd);
+            transaction.addOrderToPanel(toAdd,cOrder.get(i));
+            final int j = i;
+        }
+        for (int i = 0; i<transaction.deleteButtons.size(); i++){
+            final int j = i;
+            System.out.println(j);
+            transaction.deleteButtons.get(i).addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    deleteOrder(j);
+                    backend.removeItem(j);
+                }
+            });
         }
         if (cOrder.size()>0)
         System.out.println(cOrder.toString());
-        transaction.validate();
+        transaction.revalidate();
         validate();
+    }
+    public void deleteOrder(int i) {
+        System.out.println("Hola");
+        cOrder.remove(i);
+        displayOrder();
+        transaction.listerValidate();
+        transaction.revalidate();
+        // revalidate();
+        stage = "delete";
+        //setUpTypes();
     }
     public void checkPrice() {
         double price = 0.0;

@@ -136,7 +136,7 @@ public class Substitution extends JPanel {
 		items.add(str);
 		JLabel l = new JLabel(str);
         spinner = new JSpinner();
-        spinner.setValue(0);
+        spinner.setValue(1);
         jp.add(l);
         spins.add(spinner);
         jp.add(spinner);
@@ -165,6 +165,7 @@ public class Substitution extends JPanel {
 		backend.completeItem();
 		mainP.cOrder.get(mainP.cOrder.size() - 1).setPrice(backend.getItemPrice(mainP.cOrder.size() - 1));
 		mainP.displayOrder();
+		
 		setVisible(false);
 		mainP.setUpTypes();
 		//Return to Server Panel control for next drink

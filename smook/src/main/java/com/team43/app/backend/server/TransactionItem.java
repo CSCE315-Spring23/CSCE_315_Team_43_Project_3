@@ -21,6 +21,7 @@ public class TransactionItem {
     add_ons = new ArrayList<MenuItem>();
     size = "";
     init_item_count = main_item.getItemCount();
+    System.out.println("initial" + init_item_count);
     price = main_item.getPrice();
     quantity = 1;
     is_smoothie = !(main_item.getCategory().equals("Enhance") ||
@@ -216,8 +217,8 @@ public class TransactionItem {
     if (curr_item_count > init_item_count) {
       count_diff = curr_item_count - init_item_count;
     }
-
+    System.out.println(count_diff);
     float add_on_price = (float)0.99;
-    price = main_item.getPrice()/* + add_on_price * count_diff */+ cup.getPrice();
+    price = main_item.getPrice() + add_on_price * count_diff + cup.getPrice();
   }
 }
