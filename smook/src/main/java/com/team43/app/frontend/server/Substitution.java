@@ -1,4 +1,9 @@
-package com.team43.app.frontend.server;
+/**
+
+    The com.team43.app.frontend.server package contains classes that handle
+    the user interface of the server application.
+    */
+    package com.team43.app.frontend.server;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -16,30 +21,105 @@ import java.awt.Color;
 import java.awt.Font;
 
 import com.team43.app.backend.server.*;
-public class Substitution extends JPanel {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
-	/**
-	 * Create the panel.
-	 */
-	JLabel title;
-	JPanel lister;
-	JPanel subs2;
-	JPanel current2;
-	JScrollPane Current;
-	JLabel current_label;
-	JScrollPane Subs;
-	JLabel subs_label;
-	JButton submit;
-	ServerBackend backend;
-    ServerPanel mainP;
-	private JSpinner spinner;
-	private ArrayList<String> items;
-	private ArrayList<JSpinner> spins;
-	private ArrayList<String> newItems;
+/**
+
+    The Substitution class is a JPanel that allows the user to substitute
+
+    ingredients for a selected item.
+    */
+    public class Substitution extends JPanel {
+
+    /**
+        A unique identifier for serialization.
+        */
+        private static final long serialVersionUID = 1L;
+
+    /**
+        The title label for the Substitution panel.
+        */
+        JLabel title;
+
+    /**
+        A JPanel to display the current ingredients of the selected item.
+        */
+        JPanel lister;
+
+    /**
+        A JPanel to display the substitute ingredients for the selected item.
+        */
+        JPanel subs2;
+
+    /**
+        A JPanel to display the current quantities of the selected item's ingredients.
+        */
+        JPanel current2;
+
+    /**
+        A JScrollPane to allow the user to scroll through the current ingredients.
+        */
+        JScrollPane Current;
+
+    /**
+        A label for the current ingredient section.
+        */
+        JLabel current_label;
+
+    /**
+        A JScrollPane to allow the user to scroll through the substitute ingredients.
+        */
+        JScrollPane Subs;
+
+    /**
+        A label for the substitute ingredient section.
+        */
+        JLabel subs_label;
+
+    /**
+        A button to submit the selected substitutions.
+        */
+        JButton submit;
+
+    /**
+        The ServerBackend object used to manage the server's database.
+        */
+        ServerBackend backend;
+
+    /**
+        The ServerPanel object used to manage the server's user interface.
+        */
+        ServerPanel mainP;
+
+    /**
+        A JSpinner object used to select the quantity of an ingredient.
+        */
+        private JSpinner spinner;
+
+    /**
+        An ArrayList of Strings containing the names of the selected item's ingredients.
+        */
+        private ArrayList<String> items;
+
+    /**
+        An ArrayList of JSpinner objects corresponding to the quantities of the selected item's ingredients.
+        */
+        private ArrayList<JSpinner> spins;
+
+    /**
+        An ArrayList of Strings containing the names of the substitute ingredients selected by the user.
+        */
+        private ArrayList<String> newItems;
+
+    /**
+
+        Creates a new Substitution panel for the specified item.
+
+        @param item the name of the item to substitute ingredients for.
+
+        @param b the ServerBackend object used to manage the server's database.
+
+        @param m the ServerPanel object used to manage the server's user interface.
+        */
 	public Substitution(String item, ServerBackend b, ServerPanel m) {
 		//Substitution panel title
 		backend = b;
@@ -95,55 +175,88 @@ public class Substitution extends JPanel {
         setUpCurrent();
         setUpSubs();
 	}
-	public void setUpCurrent() {
+/**
+
+    This method sets up the display of the current ingredients and their quantities.
+    It uses the backend's getItemIngredients() method to get the current ingredients for the item being made.
+    For each ingredient, it creates a JPanel and adds a JLabel with the ingredient's name and a JSpinner with the ingredient's quantity.
+    The JSpinner is initialized with the quantity of the ingredient using the backend's getIngredientQuantity() method.
+    The method then adds the JPanel to the current2 JPanel and validates the current2 and Current JPanels.
+    */
+    public void setUpCurrent() {
 		ArrayList<String> curr = backend.getItemIngredients();
 		for (int i = 0; i<curr.size(); i++) {
-			JPanel jp = new JPanel();
-			//jp.setBorder(new LineBorder(Color.black));
-//			jp.setLayout(new GridLayout(1,0));
-			JLabel l = new JLabel(curr.get(i));
-	        spinner = new JSpinner();
-	        spinner.setValue(backend.getIngredientQuantity(curr.get(i)));
-	        items.add(curr.get(i));
-	        jp.add(l);
-	        spins.add(spinner);
-	        jp.add(spinner);
-	        current2.add(jp);
+		JPanel jp = new JPanel();
+		JLabel l = new JLabel(curr.get(i));
+		spinner = new JSpinner();
+		spinner.setValue(backend.getIngredientQuantity(curr.get(i)));
+		items.add(curr.get(i));
+		jp.add(l);
+		spins.add(spinner);
+		jp.add(spinner);
+		current2.add(jp);
 		}
 		current2.validate();
 		Current.validate();
-	}
-	public void setUpSubs() {
+		}
+	
+	/**
+	
+		This method sets up the display of the substitute ingredients.
+		It uses the backend's getAllIngredients() method to get all available ingredients.
+		For each ingredient, it creates a JButton with the ingredient's name and adds an ActionListener that calls the addItem() method when clicked.
+		The method then adds the JButton to the subs2 JPanel and validates the subs2 and Subs JPanels.
+		*/
+		public void setUpSubs() {
 		ArrayList<String> curr = backend.getAllIngredients();
 		for (int i = 0; i<curr.size(); i++) {
-			final JButton jb = new JButton(curr.get(i));
-			jb.addActionListener(new ActionListener() {
-                public void actionPerformed(ActionEvent e) {
-                    addItem(jb.getText());
-                    jb.setVisible(false);
-                }
-            });
-			subs2.add(jb);
+		final JButton jb = new JButton(curr.get(i));
+		jb.addActionListener(new ActionListener() {
+		public void actionPerformed(ActionEvent e) {
+		addItem(jb.getText());
+		jb.setVisible(false);
+		}
+		});
+		subs2.add(jb);
 		}
 		subs2.validate();
 		Subs.validate();
-	}
-	public void addItem(String str) {
+		}
+	
+	/**
+	
+		This method adds a new item to the current ingredients.
+		It creates a JPanel and adds a JLabel with the item's name and a JSpinner with a quantity of 1.
+		The method then adds the JPanel to the current2 JPanel, adds the item to the items ArrayList, adds the JSpinner to the spins ArrayList, and validates the current2 and Current JPanels.
+		@param str the name of the item to add
+		*/
+		public void addItem(String str) {
 		JPanel jp = new JPanel();
-		//jp.setBorder(new LineBorder(Color.black));
-//		jp.setLayout(new GridLayout(1,0));
 		newItems.add(str);
 		items.add(str);
 		JLabel l = new JLabel(str);
-        spinner = new JSpinner();
-        spinner.setValue(1);
-        jp.add(l);
-        spins.add(spinner);
-        jp.add(spinner);
-        current2.add(jp);
-        current2.validate();
+		spinner = new JSpinner();
+		spinner.setValue(1);
+		jp.add(l);
+		spins.add(spinner);
+		jp.add(spinner);
+		current2.add(jp);
+		current2.validate();
 		Current.validate();
-	}
+		}
+	
+	/**
+	
+		This method submits the current order.
+		It goes through each item in the order and retrieves its quantity from the JSpinner.
+		If the quantity is less than 0, the item's quantity is set to 0 using the backend's adjustItem() method.
+		If the quantity is greater than or equal to 0, the item's quantity is adjusted using the backend's adjustItem() method.
+		If the item is a new item (i.e. was added using the addItem() method), it is added to the mainP's subs ArrayList using the addSubs() method.
+		The backend's completeItem() method is called to mark the current item as completed.
+		The current item's price is set using the backend's getItemPrice() method.
+		The order is displayed using the mainP's displayOrder() method.
+		The current window is set to not visible and the mainP's setUpTypes() method is called to set up the
+		*/
 	public void submit() {
 		int num = items.size();
 		for (int i = 0; i<num; i++) {
