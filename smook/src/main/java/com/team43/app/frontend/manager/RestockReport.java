@@ -44,7 +44,8 @@ public class RestockReport extends JPanel{
             "Quantity",
             "Average_Usage"
         };
-        HashMap<String,ArrayList<Float>> report = new HashMap<String,ArrayList<Float>>();//control.getRestock();
+        HashMap<String,ArrayList<Float>> report = control.getRestock();
+        //System.out.println("Retrieved " + ); // REMOVE
         Object[][] data = new Object[report.size()][3];
         int i = 0;
         for (HashMap.Entry<String,ArrayList<Float>> entry : report.entrySet()) {
@@ -52,6 +53,12 @@ public class RestockReport extends JPanel{
             data[i][1] = entry.getValue().get(0);
             data[i][2] = entry.getValue().get(1);
             i++;
+        }
+        if (report.keySet().size() == 0){
+            data = new Object[1][3];
+            data[0][0] = "No";
+            data[0][1] = "Items";
+            data[0][2] = "Needing Restocking";
         }
         setLayout(new BorderLayout());
         add(tableSlot, BorderLayout.CENTER);

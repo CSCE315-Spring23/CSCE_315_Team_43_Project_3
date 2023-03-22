@@ -282,7 +282,40 @@ public class jdbcpostgreSQL {
       System.exit(0);
     }
   }
+/**
+   * Finds the most frequent pairs
+   * @param start string describing start of range to use in yyyy-mm-dd format
+   * @param end   string describing end of range to use in yyyy-mm-dd format
+   * @return      a list of the most frequent pairs 
+   */
+  public List<List<Integer>> findPairs(String start, String end) {
+    List<List<Integer>> table = new ArrayList<List<Integer>>();
+    try {
+      // create a statement object
+      Statement stmt = conn.createStatement();
 
+      // Running a query
+      String sqlStatement = "SELECT O1.menu_id AS menu_id_1, O2.menu_id AS menu_id_2, COUNT(*) AS PurchaseFrequency FROM transaction_item AS O1 INNER JOIN transaction_item AS O2 ON O1.transaction_id = O2.transaction_id AND O1.menu_id < O2.menu_id WHERE O1.transaction_id IN (SELECT transaction_id FROM transaction WHERE transaction.time_of_purchase BETWEEN CAST('" + start + "' AS DATE) AND CAST('" + end + "' AS DATE)) AND O2.transaction_id IN (SELECT transaction_id FROM transaction WHERE transaction.time_of_purchase BETWEEN CAST('2022-05-01' AS DATE) AND CAST('2022-10-05' AS DATE)) GROUP BY menu_id_1, menu_id_2 ORDER BY PurchaseFrequency DESC;";
+
+      // send statement to DBMS
+      ResultSet result = stmt.executeQuery(sqlStatement);
+
+      // OUTPUT
+      while (result.next()) {
+        List<Integer> elements = new ArrayList<Integer>();
+        elements.add(result.getInt("menu_id_1"));
+        elements.add(result.getInt("menu_id_2"));
+        elements.add(result.getInt("purchasefrequency"));
+        table.add(elements);
+      }
+      return table;
+    } catch (Exception e) {
+      e.printStackTrace();
+      System.err.println(e.getClass().getName() + ": " + e.getMessage());
+      System.exit(0);
+    }
+    return null;
+  }
   // returns current inventory quantities
   public HashMap<Integer, Float> getCurrentInventory() {
     HashMap<Integer, Float> inventory = new HashMap<Integer, Float>();
@@ -347,7 +380,7 @@ public class jdbcpostgreSQL {
       String sqlStatement =
           "SELECT inventory_id, SUM (usage) AS total FROM inventory_usage WHERE date BETWEEN CAST(\'" +
           date +
-          "\') CURRENT_DATE AND inventory_id IN (SELECT inventory_id FROM inventory WHERE inventory.name!=\'Dummy Item\'') GROUP BY inventory_id";
+          "\' AS DATE) AND CURRENT_DATE AND inventory_id IN (SELECT inventory_id FROM inventory WHERE inventory.name!=\'Dummy Item\') GROUP BY inventory_id";
 
       // send statement to DBMS
       ResultSet result = stmt.executeQuery(sqlStatement);
@@ -398,7 +431,7 @@ public class jdbcpostgreSQL {
 
       // Running a query
       String sqlStatement =
-          "SELECT inventory_id, AVG (usage) AS average FROM inventory_usage WHERE inventory_id IN (SELECT inventory_id FROM inventory WHERE inventory.name!=\'Dummy Item\'') GROUP BY inventory_id";
+          "SELECT inventory_id, AVG (usage) AS average FROM inventory_usage WHERE inventory_id IN (SELECT inventory_id FROM inventory WHERE inventory.name!=\'Dummy Item\') GROUP BY inventory_id";
 
       // send statement to DBMS
       ResultSet result = stmt.executeQuery(sqlStatement);
@@ -449,7 +482,7 @@ public class jdbcpostgreSQL {
     HashMap<String, ArrayList<Float>> restock =
         new HashMap<String, ArrayList<Float>>();
     for (Integer id : curr_inventory.keySet()) {
-      if (curr_inventory.get(id) < avg_usage.get(id)) {
+      if (avg_usage.containsKey(id) && curr_inventory.get(id) < avg_usage.get(id)) {
         ArrayList<Float> value = new ArrayList<Float>();
         value.add(curr_inventory.get(id));
         value.add(avg_usage.get(id));

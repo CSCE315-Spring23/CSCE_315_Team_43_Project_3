@@ -132,7 +132,7 @@ public class ManagerPanel extends JPanel {
             controller.navigatePage("ViewExcess");
         }
         else if (name == "viewRestock"){
-            controller.add("ViewRestock",new ExcessReport(controller));
+            controller.add("ViewRestock",new RestockReport(controller));
             controller.navigatePage("ViewRestock");
         }
     }
