@@ -482,7 +482,7 @@ public class jdbcpostgreSQL {
     HashMap<String, ArrayList<Float>> restock =
         new HashMap<String, ArrayList<Float>>();
     for (Integer id : curr_inventory.keySet()) {
-      if (avg_usage.containsKey(id) && curr_inventory.get(id) < avg_usage.get(id)) {
+      if (avg_usage.containsKey(id) && curr_inventory.get(id) < (7 * avg_usage.get(id))) {
         ArrayList<Float> value = new ArrayList<Float>();
         value.add(curr_inventory.get(id));
         value.add(avg_usage.get(id));
