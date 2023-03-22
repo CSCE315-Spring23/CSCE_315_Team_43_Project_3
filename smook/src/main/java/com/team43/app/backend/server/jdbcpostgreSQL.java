@@ -92,7 +92,7 @@ public class jdbcpostgreSQL {
 
       // Running a query
       String sqlStatement =
-          "SELECT name FROM menu_item WHERE name NOT IN ('Small Cup', 'Medium Cup', 'Large Cup', 'Small Straw', 'Large Straw', 'Assorted Snacks', 'Dummy Item') AND type=\'Enhance\'";
+          "SELECT name FROM menu_item WHERE name NOT IN ('Small Cup', 'Medium Cup', 'Large Cup', 'Small Straw', 'Large Straw', 'Assorted Snacks', 'Dummy Item')";
 
       // send statement to DBMS
       ResultSet result = stmt.executeQuery(sqlStatement);
@@ -160,30 +160,7 @@ public class jdbcpostgreSQL {
   }
 
   // returns number of different items in the inventory
-  // public int getNumInventoryItems() {
-  //   int num_items = 0;
-  //   try {
-  //     // create a statement object
-  //     Statement stmt = conn.createStatement();
-
-  //     // Running a query
-  //     Statement pstat = conn.prepareStatement("SELECT COUNT(inventory_id) FROM inventory;", ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
-
-  //     // send statement to DBMS
-  //     ResultSet result = pstat.executeQuery("SELECT COUNT(inventory_id) FROM inventory;");
-
-  //     // OUTPUT
-  //     result.first();
-  //     num_items = result.getInt("count");
-  //   } catch (Exception e) {
-  //     e.printStackTrace();
-  //     System.err.println(e.getClass().getName() + ": " + e.getMessage());
-  //     System.exit(0);
-  //   }
-  //   return num_items;
-  // }
-
-  public int getNumInventoryItems(){
+  public int getNumInventoryItems() {
     List<List<String>> table = new ArrayList<List<String>>();
     try {
       // create a statement object
@@ -194,7 +171,6 @@ public class jdbcpostgreSQL {
 
       // send statement to DBMS
       ResultSet result = stmt.executeQuery(sqlStatement);
-
 
       // OUTPUT
       while (result.next()) {
@@ -213,6 +189,7 @@ public class jdbcpostgreSQL {
     }
     return table.size();
   }
+
   // updates transaction and transaction_item tables based on given transaction
   public void writeTransactionData(Transaction trans, int emp_id) {
     try {
@@ -228,13 +205,12 @@ public class jdbcpostgreSQL {
       // send statement to DBMS
       stmt.executeUpdate(sqlStatement);
 
+      int trans_item_id = getNextTransactionItemID();
       for (Integer menu_id : trans.getMenuItemIDs()) {
         sqlStatement =
-            "INSERT INTO transaction_item (menu_id, transaction_id) VALUES (" +
-            menu_id + ", " + trans.getID() + ")";
+            "INSERT INTO transaction_item (transaction_item_id, menu_id, transaction_id) VALUES (" +
+            trans_item_id++ + ", " + menu_id + ", " + trans.getID() + ")";
         stmt.executeUpdate(sqlStatement);
-
-        // build single insert then execute instead?
       }
     } catch (Exception e) {
       e.printStackTrace();
@@ -267,8 +243,33 @@ public class jdbcpostgreSQL {
     return trans_id;
   }
 
+  // returns id of next transaction item
+  private int getNextTransactionItemID() {
+    int trans_id = 0;
+    try {
+      // create a statement object
+      Statement stmt = conn.createStatement();
+
+      // Running a query
+      String sqlStatement =
+          "SELECT MAX(transaction_item_id) FROM transaction_item";
+
+      // send statement to DBMS
+      ResultSet result = stmt.executeQuery(sqlStatement);
+
+      // OUTPUT
+      result.next();
+      trans_id = result.getInt("max") + 1;
+    } catch (Exception e) {
+      e.printStackTrace();
+      System.err.println(e.getClass().getName() + ": " + e.getMessage());
+      System.exit(0);
+    }
+    return trans_id;
+  }
+
   // returns current inventory quantities
-  private HashMap<Integer, Float> getCurrentInventory() {
+  public HashMap<Integer, Float> getCurrentInventory() {
     HashMap<Integer, Float> inventory = new HashMap<Integer, Float>();
     try {
       // create a statement object
@@ -315,6 +316,108 @@ public class jdbcpostgreSQL {
       System.err.println(e.getClass().getName() + ": " + e.getMessage());
       System.exit(0);
     }
+  }
+
+  // returns current inventory usage tracked for today
+  public HashMap<Integer, Float> getCurrentUsage() {
+    HashMap<Integer, Float> usage = new HashMap<Integer, Float>();
+    try {
+      // create a statement object
+      Statement stmt = conn.createStatement();
+
+      // Running a query
+      String sqlStatement =
+          "SELECT inventory_id, usage FROM inventory_usage WHERE date=CURRENT_DATE";
+
+      // send statement to DBMS
+      ResultSet result = stmt.executeQuery(sqlStatement);
+
+      // OUTPUT
+      while (result.next()) {
+        usage.put(result.getInt("inventory_id"), result.getFloat("usage"));
+      }
+    } catch (Exception e) {
+      e.printStackTrace();
+      System.err.println(e.getClass().getName() + ": " + e.getMessage());
+      System.exit(0);
+    }
+    return usage;
+  }
+
+  // updates inventory usage for today to match given usage statistics
+  public void updateInventoryUsage(HashMap<Integer, Float> usage) {
+    try {
+      // create a statement object
+      Statement stmt = conn.createStatement();
+
+      for (Integer id : usage.keySet()) {
+        String sqlStatement =
+            "INSERT INTO inventory_usage (date, inventory_id, usage) VALUES (CURRENT_DATE, " +
+            id + ", " + usage.get(id) +
+            ") ON CONFLICT (date, inventory_id) DO UPDATE SET usage=" +
+            usage.get(id) + " WHERE date=CURRENT_DATE AND inventory_id=" + id;
+        stmt.executeUpdate(sqlStatement);
+      }
+    } catch (Exception e) {
+      e.printStackTrace();
+      System.err.println(e.getClass().getName() + ": " + e.getMessage());
+      System.exit(0);
+    }
+  }
+
+  // returns inventory usage of all items currently in the inventory since the
+  // given date
+  public HashMap<Integer, Float> getUsageSinceDate(String date) {
+    HashMap<Integer, Float> usage = new HashMap<Integer, Float>();
+    try {
+      // create a statement object
+      Statement stmt = conn.createStatement();
+
+      // Running a query
+      String sqlStatement =
+          "SELECT inventory_id, SUM (usage) AS total FROM inventory_usage WHERE date BETWEEN CAST(\'" +
+          date +
+          "\') CURRENT_DATE AND inventory_id IN (SELECT inventory_id FROM inventory WHERE inventory.name!=\'Dummy Item\'') GROUP BY inventory_id";
+
+      // send statement to DBMS
+      ResultSet result = stmt.executeQuery(sqlStatement);
+
+      // OUTPUT
+      while (result.next()) {
+        usage.put(result.getInt("inventory_id"), result.getFloat("total"));
+      }
+    } catch (Exception e) {
+      e.printStackTrace();
+      System.err.println(e.getClass().getName() + ": " + e.getMessage());
+      System.exit(0);
+    }
+    return usage;
+  }
+
+  // returns map of id to name for all important inventory items
+  public HashMap<Integer, String> getInventoryNames() {
+    HashMap<Integer, String> names = new HashMap<Integer, String>();
+    try {
+      // create a statement object
+      Statement stmt = conn.createStatement();
+
+      // Running a query
+      String sqlStatement =
+          "SELECT inventory_id, name FROM inventory WHERE name!=\'Dummy Item\'";
+
+      // send statement to DBMS
+      ResultSet result = stmt.executeQuery(sqlStatement);
+
+      // OUTPUT
+      while (result.next()) {
+        names.put(result.getInt("inventory_id"), result.getString("name"));
+      }
+    } catch (Exception e) {
+      e.printStackTrace();
+      System.err.println(e.getClass().getName() + ": " + e.getMessage());
+      System.exit(0);
+    }
+    return names;
   }
 
   public boolean close_connection() {
