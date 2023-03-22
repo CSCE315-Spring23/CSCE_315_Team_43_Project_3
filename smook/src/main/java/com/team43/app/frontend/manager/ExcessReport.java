@@ -59,7 +59,7 @@ public class ExcessReport extends JPanel{
             "Percent sold since inputed date"
         };
         String[] Date = startDate.getText().split("-");
-        HashMap<String,Float> report = controller.getExcess(Integer.parseInt(Date[0]),Integer.parseInt(Date[1]),Integer.parseInt(Date[2]));
+        HashMap<String,Float> report = controller.getExcess(Integer.parseInt(Date[1]),Integer.parseInt(Date[2]),Integer.parseInt(Date[0]));
         Object[][] data = new Object[report.size()][2];
         int i = 0;
         for (HashMap.Entry<String, Float> entry : report.entrySet()) {
