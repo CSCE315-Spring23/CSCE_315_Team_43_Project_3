@@ -179,6 +179,22 @@ public class ServerBackend {
     return excess;
   }
 
-  // TODO
-  public HashMap<String, Integer> getRestock() { return null; }
+  // returns map of inventory items that are currently under their average daily
+  // usage
+  public HashMap<String, Float> getRestock() {
+    // get necessary information from database
+    HashMap<Integer, Float> curr_inventory = db.getCurrentInventory();
+    HashMap<Integer, Float> avg_usage = db.getAverageUsage();
+    HashMap<Integer, String> names = db.getInventoryNames();
+
+    // build map of understocked items
+    HashMap<String, Float> restock = new HashMap<String, Float>();
+    for (Integer id : curr_inventory.keySet()) {
+      if (curr_inventory.get(id) < avg_usage.get(id)) {
+        restock.put(names.get(id), curr_inventory.get(id));
+      }
+    }
+
+    return restock;
+  }
 }
