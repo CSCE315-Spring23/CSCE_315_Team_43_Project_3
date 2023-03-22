@@ -163,9 +163,9 @@ public class Substitution extends JPanel {
 	}
 		//backend.tester();
 		backend.completeItem();
-		mainP.cOrder.get(mainP.cOrder.size() - 1).setPrice(backend.getItemPrice(mainP.cOrder.size() - 1));
+		mainP.currentOrder.get(mainP.currentOrder.size() - 1).setPrice(backend.getItemPrice(mainP.currentOrder.size() - 1));
 		mainP.displayOrder();
-		
+		mainP.transaction.
 		setVisible(false);
 		mainP.setUpTypes();
 		//Return to Server Panel control for next drink
