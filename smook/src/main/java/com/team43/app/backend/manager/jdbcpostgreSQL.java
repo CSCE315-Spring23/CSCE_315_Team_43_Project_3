@@ -453,7 +453,50 @@ public class jdbcpostgreSQL {
         }
         return null;
     }
+      // returns map of excess inventory names and the percentage used since the
+  // given date
+  public HashMap<String, Float> getExcess(int month, int day, int year) {
+    // get necessary information from database
+    HashMap<Integer, Float> usage =
+        getUsageSinceDate("" + year + "-" + month + "-" + day);
+    HashMap<Integer, Float> curr_inv = getCurrentInventory();
+    HashMap<Integer, String> names = getInventoryNames();
 
+    // build map of excess inventory
+    HashMap<String, Float> excess = new HashMap<String, Float>();
+    for (Integer id : usage.keySet()) {
+      float percentage =
+          100 * (usage.get(id) / (usage.get(id) + curr_inv.get(id)));
+      if (percentage < 10.0) {
+        excess.put(names.get(id), percentage);
+      }
+    }
+
+    return excess;
+  }
+
+  // returns map of inventory items that are currently under their average daily
+  // usage. Maps item name to list with current inventory and average usage
+  public HashMap<String, ArrayList<Float>> getRestock() {
+    // get necessary information from database
+    HashMap<Integer, Float> curr_inventory = getCurrentInventory();
+    HashMap<Integer, Float> avg_usage = getAverageUsage();
+    HashMap<Integer, String> names = getInventoryNames();
+
+    // build map of understocked items
+    HashMap<String, ArrayList<Float>> restock =
+        new HashMap<String, ArrayList<Float>>();
+    for (Integer id : curr_inventory.keySet()) {
+      if (avg_usage.containsKey(id) && curr_inventory.get(id) < (7 * avg_usage.get(id))) {
+        ArrayList<Float> value = new ArrayList<Float>();
+        value.add(curr_inventory.get(id));
+        value.add(avg_usage.get(id));
+        restock.put(names.get(id), value);
+      }
+    }
+
+    return restock;
+  }
     /**
      * Ends the psql connection
      * @return If the connection was correctly closed
