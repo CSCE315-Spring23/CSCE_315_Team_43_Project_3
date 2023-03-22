@@ -139,4 +139,10 @@ public class Controller {
     public List<List<Integer>> getPairs(String start, String end) {
         return model.db.findPairs(start, end);
     }
+    public HashMap<String, Float> getExcess(int month, int day, int year) {
+        return model.db.getExcess(month, day, year);
+    }
+    public HashMap<String, ArrayList<Float>> getRestock() {
+        return model.db.getRestock();
+    }
 }
