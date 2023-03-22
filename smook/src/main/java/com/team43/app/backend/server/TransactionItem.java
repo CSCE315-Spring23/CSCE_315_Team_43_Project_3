@@ -217,7 +217,12 @@ public class TransactionItem {
     if (curr_item_count > init_item_count) {
       count_diff = curr_item_count - init_item_count;
     }
-    System.out.println(count_diff);
+    /*
+    System.out.println("Original Item Count: " + init_item_count);
+    System.out.println("Main Item Count: " + main_item.getItemCount());
+    System.out.println("Overall Item Count: " + curr_item_count);
+    System.out.println("Count Difference: " + count_diff);
+    */
     float add_on_price = (float)0.99;
     price = main_item.getPrice() + add_on_price * count_diff + cup.getPrice();
   }
