@@ -5,14 +5,15 @@ import HelloWorld from './components/HelloWorld.vue'
 
 <template>
   <header>
-    <img alt="Vue logo" class="logo" src="@/assets/logo.svg" width="125" height="125" />
+    <!-- <img alt="Vue logo" class="logo" src="@/assets/smookLogo.svg" width="125" height="125" /> -->
 
     <div class="wrapper">
-      <HelloWorld msg="You did it!" />
-
+      <!-- <HelloWorld msg="You did it!" /> -->
       <nav>
         <RouterLink to="/">Home</RouterLink>
-        <RouterLink to="/about">About</RouterLink>
+        <RouterLink to="/customer">Customer</RouterLink>
+        <RouterLink to="/server">Server</RouterLink>
+        <RouterLink to="/manager">Manager</RouterLink>
       </nav>
     </div>
   </header>
@@ -21,10 +22,10 @@ import HelloWorld from './components/HelloWorld.vue'
 </template>
 
 <style scoped>
-header {
-  line-height: 1.5;
+/* header {
+  /* line-height: 1.5;
   max-height: 100vh;
-}
+} */
 
 .logo {
   display: block;
@@ -33,9 +34,9 @@ header {
 
 nav {
   width: 100%;
-  font-size: 12px;
+  font-size: 22px;
   text-align: center;
-  margin-top: 2rem;
+  /*margin-top: 2rem;*/
 }
 
 nav a.router-link-exact-active {
@@ -56,7 +57,7 @@ nav a:first-of-type {
   border: 0;
 }
 
-@media (min-width: 1024px) {
+/* @media (min-width: 1024px) {
   header {
     display: flex;
     place-items: center;
@@ -81,5 +82,5 @@ nav a:first-of-type {
     padding: 1rem 0;
     margin-top: 1rem;
   }
-}
+}*/
 </style>
