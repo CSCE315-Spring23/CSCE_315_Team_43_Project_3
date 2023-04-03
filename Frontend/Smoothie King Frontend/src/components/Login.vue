@@ -4,13 +4,15 @@ import LoginTitle from './LoginTitle.vue';
 
 import { RouterLink, RouterView } from 'vue-router'
 
-
+function test(){
+    console.log("Submitted");
+}
 </script>
 <template>
     <LoginTitle msg="Smoothie King POS!" />
     <div class="login">
         <div>
-    <form>
+    <form @submit.prevent="test()">
         <label for="username">Username:</label>
         <input type="text" id="username" name="username"><br>
         <label for="password">Password: </label>
