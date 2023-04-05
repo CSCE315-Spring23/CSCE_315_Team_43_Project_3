@@ -56,10 +56,14 @@ totalRevenue = 0
 transItemID = 0
 transID = 0
 orderID = 0
+usageID = 0
+orderLedgerID = 0
+
 for i in range(0,365):
-    usageList = []
-    for i in range(1,74):
-        usageList.append([i,0,dt])
+    usageList = []  
+    for j in range(1,74):
+        usageList.append([usageID, j,0,dt])
+        usageID += 1
 
     if(i == 10 or i == 287):
         maxDailyTransactions = 180
@@ -124,7 +128,7 @@ for i in range(0,365):
                         else:
                             tempIngredient = x
                         tempIngredient[3] = int(tempIngredient[3]) - int(y[2])
-                        usageList[int(tempIngredient[0])-1][1] += int(y[2])
+                        usageList[int(tempIngredient[0])-1][2] += int(y[2])
                         x = tempIngredient
             
         trans.append(costTransaction)
@@ -144,7 +148,8 @@ for i in range(0,365):
         #arbitrary threshold to establish reorders
         if int(x[3]) <= 100:
             orderNeeded = True
-            order_ledger.append([int(x[0]), orderID, 500])
+            order_ledger.append([orderLedgerID, int(x[0]), orderID, 500])
+            orderLedgerID += 1
             orderSum += 500 * float(x[2])
             #refill stock since order has been placed
             x[3] = 500
