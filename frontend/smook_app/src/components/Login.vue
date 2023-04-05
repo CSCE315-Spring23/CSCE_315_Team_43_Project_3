@@ -19,7 +19,8 @@ function test(){
         <input type="password" name="password" id="password"><br>
         <input type="submit" value="Login" id="sub">
     </form>
-    <RouterLink to="/customer">Continue as Guest</RouterLink>
+    <RouterLink to="/customer">Place Order</RouterLink><br>
+    <RouterLink to="/menuBoard">Menu Board</RouterLink>
     </div>
 </div>
 </template>

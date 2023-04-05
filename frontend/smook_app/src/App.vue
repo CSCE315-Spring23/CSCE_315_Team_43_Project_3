@@ -1,22 +1,22 @@
 <script setup>
 import { RouterLink, RouterView } from 'vue-router'
-import HelloWorld from './components/HelloWorld.vue'
 </script>
 
 <template>
-  <header>
+  <!-- <header> -->
     <!-- <img alt="Vue logo" class="logo" src="@/assets/smookLogo.svg" width="125" height="125" /> -->
 
-    <div class="wrapper">
-      <!-- <HelloWorld msg="You did it!" /> -->
+    <!-- <div class="wrapper">
+      <HelloWorld msg="You did it!" />
       <nav>
         <RouterLink to="/">Home</RouterLink>
         <RouterLink to="/customer">Customer</RouterLink>
         <RouterLink to="/server">Server</RouterLink>
         <RouterLink to="/manager">Manager</RouterLink>
+        <RouterLink to="/menuBoard">Menu Board</RouterLink>
       </nav>
     </div>
-  </header>
+  </header> -->
 
   <RouterView />
 </template>
