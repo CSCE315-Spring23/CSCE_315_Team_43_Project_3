@@ -7,6 +7,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Inheritance;
 import jakarta.persistence.InheritanceType;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -14,7 +15,6 @@ import jakarta.persistence.Table;
 public class Menu_Item {
     
     @Id
-    @GeneratedValue
     @Column(name = "menu_id")
     long menuId;
 

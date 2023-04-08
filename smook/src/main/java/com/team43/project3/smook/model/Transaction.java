@@ -9,6 +9,7 @@ import jakarta.persistence.Inheritance;
 import jakarta.persistence.InheritanceType;
 import jakarta.persistence.Table;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.JoinColumn;
 
 import java.sql.Date;
@@ -18,13 +19,12 @@ import java.sql.Date;
 public class Transaction {
     
     @Id
-    @GeneratedValue
     @Column(name = "transaction_id")
-    long transactionId;
+    long transaction_id;
 
-    @ManyToOne(optional = true)
-    @JoinColumn(name = "employee_id")
-    long employeeId;
+    @ManyToOne
+    @JoinColumn(name="employee_id", nullable=false, insertable=false, updatable=false)
+    Employee employee;
 
     @Column(name = "purchaser_name")
     String purchaserName;
@@ -36,20 +36,20 @@ public class Transaction {
     Date timeOfPurchase;
 
 
-    public long getTransactionId() {
-        return this.transactionId;
+    public long getTransaction_id() {
+        return this.transaction_id;
     }
 
-    public void setTransactionId(long transactionId) {
-        this.transactionId = transactionId;
+    public void setTransaction_id(long transactionId) {
+        this.transaction_id = transactionId;
     }
 
     public long getEmployeeId() {
-        return this.employeeId;
+        return this.employee.getEmployee_id();
     }
 
     public void setEmployeeId(long employeeId) {
-        this.employeeId = employeeId;
+        this.employee.setEmployee_id(employeeId);;
     }
 
     public String getPurchaserName() {
@@ -77,8 +77,8 @@ public class Transaction {
     }
 
     public Transaction(long transactionId, long employeeId, String purchaserName, float priceOfTransaction, Date timeOfPurchase) {
-        this.transactionId = transactionId;
-        this.employeeId = employeeId;
+        this.transaction_id = transactionId;
+        this.employee.setEmployee_id(employeeId);
         this.purchaserName = purchaserName;
         this.priceOfTransaction = priceOfTransaction;
         this.timeOfPurchase = timeOfPurchase;

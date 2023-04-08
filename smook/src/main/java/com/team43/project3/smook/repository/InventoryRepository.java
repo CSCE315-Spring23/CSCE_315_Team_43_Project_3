@@ -6,6 +6,6 @@ import org.springframework.stereotype.Repository;
 import com.team43.project3.smook.model.Inventory;
 
 @Repository
-public interface InventoryRepository extends JpaRepository<Inventory, longeger> {
+public interface InventoryRepository extends JpaRepository<Inventory, Long> {
     
 }

@@ -6,6 +6,6 @@ import org.springframework.stereotype.Repository;
 import com.team43.project3.smook.model.Employee;
 
 @Repository
-public interface EmployeeRepository extends JpaRepository<Employee, longeger> {
+public interface EmployeeRepository extends JpaRepository<Employee, Long> {
     
 }

@@ -10,6 +10,7 @@ import jakarta.persistence.InheritanceType;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import jakarta.persistence.criteria.Order;
 
 @Entity
 @Table(name = "order_list")
@@ -21,12 +22,12 @@ public class Order_List {
     long orderListId;
 
     @ManyToOne
-    @JoinColumn(name = "inventory_id")
-    long inventoryId;
+    @JoinColumn(name = "inventory_id", insertable=false, updatable=false)
+    Inventory inventory;
 
     @ManyToOne
-    @JoinColumn(name = "order_id")
-    long orderId;
+    @JoinColumn(name = "order_id", insertable=false, updatable=false)
+    Order_Item order;
 
     @Column(name = "quantity")
     float quantity;
@@ -41,19 +42,19 @@ public class Order_List {
     }
 
     public long getInventoryId() {
-        return this.inventoryId;
+        return this.inventory.getInventoryId();
     }
 
     public void setInventoryId(long inventoryId) {
-        this.inventoryId = inventoryId;
+        this.inventory.setInventoryId(inventoryId);
     }
 
     public long getOrderId() {
-        return this.orderId;
+        return this.order.getOrderId();
     }
 
     public void setOrderId(long orderId) {
-        this.orderId = orderId;
+        this.order.setOrderId(orderId);
     }
 
     public float getQuantity() {
@@ -67,8 +68,8 @@ public class Order_List {
 
     public Order_List(long orderListId, long inventoryId, long orderId, float quantity) {
         this.orderListId = orderListId;
-        this.inventoryId = inventoryId;
-        this.orderId = orderId;
+        this.inventory.setInventoryId(inventoryId);
+        this.order.setOrderId(orderId);
         this.quantity = quantity;
     }
 

@@ -6,6 +6,6 @@ import org.springframework.stereotype.Repository;
 import com.team43.project3.smook.model.Menu_Item;
 
 @Repository
-public interface MenuItemRepository extends JpaRepository<Menu_Item, longeger> {
+public interface MenuItemRepository extends JpaRepository<Menu_Item, Long> {
     
 }

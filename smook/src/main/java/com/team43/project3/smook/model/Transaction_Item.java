@@ -23,12 +23,12 @@ public class Transaction_Item {
     long transactionItemId;
 
     @ManyToOne
-    @JoinColumn(name = "menu_id")
-    long menuId;
+    @JoinColumn(name = "menu_id", insertable=false, updatable=false)
+    Menu_Item menu_item;
 
     @ManyToOne
-    @JoinColumn(name = "transaction_id")
-    long transactionId;
+    @JoinColumn(name = "transaction_id", insertable=false, updatable=false)
+    Transaction transaction;
 
 
     public long getTransactionItemId() {
@@ -40,25 +40,25 @@ public class Transaction_Item {
     }
 
     public long getMenuId() {
-        return this.menuId;
+        return this.menu_item.getMenuId();
     }
 
     public void setMenuId(long menuId) {
-        this.menuId = menuId;
+        this.menu_item.setMenuId(menuId);
     }
 
     public long getTransactionId() {
-        return this.transactionId;
+        return this.transaction.getTransaction_id();
     }
 
     public void setTransactionId(long transactionId) {
-        this.transactionId = transactionId;
+        this.transaction.setTransaction_id(transactionId);;
     }
 
     public Transaction_Item(long transactionItemId, long menuId, long transactionId) {
         this.transactionItemId = transactionItemId;
-        this.menuId = menuId;
-        this.transactionId = transactionId;
+        this.menu_item.setMenuId(menuId); 
+        this.transaction.setTransaction_id(transactionId);
     }
 
     public Transaction_Item() {

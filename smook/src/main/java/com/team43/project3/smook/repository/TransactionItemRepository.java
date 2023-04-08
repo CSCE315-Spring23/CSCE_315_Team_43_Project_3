@@ -6,6 +6,6 @@ import org.springframework.stereotype.Repository;
 import com.team43.project3.smook.model.Transaction_Item;
 
 @Repository
-public interface TransactionItemRepository extends JpaRepository<Transaction_Item, longeger> {
+public interface TransactionItemRepository extends JpaRepository<Transaction_Item, Long> {
     
 }

@@ -7,6 +7,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Inheritance;
 import jakarta.persistence.InheritanceType;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -16,7 +17,7 @@ public class Employee {
     @Id
     @GeneratedValue
     @Column(name = "employee_id")
-    long employeeId;
+    long employee_id;
 
     @Column(name = "first_name")
     String firstName;
@@ -34,12 +35,12 @@ public class Employee {
     String password;
 
 
-    public long getEmployeeId() {
-        return this.employeeId;
+    public long getEmployee_id() {
+        return this.employee_id;
     }
 
-    public void setEmployeeId(long employeeId) {
-        this.employeeId = employeeId;
+    public void setEmployee_id(long employeeId) {
+        this.employee_id = employeeId;
     }
 
     public String getFirstName() {
@@ -83,7 +84,7 @@ public class Employee {
     }
 
     public Employee(long employeeId, String firstName, String lastName, String role, String username, String password) {
-        this.employeeId = employeeId;
+        this.employee_id = employeeId;
         this.firstName = firstName;
         this.lastName = lastName;
         this.role = role;
