@@ -1,12 +1,16 @@
-# CSCE_315_Team_43
+# CSCE_315_Team_43_Project_3
 
 ## Setup Instructions
+
 Maven is a Java software development build tool that must be installed.
 Instructions are [here](https://maven.apache.org/install.html)
 
 ## Run Instructions
+
 1. Navigate inside the `smook` directory
 
-2. To build from source, run `mvn clean compile assembly:single`
+2. To build and run the backend, run `mvn package`.
+_Note: on a first run, do `mvn clean install` to ensure the dependencies are installed correctly._
 
-3. To run the project, run `java -jar target/smook-1.0-SNAPSHOT-jar-with-dependencies.jar com.team43.app.App`
+3. To run the frontend, navigate to the `frontend/smook_app` folder and run `npm run dev` to run a live server in development mode.
+All of your local changes will be automatically updated/reflected in the live server.
