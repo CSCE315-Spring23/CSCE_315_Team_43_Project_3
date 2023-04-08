@@ -62,5 +62,8 @@ public class SmookServiceImpl implements SmookService{
         Transaction_Item testTransactionItem = transactionItemRepository.getReferenceById(1L);
         Transaction testTransaction = transactionRepository.getReferenceById(1L);
         System.out.println(testEmployee.getFirstName() + ' ' + testIngredientList.getQuantity() + ' ' + testInventory.getName() + ' ' + testMenuItem.getName() + ' ' + testOrderItem.getDatePlaced() + ' ' + testOrderList.getQuantity() + ' ' + testTransactionItem.getTransactionItemId() + ' ' + testTransaction.getPurchaserName());
+        
+        Employee newEmployee = new Employee(3L, "Charles", "Barkley", "employee", "cbark", "cbarksalot84");
+        employeeRepository.save(newEmployee);
     }
 }

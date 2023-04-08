@@ -16,7 +16,6 @@ import java.sql.Date;
 public class Order_Item {
 
     @Id
-    @GeneratedValue
     @Column(name = "order_id")
     long orderId;
 

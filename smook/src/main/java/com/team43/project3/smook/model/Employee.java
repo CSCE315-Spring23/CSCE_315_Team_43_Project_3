@@ -15,7 +15,6 @@ import jakarta.persistence.Table;
 public class Employee {
     
     @Id
-    @GeneratedValue
     @Column(name = "employee_id")
     long employee_id;
 

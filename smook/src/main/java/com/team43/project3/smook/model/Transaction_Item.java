@@ -18,7 +18,6 @@ import jakarta.persistence.JoinColumn;
 public class Transaction_Item {
     
     @Id
-    @GeneratedValue
     @Column(name = "transaction_item_id")
     long transactionItemId;
 

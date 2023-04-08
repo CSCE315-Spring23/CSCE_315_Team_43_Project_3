@@ -15,7 +15,7 @@ public class SmookController {
     @Autowired
     private SmookServiceImpl loveGameService;
 
-    @RequestMapping(value = "/smook/test", method = RequestMethod.GET)
+    @RequestMapping(value = "/smook/test", method = RequestMethod.POST)
     @ResponseBody
     public void testDB()
     {

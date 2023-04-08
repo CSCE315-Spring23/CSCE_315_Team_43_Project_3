@@ -17,7 +17,6 @@ import jakarta.persistence.criteria.Order;
 public class Order_List {
     
     @Id
-    @GeneratedValue
     @Column(name = "order_list_id")
     long orderListId;
 
