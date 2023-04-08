@@ -16,10 +16,9 @@ CREATE TABLE Order_Item (
 
 /* Order_List */
 CREATE TABLE Order_List (
+    Order_List_ID INT PRIMARY KEY,
     Inventory_ID INT,
     Order_ID INT,
-    PRIMARY KEY(Inventory_ID, Order_ID),
-
     Quantity FLOAT,
 
     CONSTRAINT FK_Inventory_ID
@@ -83,10 +82,9 @@ CREATE TABLE Transaction (
 
 /* Transaction_Item */
 CREATE TABLE Transaction_Item (
-    Transaction_Item_ID INT,
+    Transaction_Item_ID INT PRIMARY KEY,
     Menu_ID INT,
     Transaction_ID INT,
-    PRIMARY KEY(Transaction_Item_ID, Menu_ID, Transaction_ID),
 
     CONSTRAINT FK_Menu_ID
         FOREIGN KEY(Menu_ID)
@@ -98,10 +96,10 @@ CREATE TABLE Transaction_Item (
 );
 
 CREATE TABLE Inventory_Usage (
+    Inventory_Usage_ID INT PRIMARY KEY,
     Inventory_ID INT,
     usage FLOAT,
     Date DATE,
-    PRIMARY KEY(Date, Inventory_ID),
     CONSTRAINT FK_Inventory_ID
         FOREIGN KEY(Inventory_ID)
         REFERENCES Inventory(Inventory_ID)
