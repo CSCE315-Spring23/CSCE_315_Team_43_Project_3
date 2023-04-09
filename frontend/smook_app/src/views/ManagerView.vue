@@ -1,3 +1,7 @@
+<script setup>
+import Heading from '../components/Heading.vue';
+</script>
 <template>
-    <h1>ManagerView</h1>
+    <Heading />
+    <h1>Manager</h1>
 </template>
