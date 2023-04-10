@@ -72,8 +72,9 @@ main {
         min-width: 170px;
         min-height: 40px;
         margin-top: 0;
-        display: block;
+        /* display: block; */
         margin-bottom: 10px;
+        margin-right: 10px;
         border-radius: 10px;
         border: black 3px solid;
         box-sizing: border-box;
