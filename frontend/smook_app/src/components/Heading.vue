@@ -31,9 +31,9 @@ function gohome() {
         </button>
         <button id="signin" @click="login()" v-if="!log">Sign in</button>
     </div>
-    <div id="spacer">
+    <!-- <div id="spacer">
 
-    </div>
+    </div> -->
 </template>
 <style scoped>
     #head {
@@ -44,6 +44,8 @@ function gohome() {
         top: 0px;
         left: 0px;
         border-bottom: 4px grey ridge;
+        z-index: 999;
+        background-color: white;
     }
     button {
         background-color: white;
