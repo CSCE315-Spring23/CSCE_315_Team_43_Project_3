@@ -3,5 +3,5 @@ import Heading from '../components/Heading.vue';
 </script>
 <template>
     <Heading />
-    <h1>Manager</h1>
+    <h1>Manu</h1>
 </template>

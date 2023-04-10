@@ -3,6 +3,7 @@
 
 import { useRouter } from 'vue-router'
 // import {ref } from 'vue'
+import Heading from '../components/Heading.vue';
 import { ref } from 'vue'
 
 const router = useRouter()
@@ -25,6 +26,7 @@ function login() {
 }
 </script>
 <template>
+    <Heading true/>
     <div id="mainFormDiv" class="centered-div">
         <!-- <h1>Login</h1> -->
         <form @submit.prevent="login" data-testid="loginControl">

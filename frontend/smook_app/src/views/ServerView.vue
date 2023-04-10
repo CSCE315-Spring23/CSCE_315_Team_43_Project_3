@@ -1,3 +1,7 @@
+<script setup>
+import Heading from '../components/Heading.vue';
+</script>
 <template>
-    <h1>ServerView</h1>
+    <Heading />
+    <h1>Server</h1>
 </template>
