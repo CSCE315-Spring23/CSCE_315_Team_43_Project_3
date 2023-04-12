@@ -1,7 +1,7 @@
 <script setup>
-import Heading from '../components/Heading.vue';
+import NavBar from '../components/managerPanels/ManagerNavBar.vue';
 </script>
 <template>
-    <Heading />
     <h1>Manager</h1>
+    <NavBar/>
 </template>
