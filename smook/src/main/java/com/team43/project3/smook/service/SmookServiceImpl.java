@@ -26,6 +26,7 @@ import com.team43.project3.smook.repository.OrderListRepository;
 import com.team43.project3.smook.repository.TransactionItemRepository;
 import com.team43.project3.smook.repository.TransactionRepository;
 
+import io.micrometer.common.util.StringUtils;
 import jakarta.annotation.PostConstruct;
 
 @Service
@@ -54,6 +55,10 @@ public class SmookServiceImpl implements SmookService{
     @Autowired 
     private TransactionRepository transactionRepository;
 
+
+    /*
+     *Test Functions
+     */
     public void testDBConnection() {
         Employee testEmployee = employeeRepository.getReferenceById(0L);
         Ingredient_List_Key testKey = new Ingredient_List_Key(7, 0);
@@ -76,5 +81,30 @@ public class SmookServiceImpl implements SmookService{
         List<List<Integer>> pairs = transactionItemRepository.findPairs(start, end);
         System.out.println(pairs);
         return pairs;
+    }
+
+
+    /*
+     * Employee
+     */
+    public Integer login(String username, String password) {
+        System.out.println("entered login");
+        List<Employee> validLogins = employeeRepository.findByUsernameAndPassword(username, password);
+        // return validLogins;
+        if(validLogins.size() == 1) {
+            System.out.println(validLogins.get(0).getRole().equals("manager"));
+            if(validLogins.get(0).getRole().equals("manager")) {
+                return 1;
+            }
+            else if (validLogins.get(0).getRole().equals("employee")) {
+                return 2;
+            }
+            else {
+                return 0;
+            }
+        }
+        else {
+            return 0;
+        }
     }
 }
