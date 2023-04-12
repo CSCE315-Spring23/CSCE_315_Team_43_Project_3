@@ -21,4 +21,11 @@ public class SmookController {
     {
         loveGameService.testDBConnection();
     }
+
+    @RequestMapping(value = "/smook/pairs", method = RequestMethod.GET)
+    @ResponseBody
+    public void testPairFunction()
+    {
+        loveGameService.testPairs();
+    }
 }

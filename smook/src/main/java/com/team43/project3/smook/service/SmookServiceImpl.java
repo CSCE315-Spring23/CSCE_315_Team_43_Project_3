@@ -1,5 +1,8 @@
 package com.team43.project3.smook.service;
 
+import java.sql.Date;
+import java.util.List;
+
 import javax.swing.plaf.metal.MetalBorders.MenuItemBorder;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -65,5 +68,13 @@ public class SmookServiceImpl implements SmookService{
         
         Employee newEmployee = new Employee(3L, "Charles", "Barkley", "employee", "cbark", "cbarksalot84");
         employeeRepository.save(newEmployee);
+    }
+
+    public List<List<Integer>> testPairs() {
+        Date start = Date.valueOf("2022-01-01");
+        Date end = Date.valueOf("2022-05-08");
+        List<List<Integer>> pairs = transactionItemRepository.findPairs(start, end);
+        System.out.println(pairs);
+        return pairs;
     }
 }
