@@ -1,5 +1,8 @@
 package com.team43.project3.smook.service;
 
+import java.sql.Date;
+import java.util.List;
+
 import javax.swing.plaf.metal.MetalBorders.MenuItemBorder;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +26,7 @@ import com.team43.project3.smook.repository.OrderListRepository;
 import com.team43.project3.smook.repository.TransactionItemRepository;
 import com.team43.project3.smook.repository.TransactionRepository;
 
+import io.micrometer.common.util.StringUtils;
 import jakarta.annotation.PostConstruct;
 
 @Service
@@ -51,6 +55,10 @@ public class SmookServiceImpl implements SmookService{
     @Autowired 
     private TransactionRepository transactionRepository;
 
+
+    /*
+     *Test Functions
+     */
     public void testDBConnection() {
         Employee testEmployee = employeeRepository.getReferenceById(0L);
         Ingredient_List_Key testKey = new Ingredient_List_Key(7, 0);
@@ -65,5 +73,38 @@ public class SmookServiceImpl implements SmookService{
         
         Employee newEmployee = new Employee(3L, "Charles", "Barkley", "employee", "cbark", "cbarksalot84");
         employeeRepository.save(newEmployee);
+    }
+
+    public List<List<Integer>> testPairs() {
+        Date start = Date.valueOf("2022-01-01");
+        Date end = Date.valueOf("2022-05-08");
+        List<List<Integer>> pairs = transactionItemRepository.findPairs(start, end);
+        System.out.println(pairs);
+        return pairs;
+    }
+
+
+    /*
+     * Employee
+     */
+    public Integer login(String username, String password) {
+        System.out.println("entered login");
+        List<Employee> validLogins = employeeRepository.findByUsernameAndPassword(username, password);
+        // return validLogins;
+        if(validLogins.size() == 1) {
+            System.out.println(validLogins.get(0).getRole().equals("manager"));
+            if(validLogins.get(0).getRole().equals("manager")) {
+                return 1;
+            }
+            else if (validLogins.get(0).getRole().equals("employee")) {
+                return 2;
+            }
+            else {
+                return 0;
+            }
+        }
+        else {
+            return 0;
+        }
     }
 }

@@ -5,6 +5,7 @@ import { useRouter } from 'vue-router'
 // import {ref } from 'vue'
 import Heading from '../components/Heading.vue';
 import { ref } from 'vue'
+import axios from 'axios';
 
 const router = useRouter()
 
@@ -14,16 +15,33 @@ const pass = ref('')
 
 const err = ref('')
 
-function login() {
+const loginVerify = ref('')
+
+// const instance = axios.create({
+//   baseURL: 'http://localhost:8080',
+//   timeout: 1000
+// });
+
+async function login() {
     console.log(user.value);
     if (user.value == "server")
         router.replace('/server')
     else if (user.value == "manager")
         router.replace('/manager')
+    else if (user.value != "" && pass.value != "")
+        axios
+          .get('http://localhost:8080' + '/login?username=' + user.value + '&password=' + pass.value)
+          .then(response => {
+            if(response.data == 1) {router.replace('/manager');}
+            else if(response.data == 2) {router.replace('/employee');}
+            else {err.value = 'bad';}
+          })
+          .catch(error => console.log(error))
     else
         err.value = 'bad';
     console.log(err);
 }
+
 </script>
 <template>
     <Heading true/>
