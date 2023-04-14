@@ -1,6 +1,7 @@
 <script setup>
 
 import { reactive } from 'vue'
+import Smoothie from './Smoothie.vue'
 defineProps({
   catName: {
     type: String,
@@ -22,11 +23,28 @@ let drink3 = {
     image: 'imgs/smoothie1.png',
     ingredients: ['chocolate','protein powder', 'blueberries', 'whey powder', 'peanut butter']
 }
+let drink4 = {
+    name: 'Veryy bean Vanilla',
+    image: 'imgs/smoothie1.png',
+    ingredients: ['chocolate','protein powder', 'blueberries', 'whey powder', 'peanut butter']
+}
+let drink5 = {
+    name: 'Veryy Yikes',
+    image: 'imgs/smoothie1.png',
+    ingredients: ['chocolate','protein powder', 'blueberries', 'whey powder', 'peanut butter']
+}
 
 let smoothies = reactive([])
 smoothies.push(drink1)
 smoothies.push(drink2)
 smoothies.push(drink3)
+smoothies.push(drink4)
+smoothies.push(drink5)
+smoothies.push(drink1)
+smoothies.push(drink2)
+smoothies.push(drink3)
+smoothies.push(drink4)
+smoothies.push(drink5)
 </script>
 <template>
     <div id="cat">
@@ -34,10 +52,15 @@ smoothies.push(drink3)
             <h2>{{ catName }}</h2>
         </div>
         <div class="items">
-            <div v-for="smoothie in smoothies" :key="smoothie.name">
+            <!-- <div v-for="smoothie in smoothies" :key="smoothie.name">
                 <h3>{{ smoothie.name }}</h3>
-                <!-- <img :src="smoothie.image" alt="Ayo"> -->
-            </div>
+                <img :src="smoothie.image" alt="Ayo">
+            </div> -->
+            <Smoothie
+            v-for="smoothie in smoothies"
+            :key="smoothie"
+            :itemN="smoothie.name"
+            />
         </div>
     </div>
 </template>
@@ -45,8 +68,20 @@ smoothies.push(drink3)
     .divider {
         width: 100%;
         background-color: lightcoral;
+        margin-top: 12px;
+        margin-bottom: 12px;
+    }
+    .divider:first-of-type {
+        margin-top: 0;
     }
     .divider h2 {
         text-align: center;
     }
+    .items {
+        display: flex;
+        /* flex-wrap: wrap; */
+        /* justify-content: space-between; */
+        overflow: scroll;
+    }
+
 </style>

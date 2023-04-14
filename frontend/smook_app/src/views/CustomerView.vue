@@ -4,6 +4,7 @@ import Heading from '../components/Heading.vue';
 //import { useRouter } from 'vue-router'
 import { reactive } from 'vue';
 import Category from '../components/customer/Category.vue'
+import Smoothie from '../components/customer/Smoothie.vue'
 //const router = useRouter();
 
 const itemTypes = reactive(['Feel Energized', 'Get Fit','Manage Weight','Have Fun']);
@@ -86,5 +87,6 @@ main {
     padding: 5%;
     padding-top: 5px;
     padding-bottom: 0;
+    margin-bottom: 30px;
 }
 </style>
