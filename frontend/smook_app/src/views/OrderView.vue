@@ -35,9 +35,10 @@ function back() {
           <h1>{{ itemStore.name }}</h1>
         </div>
         <div id="orderingPanels">
-        <Size v-if="itemStore.size == 'none'"/>
+        <Size/>
         <AddOn v-if="itemStore.size != 'none'"/>
         </div>
+
     </div>
   </main>
 </template>
@@ -109,5 +110,9 @@ main {
 }
 #titlePanel h1 {
   text-align: center;
+}
+#orderingPanels {
+  display: flex;
+  justify-content: center;
 }
 </style>

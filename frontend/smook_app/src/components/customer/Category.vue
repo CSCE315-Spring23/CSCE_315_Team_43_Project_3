@@ -14,7 +14,7 @@ let drink1 = {
     ingredients: ['chocolate','protein powder', 'blueberries', 'whey powder', 'peanut butter']
 }
 let drink2 = {
-    name: 'Fuck Juice',
+    name: 'Apple Juice',
     image: 'imgs/smoothie2.png',
     ingredients: ['chocolate','protein powder', 'blueberries', 'whey powder', 'peanut butter']
 }
@@ -24,12 +24,12 @@ let drink3 = {
     ingredients: ['chocolate','protein powder', 'blueberries', 'whey powder', 'peanut butter']
 }
 let drink4 = {
-    name: 'WAP Flavored',
+    name: 'Apple Juice 4',
     image: 'imgs/smoothie1.png',
     ingredients: ['chocolate','protein powder', 'blueberries', 'whey powder', 'peanut butter']
 }
 let drink5 = {
-    name: 'Cum',
+    name: 'Apple Juice 9',
     image: 'imgs/smoothie2.png',
     ingredients: ['chocolate','protein powder', 'blueberries', 'whey powder', 'peanut butter']
 }
