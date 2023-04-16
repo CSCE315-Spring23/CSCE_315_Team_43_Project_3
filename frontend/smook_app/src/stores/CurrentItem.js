@@ -1,20 +1,33 @@
 import { defineStore } from "pinia";
 
-export const useItemStore = defineStore('cItem', {
+export const useItemStore = defineStore('itemStore', {
     state: () => ({
         name: "",
+        size: 'none',
         ingredients: [],
-        image: "",
         price: 0.0
     }),
     getters: {
-        getName(state){
-            return state.cItem.name
-        }
+        getPrice: (state) => state.price.toLocaleString('en-US', {
+            style: 'currency',
+            currency: 'USD'
+          })
     },
     actions: {
-        addItem(item){
-            this.cart.push(item);
+        changePrice() {
+          this.setState((state) => ({ price: state.price + 1 }));
+        },
+        changeName(name) {
+          this.name = name;
+        },
+        changeSize(s){
+          this.size = s;
+          if (s == 'small')
+          this.price = 6.99
+          else if (s=='medium')
+          this.price = 8.99
+          else
+          this.price = 10.99
         }
-    }
+      }
 })

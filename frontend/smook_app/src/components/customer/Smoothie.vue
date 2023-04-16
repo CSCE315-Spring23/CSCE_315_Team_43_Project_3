@@ -1,36 +1,29 @@
 <script setup>
-import { reactive } from 'vue'
-defineProps({
-  itemN: String
-})
+import { useRouter } from 'vue-router'
+import { useItemStore } from '@/stores/CurrentItem';
+const props = defineProps(['item']);
+const router = useRouter();
 console.log("Ayo");
-const drinks = reactive(
-    new Map(
-        [
-            ['Espreso Coffee Vanilla',['chocolate','protein powder', 'blueberries', 'whey powder', 'peanut butter']],
-            ['Espreso Coffee chocolate',['chocolate','protein powder', 'blueberries', 'whey powder', 'peanut butter']],
-            ['Cool bean Vanilla',['chocolate','protein powder', 'blueberries', 'whey powder', 'peanut butter']]
-        ]
-    )
-)
-
-//const ingredients = drinks.get(itemN.value);
-function smoothieClick() {
-
+const itemStore = useItemStore();
+itemStore.$reset();
+const smoothieClick = () => {
+  itemStore.name = props.item;
+  router.push('/customer/OrderPage');
 }
-
 </script>
+
 <template>
     <div id="smoothie" @click="smoothieClick">
       <div class="smoothieItem">
         <img src="./imgs/smoothie1.png" alt="Ayo">
-        <h4>{{ itemN }}</h4>
+        <h4>{{ item }}</h4>
         <!-- <ul v-if="ingredients.length>0">
           <li v-for="thing in ingredients" :key="thing">{{ thing }}</li>
         </ul> -->
       </div>
     </div>
 </template>
+
 <style scoped>
   #smoothie {
     /* flex: 1; */

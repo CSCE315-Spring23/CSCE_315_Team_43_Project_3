@@ -9,6 +9,7 @@ import Smoothie from '../components/customer/Smoothie.vue'
 
 const itemTypes = reactive(['Feel Energized', 'Get Fit','Manage Weight','Have Fun']);
 
+
 // let drink1 = {
 //     name: 'Espreso Coffee Vanilla',
 //     image: 'smoothie1.png',
@@ -84,7 +85,7 @@ main {
     text-align: center;
 }
 #orderPanel {
-    padding: 5%;
+    padding: 3%;
     padding-top: 5px;
     padding-bottom: 0;
     margin-bottom: 30px;

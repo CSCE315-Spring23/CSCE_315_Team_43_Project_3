@@ -9,28 +9,28 @@ defineProps({
   }
 })
 let drink1 = {
-    name: 'Espreso Coffee Vanilla',
+    name: 'Italian Hooker',
     image: 'imgs/smoothie1.png',
     ingredients: ['chocolate','protein powder', 'blueberries', 'whey powder', 'peanut butter']
 }
 let drink2 = {
-    name: 'Espreso Coffee chocolate',
+    name: 'Fuck Juice',
     image: 'imgs/smoothie2.png',
     ingredients: ['chocolate','protein powder', 'blueberries', 'whey powder', 'peanut butter']
 }
 let drink3 = {
-    name: 'Cool bean Vanilla',
+    name: 'Pineapple Cream',
     image: 'imgs/smoothie1.png',
     ingredients: ['chocolate','protein powder', 'blueberries', 'whey powder', 'peanut butter']
 }
 let drink4 = {
-    name: 'Veryy bean Vanilla',
+    name: 'WAP Flavored',
     image: 'imgs/smoothie1.png',
     ingredients: ['chocolate','protein powder', 'blueberries', 'whey powder', 'peanut butter']
 }
 let drink5 = {
-    name: 'Veryy Yikes',
-    image: 'imgs/smoothie1.png',
+    name: 'Cum',
+    image: 'imgs/smoothie2.png',
     ingredients: ['chocolate','protein powder', 'blueberries', 'whey powder', 'peanut butter']
 }
 
@@ -59,7 +59,7 @@ smoothies.push(drink5)
             <Smoothie
             v-for="smoothie in smoothies"
             :key="smoothie"
-            :itemN="smoothie.name"
+            :item="smoothie.name"
             />
         </div>
     </div>
