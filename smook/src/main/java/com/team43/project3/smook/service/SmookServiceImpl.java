@@ -107,4 +107,85 @@ public class SmookServiceImpl implements SmookService{
             return 0;
         }
     }
+
+    /*
+     * View Tables
+     */
+    public List<Inventory> viewInventory() {
+        return inventoryRepository.findAll();
+    } 
+
+    public List<Menu_Item> viewMenuItems() {
+        return menuItemRepository.findAll();
+    }
+
+    public List<Order_Item> viewOrderItems() {
+        return orderItemRepository.findAll();
+    }
+
+    /*
+     * Inventory
+     */
+    public Inventory getInventoryItem(long inventoryId) {
+        return inventoryRepository.getReferenceById(inventoryId);
+    }
+
+    public Inventory editInventoryItem(long inventoryId, String name, float price, float quantity, String measurement_type) {
+        Inventory inv = inventoryRepository.getReferenceById(inventoryId);
+        inv.setName(name);
+        inv.setPrice(price);
+        inv.setQuantity(quantity);
+        inv.setMeasurementType(measurement_type);
+        inventoryRepository.save(inv);
+        return inv;
+    }
+
+    public Inventory addInventoryItem(long inventoryId, String name, float price, float quantity, String measurement_type) {
+        Inventory inv = new Inventory(inventoryId, name, price, quantity, measurement_type);
+        inventoryRepository.save(inv);
+        return inv;
+    }
+
+    /*
+     * Menu Item
+     */
+    public Menu_Item getMenuItem(long menuItemId) {
+        return menuItemRepository.getReferenceById(menuItemId);
+    }
+
+    public Menu_Item editMenuItem(long menuItemId, String name, String type, float price, int ingredientAmount, List<Integer> ingredientIds, List<Integer> ingredientQuantity) {
+        Menu_Item item = menuItemRepository.getReferenceById(menuItemId);
+        item.setName(name);
+        item.setType(type);
+        item.setPrice(price);
+        item.setIngredientAmount(ingredientAmount);
+        menuItemRepository.save(item);
+        for(int i = 0; i < ingredientIds.size(); i++) {
+            Ingredient_List_Key ingListKey = new Ingredient_List_Key(ingredientIds.get(i), menuItemId);
+            Ingredient_List ingList = ingredientListRepository.getReferenceById(ingListKey);
+            if(ingList == null) {
+                ingList = new Ingredient_List(ingredientIds.get(i), menuItemId, ingredientQuantity.get(i));
+            }
+            else {
+                ingList.setInventoryId(ingredientIds.get(i));
+                ingList.setQuantity(ingredientQuantity.get(i));
+            }
+            ingredientListRepository.save(ingList);
+        }
+        return item;
+    }
+
+    public Menu_Item addMenuItem(long menuItemId, String name, String type, float price, int ingredientAmount, List<Integer> ingredientIds, List<Integer> ingredientQuantity) {
+        Menu_Item item = new Menu_Item(menuItemId, name, type, price, ingredientAmount);
+        for(int i = 0; i < ingredientIds.size(); i++) {
+            Ingredient_List ingList = new Ingredient_List(ingredientIds.get(i), menuItemId, ingredientQuantity.get(i));
+            ingredientListRepository.save(ingList);
+        }
+        menuItemRepository.save(item);
+        return item;
+    }
+
+    /*
+     * 
+     */
 }
