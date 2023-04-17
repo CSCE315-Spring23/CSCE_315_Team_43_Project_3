@@ -18,6 +18,9 @@ export const useCartStore = defineStore('cart', {
         },
         deleteItem(i){
             this.cart.splice(i,1);
+        },
+        send(name){
+            console.log(name);
         }
     }
 })

@@ -3,6 +3,7 @@ import {useCartStore} from '@/stores/CartStore';
 import Heading from '../components/Heading.vue';
 import { ref } from 'vue';
 import router from '../router';
+import { createDOMCompilerError } from '@vue/compiler-dom';
 const cartStore = useCartStore();
 const subtotal = ref(0.0);
 const tax = ref(0.0);
@@ -29,6 +30,8 @@ function totaler() {
 }
 totaler();
 function submit() {
+    let name = prompt("Congradulations on your purchase!! What's your name?");
+      cartStore.send(name);
     cartStore.$reset();
     router.replace('/customer');
 }
