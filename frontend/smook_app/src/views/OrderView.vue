@@ -2,18 +2,32 @@
 import Heading from '../components/Heading.vue';
 import Size from '../components/customer/Size.vue'
 import AddOn from '../components/customer/addOn.vue'
+import cartButton from '../components/customer/cartButton.vue'
 
 import { RouterLink, useRouter } from 'vue-router';
 import { useItemStore } from '@/stores/CurrentItem';
+import {useCartStore} from '@/stores/CartStore';
 import { ref } from 'vue';
 const router = useRouter();
 
 const itemStore = useItemStore();
+const cartStore = useCartStore();
 const screen1 = ref(true);
 
 // console.log("Test:" + itemStore.getPrice())
 function back() {
     router.back();
+}
+function cart() {
+  let smoothie = {
+    name: itemStore.name,
+    size: itemStore.size,
+    ingredients: itemStore.ingredients,
+    price: itemStore.price
+}
+cartStore.addItem(smoothie);
+itemStore.$reset();
+router.back();
 }
 </script>
 
@@ -28,7 +42,7 @@ function back() {
                 <h4><span v-if="itemStore.price!=0.0">{{itemStore.getPrice}}</span><span v-if="itemStore.price==0.0">$-</span></h4>
             </div>
             <button id="addToCart" v-if="itemStore.size == 'none'">Add to Cart</button>
-            <button id="addToCart2" v-if="itemStore.size != 'none'">Add to Cart</button>
+            <button id="addToCart2" v-if="itemStore.size != 'none'" @click="cart">Add to Cart</button>
           </div>
         </div>
         <div id="titlePanel">
@@ -51,6 +65,7 @@ function back() {
       </div> -->
     </div>
   </main>
+  <cartButton />
 </template>
 
 <style scoped>

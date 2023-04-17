@@ -9,7 +9,7 @@ defineProps({
   }
 })
 let drink1 = {
-    name: 'James Jonasburg',
+    name: 'Chocolate Gladiator',
     image: 'imgs/smoothie1.png',
     ingredients: ['chocolate','protein powder', 'blueberries', 'whey powder', 'peanut butter']
 }
@@ -19,17 +19,17 @@ let drink2 = {
     ingredients: ['chocolate','protein powder', 'blueberries', 'whey powder', 'peanut butter']
 }
 let drink3 = {
-    name: 'Pineapple Cream',
+    name: 'Pineapple Pie',
     image: 'imgs/smoothie1.png',
     ingredients: ['chocolate','protein powder', 'blueberries', 'whey powder', 'peanut butter']
 }
 let drink4 = {
-    name: 'Apple Juice 4',
+    name: 'Apple Juice',
     image: 'imgs/smoothie1.png',
     ingredients: ['chocolate','protein powder', 'blueberries', 'whey powder', 'peanut butter']
 }
 let drink5 = {
-    name: 'Apple Juice 9',
+    name: 'Pear Juice',
     image: 'imgs/smoothie2.png',
     ingredients: ['chocolate','protein powder', 'blueberries', 'whey powder', 'peanut butter']
 }
