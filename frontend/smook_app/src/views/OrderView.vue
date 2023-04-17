@@ -38,7 +38,17 @@ function back() {
         <Size/>
         <AddOn v-if="itemStore.size != 'none'"/>
         </div>
-
+        <!-- <div id="leftside">
+        <div id="ingredients">
+          <h3>Ingredients:</h3>
+          <p>
+          <span v-for="ing in itemStore.ingredients">{{ ing }},</span>
+          </p>
+        </div>
+        <div id="adds">
+          &lt;- Subsitutions/Addons
+        </div>
+      </div> -->
     </div>
   </main>
 </template>
@@ -114,5 +124,24 @@ main {
 #orderingPanels {
   display: flex;
   justify-content: center;
+}
+#leftside {
+  position: absolute;
+  left: 2%;
+  top: 30%;
+  width: 15%;
+}
+#ingredients {
+  border: 1px solid black;
+  padding: 5px;
+}
+#ingredients p span {
+  display: inline-block;
+}
+#adds {
+  border: 1px solid black;
+  margin-top: 10px;
+  padding: 5px;
+  cursor: pointer;
 }
 </style>

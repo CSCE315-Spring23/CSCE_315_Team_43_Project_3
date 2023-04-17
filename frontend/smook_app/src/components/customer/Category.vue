@@ -9,7 +9,7 @@ defineProps({
   }
 })
 let drink1 = {
-    name: 'Italian Hooker',
+    name: 'James Jonasburg',
     image: 'imgs/smoothie1.png',
     ingredients: ['chocolate','protein powder', 'blueberries', 'whey powder', 'peanut butter']
 }
