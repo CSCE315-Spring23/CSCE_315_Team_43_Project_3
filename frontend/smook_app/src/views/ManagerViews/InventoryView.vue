@@ -1,5 +1,5 @@
 <script setup>
-    import VuetifyDatatable from "../../components/managerPanels/Table.vue";
+    import VuetifyDatatable from "../../components/managerPanels/InventoryTable.vue";
     import NavBar from '../../components/managerPanels/ManagerNavBar.vue';
 </script>
 
@@ -14,20 +14,46 @@ export default {
   data: () => ({
     posts: [
       {
-        userId: 1,
-        id: 1,
-        title:
-          "sunt aut facere repellat provident occaecati excepturi optio reprehenderit",
+        inventoryID: 1,
+        name: "100% Cocoa",
+        price: 1, 
+        quantity: 426, 
+        measurementType: "oz"
       },
       {
-        userId: 1,
-        id: 2,
-        title: "qui est esse",
+        inventoryID: 2,
+        name: "Almond Butter",
+        price: 1, 
+        quantity: 186, 
+        measurementType: "oz"
       },
       {
-        userId: 1,
-        id: 3,
-        title: "ea molestias quasi exercitationem repellat qui ipsa sit aut",
+        inventoryID: 3,
+        name: "Almonds",
+        price: 1, 
+        quantity: 468, 
+        measurementType: "oz"
+      },
+      {
+        inventoryID: 4,
+        name: "Apple Blueberry Juice Blend",
+        price: 1, 
+        quantity: 165, 
+        measurementType: "oz"
+      },
+      {
+        inventoryID: 5,
+        name: "Apple Juice Blend",
+        price: 1, 
+        quantity: 184, 
+        measurementType: "oz"
+      },
+      {
+        inventoryID: 6,
+        name: "Apple Pineapple Juice Blend",
+        price: 1, 
+        quantity: 206, 
+        measurementType: "oz"
       },
     ]
   }),

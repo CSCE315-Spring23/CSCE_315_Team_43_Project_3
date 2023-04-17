@@ -2,7 +2,7 @@
   <v-app>
     <v-main>
       <v-container>
-        <h2>Vuetify Table</h2>
+        <h2>Inventory</h2>
           <v-row>
             <v-col>
                 <v-data-table 
@@ -25,10 +25,11 @@ export default {
     data: () => ({
         search: "",
         headers: [
-            { title: 'User ID', align: 'start', sortable: true, key: 'userId' },
-            { title: 'ID', key: 'id' },
-            { title: 'Title', key: 'title' },
-            { title: 'Actions', key: 'actions'},
+            { title: 'Inventory ID', align: 'start', sortable: true, key: 'inventoryID' },
+            { title: 'Name', key: 'name' },
+            { title: 'Price', key: 'price' },
+            { title: 'Quantity', key: 'quantity'},
+            { title: 'Measurement Type', key: 'measurementType'},
         ],
     })
 };
