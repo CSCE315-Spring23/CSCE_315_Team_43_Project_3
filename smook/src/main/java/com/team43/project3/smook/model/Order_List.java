@@ -40,20 +40,20 @@ public class Order_List {
         this.orderListId = orderListId;
     }
 
-    public long getInventoryId() {
-        return this.inventory.getInventoryId();
+    public Inventory getInventory() {
+        return this.inventory;
     }
 
-    public void setInventoryId(long inventoryId) {
-        this.inventory.setInventoryId(inventoryId);
+    public void setInventory(Inventory inventory) {
+        this.inventory = inventory;
     }
 
-    public long getOrderId() {
-        return this.order.getOrderId();
+    public Order_Item getOrder() {
+        return this.order;
     }
 
-    public void setOrderId(long orderId) {
-        this.order.setOrderId(orderId);
+    public void setOrder(Order_Item order) {
+        this.order = order;
     }
 
     public float getQuantity() {
@@ -65,10 +65,10 @@ public class Order_List {
     }
 
 
-    public Order_List(long orderListId, long inventoryId, long orderId, float quantity) {
+    public Order_List(long orderListId, Inventory inventory, Order_Item order, float quantity) {
         this.orderListId = orderListId;
-        this.inventory.setInventoryId(inventoryId);
-        this.order.setOrderId(orderId);
+        this.setInventory(inventory);
+        this.setOrder(order);
         this.quantity = quantity;
     }
 

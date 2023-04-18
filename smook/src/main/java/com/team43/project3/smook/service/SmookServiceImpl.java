@@ -1,6 +1,7 @@
 package com.team43.project3.smook.service;
 
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.plaf.metal.MetalBorders.MenuItemBorder;
@@ -91,7 +92,7 @@ public class SmookServiceImpl implements SmookService{
         System.out.println("entered login");
         List<Employee> validLogins = employeeRepository.findByUsernameAndPassword(username, password);
         // return validLogins;
-        if(validLogins.size() == 1) {
+        if(validLogins.size() == 1 || validLogins.get(0) == null) {
             System.out.println(validLogins.get(0).getRole().equals("manager"));
             if(validLogins.get(0).getRole().equals("manager")) {
                 return 1;
@@ -153,7 +154,7 @@ public class SmookServiceImpl implements SmookService{
         return menuItemRepository.getReferenceById(menuItemId);
     }
 
-    public Menu_Item editMenuItem(long menuItemId, String name, String type, float price, int ingredientAmount, List<Integer> ingredientIds, List<Integer> ingredientQuantity) {
+    public Menu_Item editMenuItem(long menuItemId, String name, String type, float price, int ingredientAmount, List<Long> ingredientIds, List<Long> ingredientQuantity) {
         Menu_Item item = menuItemRepository.getReferenceById(menuItemId);
         item.setName(name);
         item.setType(type);
@@ -167,7 +168,8 @@ public class SmookServiceImpl implements SmookService{
                 ingList = new Ingredient_List(ingredientIds.get(i), menuItemId, ingredientQuantity.get(i));
             }
             else {
-                ingList.setInventoryId(ingredientIds.get(i));
+                Inventory tempInv = inventoryRepository.getReferenceById(ingredientIds.get(i));
+                ingList.setInventory(tempInv);
                 ingList.setQuantity(ingredientQuantity.get(i));
             }
             ingredientListRepository.save(ingList);
@@ -186,6 +188,40 @@ public class SmookServiceImpl implements SmookService{
     }
 
     /*
-     * 
+     * Server
      */
+    public List<String> getCategories() {
+        return menuItemRepository.findCategories();
+    }
+
+    public List<String> getItemsInCategory(String category) {
+        return menuItemRepository.findItemsInCategory(category);
+    }
+
+    public List<String> getIngredientsInItem(String name) {
+        List<String> ingList = new ArrayList<String>();
+        List<Menu_Item> menuList = menuItemRepository.findByName(name);
+        if(menuList.size() == 1) {
+            Menu_Item menu = menuList.get(0);
+            List<Integer> idList = ingredientListRepository.findInventoryByMenu((int)(menu.getMenuId()));
+            for(Integer id : idList) {
+                ingList.add(inventoryRepository.findNameByInventoryId(id).get(0));
+            }
+            return ingList;
+        }
+        else {
+            System.out.println("menuListSize: " + menuList.size());
+            return null;
+        }
+    }
+
+    public List<String> getAllIngredients() {
+        return inventoryRepository.findAllValidIngredients();
+    }
+
+    public float getPriceofMenuItem(String name) {
+        return menuItemRepository.findPriceByMenu(name).get(0);
+    }
+
+    // public void pushTransaction()
 }
