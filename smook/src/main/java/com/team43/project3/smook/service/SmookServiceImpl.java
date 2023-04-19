@@ -224,4 +224,10 @@ public class SmookServiceImpl implements SmookService{
     }
 
     // public void pushTransaction()
+
+    /*
+     * manager
+     */
+
+    
 }

@@ -1,9 +1,11 @@
 package com.team43.project3.smook.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -82,4 +84,11 @@ public class SmookController {
     {
         return loveGameService.getPriceofMenuItem(name);
     }
+
+    // @RequestMapping(value = "/transaction", method = RequestMethod.POST)
+    // @ResponseBody
+    // public void receiveTransaction(@RequestBody Map<String, Object> payload)
+    // {
+        
+    // }
 }
