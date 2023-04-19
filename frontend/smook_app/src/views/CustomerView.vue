@@ -5,8 +5,19 @@ import { reactive } from 'vue';
 import Category from '../components/customer/Category.vue'
 import Smoothie from '../components/customer/Smoothie.vue'
 import cartButton from '../components/customer/cartButton.vue'
+import axios from 'axios';
+
 
 const itemTypes = reactive(['Feel Energized', 'Get Fit','Manage Weight','Have Fun']);
+
+// axios.get('http://localhost:8080/category')
+//   .then(response => {
+//     const categories = response.data;
+//     console.log(categories); // Prints the array of strings to the console
+//   })
+//   .catch(error => {
+//     console.error(error);
+//   });
 </script>
 
 <template>

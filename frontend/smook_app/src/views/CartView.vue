@@ -9,6 +9,9 @@ const subtotal = ref(0.0);
 const tax = ref(0.0);
 const total = ref(0.0);
 function totaler() {
+  subtotal.value = 0.0;
+  tax.value = 0.0;
+  total.value = 0.0;
     for(let i = 0; i<cartStore.cart.length; i++){
         let item = cartStore.cart[i];
         subtotal.value += item.price;
@@ -50,7 +53,7 @@ function submit() {
             style: 'currency',
             currency: 'USD'
           }) }}</h3>
-          <button @click="cartStore.removeItem(item);totaler()">x</button>
+          <button @click="cartStore.removeItem(item);totaler()" id="xButton">x</button>
         </div>
     </div>
     <div id="price">
@@ -64,6 +67,12 @@ function submit() {
 </template>
 
 <style scoped>
+#xButton {
+    display: inline;
+}
+h3 {
+  display: inline;
+}
 main {
   background-color: #f5f5f5;
   width: 90%;
