@@ -47,4 +47,39 @@ public class SmookController {
         System.out.println("entered controller");
         return loveGameService.login(username, password);
     }
+
+    @RequestMapping(value = "/category", method = RequestMethod.GET)
+    @ResponseBody
+    public List<String> sendCategories()
+    {
+        return loveGameService.getCategories();
+    }
+
+    @RequestMapping(value = "/items", method = RequestMethod.GET)
+    @ResponseBody
+    public List<String> sendItemsInCategory(@RequestParam String category)
+    {
+        return loveGameService.getItemsInCategory(category);
+    }
+
+    @RequestMapping(value = "/ingredients", method = RequestMethod.GET)
+    @ResponseBody
+    public List<String> sendIngredientsInItem(@RequestParam String name)
+    {
+        return loveGameService.getIngredientsInItem(name);
+    }
+
+    @RequestMapping(value = "/allingredients", method = RequestMethod.GET)
+    @ResponseBody
+    public List<String> sendAllIngredients()
+    {
+        return loveGameService.getAllIngredients();
+    }
+
+    @RequestMapping(value = "/price", method = RequestMethod.GET)
+    @ResponseBody
+    public float sendPriceOfItem(@RequestParam String name)
+    {
+        return loveGameService.getPriceofMenuItem(name);
+    }
 }
