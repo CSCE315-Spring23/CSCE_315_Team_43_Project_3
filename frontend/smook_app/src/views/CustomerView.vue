@@ -9,19 +9,23 @@ import axios from 'axios';
 
 
 const itemTypes = reactive(['Feel Energized', 'Get Fit','Manage Weight','Have Fun']);
-
+// async function getCatagories() {
 // axios.get('http://localhost:8080/category')
 //   .then(response => {
-//     const categories = response.data;
-//     console.log(categories); // Prints the array of strings to the console
+//     console.log("Response" + response);
+//     //const categories = response.data;
+//     //console.log(categories); // Prints the array of strings to the console
 //   })
 //   .catch(error => {
 //     console.error(error);
 //   });
+// }
+// //getCatagories();
 </script>
 
 <template>
       <Heading />
+      <button style="z-index: 10000;" @click="getCatagories">Hello</button>
   <main>
     <div id="main">
         <header>
