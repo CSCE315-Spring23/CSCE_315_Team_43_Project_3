@@ -17,6 +17,7 @@ import com.team43.project3.smook.service.SmookServiceImpl;
 
 @RequestMapping("/")
 @RestController
+@CrossOrigin(origins = "http://localhost:5173/")
 public class SmookController {
     @Autowired
     private SmookServiceImpl loveGameService;

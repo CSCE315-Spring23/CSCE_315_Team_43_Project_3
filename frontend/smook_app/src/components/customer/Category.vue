@@ -2,49 +2,32 @@
 
 import { reactive } from 'vue'
 import Smoothie from './Smoothie.vue'
-defineProps({
+import axios from 'axios'
+const props = defineProps({
   catName: {
     type: String,
     required: true
   }
 })
-let drink1 = {
-    name: 'Chocolate Gladiator',
-    image: 'imgs/smoothie1.png',
-    ingredients: ['chocolate','protein powder', 'blueberries', 'whey powder', 'peanut butter']
-}
-let drink2 = {
-    name: 'Apple Juice',
-    image: 'imgs/smoothie2.png',
-    ingredients: ['chocolate','protein powder', 'blueberries', 'whey powder', 'peanut butter']
-}
-let drink3 = {
-    name: 'Pineapple Pie',
-    image: 'imgs/smoothie1.png',
-    ingredients: ['chocolate','protein powder', 'blueberries', 'whey powder', 'peanut butter']
-}
-let drink4 = {
-    name: 'Apple Juice',
-    image: 'imgs/smoothie1.png',
-    ingredients: ['chocolate','protein powder', 'blueberries', 'whey powder', 'peanut butter']
-}
-let drink5 = {
-    name: 'Pear Juice',
-    image: 'imgs/smoothie2.png',
-    ingredients: ['chocolate','protein powder', 'blueberries', 'whey powder', 'peanut butter']
+
+const smoothies = reactive([]);
+async function getSmoothies() {
+    axios.get('http://localhost:8080/items', { params: { category: props.catName } })
+  .then(response => {
+    console.log("Response" + response.data);
+    const drinks = response.data;
+    for (let i = 0; i<drinks.length; i++){
+        //console.log(drinks[drinks.length-i-1]);
+        smoothies.push(drinks[drinks.length-i-1]);
+    }
+    //console.log(categories); // Prints the array of strings to the console
+  })
+  .catch(error => {
+    console.error(error);
+  });
 }
 
-let smoothies = reactive([])
-smoothies.push(drink1)
-smoothies.push(drink2)
-smoothies.push(drink3)
-smoothies.push(drink4)
-smoothies.push(drink5)
-smoothies.push(drink1)
-smoothies.push(drink2)
-smoothies.push(drink3)
-smoothies.push(drink4)
-smoothies.push(drink5)
+getSmoothies();
 </script>
 <template>
     <div id="cat">
@@ -59,7 +42,7 @@ smoothies.push(drink5)
             <Smoothie
             v-for="smoothie in smoothies"
             :key="smoothie"
-            :item="smoothie.name"
+            :item="smoothie"
             />
         </div>
     </div>
