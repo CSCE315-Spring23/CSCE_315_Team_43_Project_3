@@ -30,10 +30,12 @@ function totaler() {
 }
 totaler();
 function submit() {
-    let name = prompt("Congradulations on your purchase!! What's your name?");
+    let name = prompt("What's your name?");
+    if (name != null){
       cartStore.send(name);
-    cartStore.$reset();
-    router.replace('/customer');
+      cartStore.$reset();
+      router.replace('/customer');
+    }
 }
 </script>
 
@@ -48,6 +50,7 @@ function submit() {
             style: 'currency',
             currency: 'USD'
           }) }}</h3>
+          <button @click="cartStore.removeItem(item);totaler()">x</button>
         </div>
     </div>
     <div id="price">
@@ -58,7 +61,6 @@ function submit() {
     <button @click="submit">Pay and Order</button>
   </div>
 </main>
-<cartButton />
 </template>
 
 <style scoped>
