@@ -35,20 +35,20 @@ public class Ingredient_List {
     float quantity;
 
 
-    public long getInventoryId() {
-        return this.inventory.getInventoryId();
+    public Inventory getInventory() {
+        return this.inventory;
     }
 
-    public void setInventoryId(long inventoryId) {
-        this.inventory.setInventoryId(inventoryId);
+    public void setInventory(Inventory inventory) {
+        this.inventory = inventory;
     }
 
-    public long getMenuId() {
-        return this.menu.getMenuId();
+    public Menu_Item getMenu() {
+        return this.menu;
     }
 
-    public void setMenuId(long menuId) {
-        this.menu.setMenuId(menuId);
+    public void setMenu(Menu_Item menu) {
+        this.menu = menu;
     }
 
     public float getQuantity() {
@@ -60,8 +60,8 @@ public class Ingredient_List {
     }
 
     public Ingredient_List(long inventoryId, long menuId, float quantity) {
-        this.inventory.setInventoryId(inventoryId);
-        this.menu.setMenuId(menuId);
+        this.setInventory(inventory);
+        this.setMenu(menu);
         this.quantity = quantity;
     }
 

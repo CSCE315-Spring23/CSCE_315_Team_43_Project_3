@@ -12,7 +12,15 @@ const router = createRouter({
     {
       path: '/customer',
       name: 'customer',
-      component: () => import('../views/CustomerView.vue')
+      component: () => import('../views/CustomerView.vue'),
+      // children: [
+      //   {
+      //     // UserProfile will be rendered inside User's <router-view>
+      //     // when /user/:id/profile is matched
+      //     path: 'OrderPage',
+      //     component: () => import('../views/OrderView.vue'),
+      //   }
+      // ]
     },
     {
       path: '/server',
@@ -33,6 +41,16 @@ const router = createRouter({
       path: '/login',
       name: 'login',
       component: () => import('../views/LoginView.vue')
+    },
+    {
+      path: '/customer/OrderPage',
+      name: 'order',
+      component: () => import('../views/OrderView.vue')
+    },
+    {
+      path: '/customer/cart',
+      name: 'cart',
+      component: () => import('../views/CartView.vue')
     }
   ]
 })
