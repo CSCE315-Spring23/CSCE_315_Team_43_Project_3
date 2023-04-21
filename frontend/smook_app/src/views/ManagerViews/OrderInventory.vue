@@ -2,8 +2,23 @@
 import { useRouter } from 'vue-router'
 // import {ref } from 'vue'
 import { ref } from 'vue'
+import { DropDownListPlugin } from "@syncfusion/ej2-vue-dropdowns";
 // import SearchDropdown from "../../components/managerPanels/SearchDropdown.vue";s
 
+export default Vue.extend({
+  data: function() {
+    return {
+      localData: [
+          { Id: 'game1', Game: 'Football' },
+          { Id: 'game2', Game: 'Basketball' },
+          { Id: 'game3', Game: 'Volleyball' }
+        ],
+      localField: { text: 'Game', value: 'Id' },
+      remoteData: remoteDataSource,
+      remoteFields: { text: 'FirstName', value: 'EmployeeID' }
+    };
+  }
+});
 const router = useRouter()
 
 const user = ref('')
@@ -29,7 +44,10 @@ function login() {
         <form @submit.prevent="login" data-testid="loginControl">
         <label for="ingredient">Ingredient</label>
         <!-- <input type="text" v-model="ingredient" class="formIn"><br> -->
-
+        <ejs-dropdownlist popupHeight="200px" popupWidth="250px" 
+        :dataSource='remoteData' :fields='remoteFields' placeholder='Select a name'
+        sortOrder='Descending'>
+        </ejs-dropdownlist>
         <label for="amount">Amount</label>
         <input type="text" v-model="amount" class="formIn"><br>
         <input type="submit" value="Add to Order" id="sub">
@@ -38,6 +56,9 @@ function login() {
     </div>
 </template>
 
+<style>
+@import url(https://cdn.syncfusion.com/ej2/material.css);
+</style>
 
 <style scoped>
 .centered-div {
