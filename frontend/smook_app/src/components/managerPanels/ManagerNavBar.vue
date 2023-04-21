@@ -14,14 +14,14 @@
 
 <template>
     <ul class="nav_bar">
-        <li class="nav_elem"><a href="Inventory" tabindex="1">Inventory</a></li>
-        <li class="nav_elem"><a href="www.google.com">End of Day</a></li>
-        <li class="nav_elem"><a href="www.google.com">Order Inventory</a></li>
-        <li class="nav_elem"><a href="www.google.com">View/Edit Item</a></li>
-        <li class="nav_elem"><a href="www.google.com">Edit Menu</a></li>
-        <li class="nav_elem"><a href="www.google.com">Analytics</a></li>
-        <li class="nav_elem"><a href="www.google.com">Generate Reports</a></li>
-        <li class="nav_elem"><a href="www.google.com">Item Pairs</a></li>
+        <li class="nav_elem"><a href="Inventory">Inventory</a></li>
+        <li class="nav_elem"><a href="Menu">Menu</a></li>
+        <li class="nav_elem"><a href="EditMenu">Edit Menu Item</a></li>
+        <li class="nav_elem"><a href="AddMenu">Add Menu Item</a></li>
+        <li class="nav_elem"><a href="OrderInventory">Order Inventory</a></li>
+        <li class="nav_elem"><a href="AddInventory">Add Inventory Item</a></li>
+        <li class="nav_elem"><a href="XReport">X Report</a></li>
+        <li class="nav_elem"><a href="ZReport">Z Report</a></li>
     </ul>
 </template>
 <style scoped>

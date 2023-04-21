@@ -38,7 +38,47 @@ const router = createRouter({
       path: '/Inventory',
       name: 'inventory',
       component: () => import('../views/ManagerViews/InventoryView.vue')
-    }
+    },
+    {
+      path: '/OrderInventory',
+      name: 'orderInventory',
+      component: () => import('../views/ManagerViews/OrderInventory.vue')
+    },
+    {
+      path: '/Menu',
+      name: 'menu',
+      component: () => import('../views/ManagerViews/MenuView.vue')
+    },
+    {
+      path: '/EditMenu',
+      name: 'editMenu',
+      component: () => import('../views/ManagerViews/EditMenuView.vue')
+    },
+    {
+      path: '/AddMenu',
+      name: 'addMenu',
+      component: () => import('../views/ManagerViews/AddMenuView.vue')
+    },
+    {
+      path: '/OrderInventory',
+      name: 'orderInventory',
+      component: () => import('../views/ManagerViews/OrderInventory.vue')
+    },
+    {
+      path: '/AddInventory',
+      name: 'addInventory',
+      component: () => import('../views/ManagerViews/AddInventoryView.vue')
+    },
+    {
+      path: '/XReport',
+      name: 'xReport',
+      component: () => import('../views/ManagerViews/XReportView.vue')
+    },
+    {
+      path: '/ZReport',
+      name: 'zReport',
+      component: () => import('../views/ManagerViews/ZReportView.vue')
+    },
   ]
 })
 
