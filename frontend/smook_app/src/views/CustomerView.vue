@@ -10,7 +10,9 @@ import axios from 'axios';
 
 const itemTypes = reactive([]);
 async function getCatagories() {
-axios.get('http://localhost:8080/category')
+  axios.get('http://localhost:8080/category', {
+  withCredentials: true
+})
   .then(response => {
     const categories = response.data;
     for (let i = 0; i<categories.length; i++){

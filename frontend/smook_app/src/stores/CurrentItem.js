@@ -1,4 +1,5 @@
 import { defineStore } from "pinia";
+import axios from 'axios';
 
 export const useItemStore = defineStore('itemStore', {
     state: () => ({
@@ -14,20 +15,30 @@ export const useItemStore = defineStore('itemStore', {
           })
     },
     actions: {
-        changePrice() {
-          this.setState((state) => ({ price: state.price + 1 }));
-        },
         changeName(name) {
           this.name = name;
         },
-        changeSize(s){
+        pushIngredient(ingredient) {
+          this.ingredients.push(ingredient);
+          this.price += .99;
+        },
+        async changeSize(s) {
+          console.log("size called");
           this.size = s;
-          if (s == 'small')
-          this.price = 6.99
-          else if (s=='medium')
-          this.price = 8.99
-          else
-          this.price = 10.99
+          try {
+            const response = await axios.get('http://localhost:8080/price', { params: { name: this.name } });
+            console.log("Response" + response.data);
+            const p = response.data;
+            this.price = p;
+            if (s == 'small')
+              this.price += 0;
+            else if (s == 'medium')
+              this.price += 1.20;
+            else
+              this.price += 2.40;
+          } catch (error) {
+            console.error(error);
+          }
         }
       }
 })
