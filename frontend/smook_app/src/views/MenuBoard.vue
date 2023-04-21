@@ -1,6 +1,7 @@
 <script setup>
 import Heading from '../components/Heading.vue';
-let apikey = import.meta.env.VITE_OPENWEATHERMAP_API_KEY;
+const apikey = import.meta.env.VITE_OPENWEATHERMAP_API_KEY;
+const weatherUrl = `https://api.openweathermap.org/data/2.5/forecast?lat=30.6212&lon=-96.3404&appid=${apikey}&units=imperial&cnt=1`
 
 function httpGet(url) {
     var xmlHttp = new XMLHttpRequest();
@@ -10,7 +11,7 @@ function httpGet(url) {
 }
 
 function getWeather() {
-    let resp = httpGet(`https://api.openweathermap.org/data/2.5/forecast?lat=30.6212&lon=-96.3404&appid=${apikey}&units=imperial&cnt=1`);
+    let resp = httpGet(weatherUrl);
     const weather = JSON.parse(resp);
     let forecast = weather.list[0];
     return `${forecast.weather[0].description}, ${forecast.main.temp}°`
