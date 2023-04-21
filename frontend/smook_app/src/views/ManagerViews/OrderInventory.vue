@@ -2,7 +2,7 @@
 import { useRouter } from 'vue-router'
 // import {ref } from 'vue'
 import { ref } from 'vue'
-import SearchDropdown from "../../components/managerPanels/SearchDropdown.vue";
+// import SearchDropdown from "../../components/managerPanels/SearchDropdown.vue";s
 
 const router = useRouter()
 
@@ -29,7 +29,7 @@ function login() {
         <form @submit.prevent="login" data-testid="loginControl">
         <label for="ingredient">Ingredient</label>
         <!-- <input type="text" v-model="ingredient" class="formIn"><br> -->
-        <SearchDropdown title="Services" :items="services" />
+
         <label for="amount">Amount</label>
         <input type="text" v-model="amount" class="formIn"><br>
         <input type="submit" value="Add to Order" id="sub">
@@ -37,6 +37,7 @@ function login() {
         </form>
     </div>
 </template>
+
 
 <style scoped>
 .centered-div {
