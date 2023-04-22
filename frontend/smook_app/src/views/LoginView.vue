@@ -30,7 +30,7 @@ async function login() {
         router.replace('/manager')
     else if (user.value != "" && pass.value != "")
         axios
-          .get('http://localhost:8080' + '/login?username=' + user.value + '&password=' + pass.value)
+          .get('https://smook-app.uc.r.appspot.com/api' + '/login?username=' + user.value + '&password=' + pass.value)
           .then(response => {
             if(response.data == 1) {router.replace('/manager');}
             else if(response.data == 2) {router.replace('/employee');}
