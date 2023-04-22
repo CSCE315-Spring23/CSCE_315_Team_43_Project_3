@@ -15,7 +15,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.team43.project3.smook.model.Employee;
 import com.team43.project3.smook.service.SmookServiceImpl;
 
-@RequestMapping("/")
+@RequestMapping("/api")
+@CrossOrigin(origins = "http://localhost:5173")
 @RestController
 public class SmookController {
     @Autowired
