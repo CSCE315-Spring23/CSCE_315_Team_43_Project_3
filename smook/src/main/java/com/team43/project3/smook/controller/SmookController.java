@@ -85,7 +85,15 @@ public class SmookController {
     {
         return loveGameService.getPriceofMenuItem(name);
     }
-
+    @RequestMapping(value = "/transaction", method = RequestMethod.POST)
+    @ResponseBody
+    public boolean receiveTransaction(@RequestBody String body){
+        System.out.println(body);
+        if (body == null){
+            return false;
+        }
+        return true;
+    }
     // @RequestMapping(value = "/transaction", method = RequestMethod.POST)
     // @ResponseBody
     // public void receiveTransaction(@RequestBody Map<String, Object> payload)
