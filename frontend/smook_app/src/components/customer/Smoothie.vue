@@ -6,7 +6,7 @@ const router = useRouter();
 const itemStore = useItemStore();
 itemStore.$reset();
 const smoothieClick = () => {
-  itemStore.name = props.item;
+  itemStore.changeName(props.item);
   router.push('/customer/OrderPage');
 }
 </script>

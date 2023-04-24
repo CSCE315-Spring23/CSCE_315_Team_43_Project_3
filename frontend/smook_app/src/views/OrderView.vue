@@ -48,6 +48,9 @@ router.back();
         <div id="titlePanel">
           <h1>{{ itemStore.name }}</h1>
         </div>
+        <div id="ingredientsPanel">
+          <p><span v-for="ing in itemStore.ingredients">{{ ing }}, </span></p>
+        </div>
         <div id="orderingPanels">
         <Size/>
         <AddOn v-if="itemStore.size != 'none'"/>
@@ -133,12 +136,25 @@ main {
   align-items: center;
   padding: 10px;
 }
+#titlePanel {
+  /* position: fixed; */
+  width: 100%;
+  margin-top: -3%;
+  z-index: -1;
+}
 #titlePanel h1 {
   text-align: center;
 }
 #orderingPanels {
   display: flex;
   justify-content: center;
+}
+#ingredientsPanel {
+  width: 100%;
+}
+#ingredientsPanel p {
+  text-align: center;
+  margin-top: 19px;
 }
 #leftside {
   position: absolute;

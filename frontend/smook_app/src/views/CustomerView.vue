@@ -7,15 +7,14 @@ import Smoothie from '../components/customer/Smoothie.vue'
 import cartButton from '../components/customer/cartButton.vue'
 import axios from 'axios';
 
-axios.interceptors.request.use(config => {
-  config.headers['Access-Control-Allow-Origin'] = '*';
-  return config;
-});
+// axios.interceptors.request.use(config => {
+//   config.headers['Access-Control-Allow-Origin'] = '*';
+//   return config;
+// });
 
 const itemTypes = reactive([]);
 async function getCatagories() {
-  axios.get('http://localhost:8080/category', {
-  withCredentials: true
+  axios.get('/api/category', {
 })
   .then(response => {
     const categories = response.data;

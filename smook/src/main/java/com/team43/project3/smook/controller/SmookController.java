@@ -15,8 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.team43.project3.smook.model.Employee;
 import com.team43.project3.smook.service.SmookServiceImpl;
 
-// @RequestMapping("/")
-@CrossOrigin(origins = "http://localhost:5173/", allowCredentials = "true")
+@RequestMapping("/")
 @RestController
 public class SmookController {
     @Autowired
@@ -26,6 +25,7 @@ public class SmookController {
      * Test Functions
      */
     @RequestMapping(value = "/test", method = RequestMethod.POST)
+    @CrossOrigin(origins = "http://localhost:5173/")
     @ResponseBody
     public void testDB()
     {
@@ -33,6 +33,7 @@ public class SmookController {
     }
 
     @RequestMapping(value = "/pairs", method = RequestMethod.GET)
+    @CrossOrigin(origins = "http://localhost:5173/")
     @ResponseBody
     public List<List<Integer>> testPairFunction()
     {
@@ -45,6 +46,7 @@ public class SmookController {
 
      //returns 0 if not found, 1 if manager, 2 if employee
     @RequestMapping(value = "/login", method = RequestMethod.GET)
+    @CrossOrigin(origins = "http://localhost:5173/")
     @ResponseBody
     public Integer loginVerify(@RequestParam String username, @RequestParam String password){
         System.out.println("entered controller");
@@ -52,6 +54,7 @@ public class SmookController {
     }
 
     @RequestMapping(value = "/category", method = RequestMethod.GET)
+    @CrossOrigin(origins = "http://localhost:5173/")
     @ResponseBody
     public List<String> sendCategories()
     {
@@ -59,6 +62,7 @@ public class SmookController {
     }
 
     @RequestMapping(value = "/items", method = RequestMethod.GET)
+    @CrossOrigin(origins = "http://localhost:5173/")
     @ResponseBody
     public List<String> sendItemsInCategory(@RequestParam String category)
     {
@@ -66,6 +70,7 @@ public class SmookController {
     }
 
     @RequestMapping(value = "/ingredients", method = RequestMethod.GET)
+    @CrossOrigin(origins = "http://localhost:5173/")
     @ResponseBody
     public List<String> sendIngredientsInItem(@RequestParam String name)
     {
@@ -73,6 +78,7 @@ public class SmookController {
     }
 
     @RequestMapping(value = "/allingredients", method = RequestMethod.GET)
+    @CrossOrigin(origins = "http://localhost:5173/")
     @ResponseBody
     public List<String> sendAllIngredients()
     {
@@ -80,12 +86,14 @@ public class SmookController {
     }
 
     @RequestMapping(value = "/price", method = RequestMethod.GET)
+    @CrossOrigin(origins = "http://localhost:5173/")
     @ResponseBody
     public float sendPriceOfItem(@RequestParam String name)
     {
         return loveGameService.getPriceofMenuItem(name);
     }
     @RequestMapping(value = "/transaction", method = RequestMethod.POST)
+    @CrossOrigin(origins = "http://localhost:5173/")
     @ResponseBody
     public boolean receiveTransaction(@RequestBody String body){
         System.out.println(body);

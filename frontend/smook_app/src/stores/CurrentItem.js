@@ -17,6 +17,16 @@ export const useItemStore = defineStore('itemStore', {
     actions: {
         changeName(name) {
           this.name = name;
+          axios.get('/api/ingredients', { params: { name: this.name } })
+            .then(response => {
+              const stuff = response.data;
+              for (let i = 0; i<stuff.length; i++){
+                this.ingredients.push(stuff[stuff.length-i-1]);
+              }
+            })
+            .catch(error => {
+              console.error(error);
+            });
         },
         pushIngredient(ingredient) {
           this.ingredients.push(ingredient);
@@ -26,7 +36,7 @@ export const useItemStore = defineStore('itemStore', {
           console.log("size called");
           this.size = s;
           try {
-            const response = await axios.get('http://localhost:8080/price', { params: { name: this.name } });
+            const response = await axios.get('/api/price', { params: { name: this.name } });
             console.log("Response" + response.data);
             const p = response.data;
             this.price = p;

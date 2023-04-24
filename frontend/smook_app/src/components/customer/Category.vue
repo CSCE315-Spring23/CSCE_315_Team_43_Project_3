@@ -12,7 +12,7 @@ const props = defineProps({
 
 const smoothies = reactive([]);
 async function getSmoothies() {
-    axios.get('http://localhost:8080/items', { params: { category: props.catName } })
+    axios.get('/api/items', { params: { category: props.catName } })
   .then(response => {
     console.log("Response" + response.data);
     const drinks = response.data;
