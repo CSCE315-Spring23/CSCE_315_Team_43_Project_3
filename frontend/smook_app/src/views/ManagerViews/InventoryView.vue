@@ -1,6 +1,7 @@
 <script setup>
     import VuetifyDatatable from "../../components/managerPanels/InventoryTable.vue";
     import NavBar from '../../components/managerPanels/ManagerNavBar.vue';
+    import axios from 'axios';
 </script>
 
 <script>

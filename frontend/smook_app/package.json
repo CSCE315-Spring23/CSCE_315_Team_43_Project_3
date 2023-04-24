@@ -11,7 +11,7 @@
   "dependencies": {
     "@mdi/font": "5.9.55",
     "@syncfusion/ej2-vue-dropdowns": "^21.1.41",
-    "axios": "^1.3.5",
+    "axios": "^1.3.6",
     "bootstrap": "^5.2.3",
     "bootstrap-vue": "^2.23.1",
     "jquery": "^3.6.4",
@@ -20,6 +20,7 @@
     "roboto-fontface": "*",
     "search-dropdown-vue": "^1.0.3",
     "vue": "^3.2.47",
+    "vue-axios": "^3.5.2",
     "vue-router": "^4.1.6",
     "vue-simple-search-dropdown": "^1.0.1",
     "vue3-dropdown-navbar": "^0.1.3",

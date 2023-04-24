@@ -14,7 +14,7 @@ See [Vite Configuration Reference](https://vitejs.dev/config/).
 
 ```sh
 npm install -g @vue/cli
-npm install search-dropdown-vue
+vue add vuetify
 npm install
 ```
 
