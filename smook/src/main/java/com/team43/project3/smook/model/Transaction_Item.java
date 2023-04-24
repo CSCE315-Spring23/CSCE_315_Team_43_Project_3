@@ -22,11 +22,11 @@ public class Transaction_Item {
     long transactionItemId;
 
     @ManyToOne
-    @JoinColumn(name = "inventory_id", insertable=false, updatable=false)
+    @JoinColumn(name = "inventory_id")
     Inventory inventory;
 
     @ManyToOne
-    @JoinColumn(name = "transaction_id", insertable=false, updatable=false)
+    @JoinColumn(name = "transaction_id")
     Transaction transaction;
 
     @Column(name = "quantity")

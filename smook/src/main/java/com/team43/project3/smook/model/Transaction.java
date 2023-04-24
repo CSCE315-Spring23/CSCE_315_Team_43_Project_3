@@ -13,6 +13,7 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.JoinColumn;
 
 import java.sql.Date;
+import java.sql.Timestamp;
 
 @Entity
 @Table(name = "transaction")
@@ -23,7 +24,7 @@ public class Transaction {
     long transaction_id;
 
     @ManyToOne
-    @JoinColumn(name="employee_id", nullable=false, insertable=false, updatable=false)
+    @JoinColumn(name="employee_id", nullable=false)
     Employee employee;
 
     @Column(name = "purchaser_name")
@@ -33,7 +34,7 @@ public class Transaction {
     float priceOfTransaction;
 
     @Column(name = "time_of_purchase")
-    Date timeOfPurchase;
+    Timestamp timeOfPurchase;
 
 
     public long getTransaction_id() {
@@ -44,12 +45,12 @@ public class Transaction {
         this.transaction_id = transactionId;
     }
 
-    public long getEmployeeId() {
-        return this.employee.getEmployee_id();
+    public Employee getEmployee() {
+        return this.employee;
     }
 
-    public void setEmployeeId(long employeeId) {
-        this.employee.setEmployee_id(employeeId);;
+    public void setEmployee(Employee employee) {
+        this.employee = employee;
     }
 
     public String getPurchaserName() {
@@ -68,17 +69,17 @@ public class Transaction {
         this.priceOfTransaction = priceOfTransaction;
     }
 
-    public Date getTimeOfPurchase() {
+    public Timestamp getTimeOfPurchase() {
         return this.timeOfPurchase;
     }
 
-    public void setTimeOfPurchase(Date timeOfPurchase) {
+    public void setTimeOfPurchase(Timestamp timeOfPurchase) {
         this.timeOfPurchase = timeOfPurchase;
     }
 
-    public Transaction(long transactionId, long employeeId, String purchaserName, float priceOfTransaction, Date timeOfPurchase) {
+    public Transaction(long transactionId, Employee employee, String purchaserName, float priceOfTransaction, Timestamp timeOfPurchase) {
         this.transaction_id = transactionId;
-        this.employee.setEmployee_id(employeeId);
+        this.employee = employee;
         this.purchaserName = purchaserName;
         this.priceOfTransaction = priceOfTransaction;
         this.timeOfPurchase = timeOfPurchase;
