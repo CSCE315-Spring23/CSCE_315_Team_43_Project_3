@@ -1,6 +1,14 @@
 <script setup>
 import {RouterView } from 'vue-router'
 
+function googleTranslateElementInit() {
+  window.google.translate.TranslateElement(
+    { pageLanguage: "en" },
+    "google_translate_element"
+  );
+}
+
+googleTranslateElementInit();
 </script>
 
 <template>
