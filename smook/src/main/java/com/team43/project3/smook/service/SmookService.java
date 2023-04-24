@@ -10,7 +10,6 @@ import com.team43.project3.smook.model.Order_Item;
 public interface SmookService {
     //Test Functionalities
     public void testDBConnection();
-    public List<List<Integer>> testPairs();
 
     //Employee
     public Integer login(String username, String password);

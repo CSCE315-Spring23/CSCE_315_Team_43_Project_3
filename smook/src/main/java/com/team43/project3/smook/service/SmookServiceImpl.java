@@ -1,11 +1,13 @@
 package com.team43.project3.smook.service;
 
-import java.sql.Date;
+import java.util.Date;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.plaf.metal.MetalBorders.MenuItemBorder;
 
+import org.apache.commons.lang3.tuple.Pair;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -56,6 +58,7 @@ public class SmookServiceImpl implements SmookService{
     @Autowired 
     private TransactionRepository transactionRepository;
 
+    private List<InventoryUsage> inventoryUsage = new ArrayList<InventoryUsage>();
 
     /*
      *Test Functions
@@ -76,12 +79,17 @@ public class SmookServiceImpl implements SmookService{
         employeeRepository.save(newEmployee);
     }
 
-    public List<List<Integer>> testPairs() {
-        Date start = Date.valueOf("2022-01-01");
-        Date end = Date.valueOf("2022-05-08");
-        List<List<Integer>> pairs = transactionItemRepository.findPairs(start, end);
-        System.out.println(pairs);
-        return pairs;
+    // public List<List<Integer>> testPairs() {
+    //     Date start = Date.valueOf("2022-01-01");
+    //     Date end = Date.valueOf("2022-05-08");
+    //     List<List<Integer>> pairs = transactionItemRepository.findPairs(start, end);
+    //     System.out.println(pairs);
+    //     return pairs;
+    // }
+
+    public List<InventoryUsage> testInventoryUsage() {
+        inventoryUsage.add(new InventoryUsage(Timestamp.valueOf("2022-01-01"), 1, 18));
+        return inventoryUsage;
     }
 
 
@@ -129,6 +137,12 @@ public class SmookServiceImpl implements SmookService{
      */
     public Inventory getInventoryItem(long inventoryId) {
         return inventoryRepository.getReferenceById(inventoryId);
+    }
+
+    public Inventory getInventoryItemByName(String name) {
+        List<Inventory> inventory = inventoryRepository.findByName(name);
+        System.out.println(inventory);
+        return inventory.get(0);
     }
 
     public Inventory editInventoryItem(long inventoryId, String name, float price, float quantity, String measurement_type) {
@@ -185,6 +199,41 @@ public class SmookServiceImpl implements SmookService{
         }
         menuItemRepository.save(item);
         return item;
+    }
+
+    /*
+     * Transaction
+     */
+    public Transaction addTransaction(long employeeId, String purchaser, float price, List<Inventory> itemList, List<Integer> quantityList) {
+        Employee emp = employeeRepository.getReferenceById(employeeId);
+        Date now = new Date();
+        Timestamp timeOfPurchase = new Timestamp(now.getTime());
+        System.out.println("got time");
+        long transactionId = transactionRepository.findCurrentId() + 1;
+        System.out.println("got transid: " + transactionId);
+        System.out.println(transactionId + " " + emp + " " + purchaser + " " + price + " " + timeOfPurchase);
+        Transaction trans = new Transaction(transactionId, emp, purchaser, price, timeOfPurchase);
+        transactionRepository.save(trans);
+        long transItemId = transactionItemRepository.findCurrentId() + 1;
+        System.out.println("got transitemid: " + transItemId);
+        int i = 0;
+        for(Inventory item : itemList) {
+            // if(item.getClass() == Inventory.class) {
+                System.out.println(transItemId + " " + item + " " + trans + " " + quantityList.get(i));
+                Transaction_Item transItem = new Transaction_Item(transItemId, item, trans, quantityList.get(i));
+                transactionItemRepository.save(transItem);
+            // }
+            // else if(item.getClass() == Menu_Item.class) {
+            //     List<Pair<Integer, Integer>> ingListKeys = ingredientListRepository.findInventoryAndQuantityByMenu((int)((Menu_Item)item).getMenuId());
+            //     for(Pair<Integer, Integer> pair : ingListKeys) {
+            //         Inventory inv = inventoryRepository.getReferenceById((long)pair.getLeft());
+            //         Transaction_Item transItem = new Transaction_Item(transItemId, inv, trans, quantityList.get(i) * pair.getRight());
+            //         transactionItemRepository.save(transItem);
+            //     }
+            // }
+            i++;
+        }
+        return trans;
     }
 
     /*
