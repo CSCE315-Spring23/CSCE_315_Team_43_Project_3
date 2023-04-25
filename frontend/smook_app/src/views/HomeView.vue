@@ -1,7 +1,6 @@
 <script setup>
 import Heading from '../components/Heading.vue';
 import Login from '../components/Login.vue';
-
 import { useRouter } from 'vue-router'
 const router = useRouter();
 function menu() {
