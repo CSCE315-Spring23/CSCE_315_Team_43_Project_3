@@ -1,7 +1,7 @@
 import csv
 import os
 import random
-import names
+# import names
 import string
 from datetime import datetime
 from datetime import timedelta
@@ -100,12 +100,6 @@ for i in range(0,365):
             alreadySelectedItems.append(item[0])
             costTransaction += float(item[3]) * int(item[4])
             #write associated menu item to the ledger for the transaction
-            transactionItemWriter.writerow([transItemID, item[0], transID])
-            transItemID += 1
-            transactionItemWriter.writerow([transItemID, menu_item[68][0], transID])
-            transItemID += 1
-            transactionItemWriter.writerow([transItemID, menu_item[71][0], transID])
-            transItemID += 1
 
             #UPDATE INVENTORY
             #find all ingredients associated with id and quantity
@@ -113,10 +107,16 @@ for i in range(0,365):
             for x in ingredient_list:
                 if float(x[1]) == float(item[0]):
                     ingredients_bridge.append(x)
+                    transactionItemWriter.writerow([transItemID, x[0], transID, x[2]])
+                    transItemID += 1
                 if float(x[0]) == 68:
                     ingredients_bridge.append(x)
+                    transactionItemWriter.writerow([transItemID, x[0], transID, x[2]])
+                    transItemID += 1
                 if float(x[0]) == 71:
                     ingredients_bridge.append(x)
+                    transactionItemWriter.writerow([transItemID, x[0], transID, x[2]])
+                    transItemID += 1
             #subtract quantity from associated ingredient in inventory
             for x in inventory:
                 for y in ingredients_bridge:

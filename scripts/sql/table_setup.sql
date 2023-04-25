@@ -83,12 +83,13 @@ CREATE TABLE Transaction (
 /* Transaction_Item */
 CREATE TABLE Transaction_Item (
     Transaction_Item_ID INT PRIMARY KEY,
-    Menu_ID INT,
+    Inventory_ID INT,
     Transaction_ID INT,
+    Quantity INT,
 
-    CONSTRAINT FK_Menu_ID
-        FOREIGN KEY(Menu_ID)
-        REFERENCES Menu_Item(Menu_ID),
+    CONSTRAINT FK_Inventory_ID
+        FOREIGN KEY(Inventory_ID)
+        REFERENCES Inventory(Inventory_ID),
 
     CONSTRAINT FK_Transaction_ID
         FOREIGN KEY(Transaction_ID)

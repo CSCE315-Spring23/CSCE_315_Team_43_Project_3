@@ -22,12 +22,15 @@ public class Transaction_Item {
     long transactionItemId;
 
     @ManyToOne
-    @JoinColumn(name = "menu_id", insertable=false, updatable=false)
-    Menu_Item menu_item;
+    @JoinColumn(name = "inventory_id", insertable=false, updatable=false)
+    Inventory inventory;
 
     @ManyToOne
     @JoinColumn(name = "transaction_id", insertable=false, updatable=false)
     Transaction transaction;
+
+    @Column(name = "quantity")
+    int quantity;
 
 
     public long getTransactionItemId() {
@@ -38,26 +41,35 @@ public class Transaction_Item {
         this.transactionItemId = transactionItemId;
     }
 
-    public long getMenuId() {
-        return this.menu_item.getMenuId();
+    public Inventory getInventory() {
+        return this.inventory;
     }
 
-    public void setMenuId(long menuId) {
-        this.menu_item.setMenuId(menuId);
+    public void setInventory(Inventory inventory) {
+        this.inventory = inventory;
     }
 
-    public long getTransactionId() {
-        return this.transaction.getTransaction_id();
+    public Transaction getTransaction() {
+        return this.transaction;
     }
 
-    public void setTransactionId(long transactionId) {
-        this.transaction.setTransaction_id(transactionId);;
+    public void setTransaction(Transaction transaction) {
+        this.transaction = transaction;
     }
 
-    public Transaction_Item(long transactionItemId, long menuId, long transactionId) {
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
+    }
+
+    public Transaction_Item(long transactionItemId, Inventory inventory, Transaction transaction, int quantity) {
         this.transactionItemId = transactionItemId;
-        this.menu_item.setMenuId(menuId); 
-        this.transaction.setTransaction_id(transactionId);
+        this.setInventory(inventory);
+        this.setTransaction(transaction);
+        this.quantity = quantity;
     }
 
     public Transaction_Item() {

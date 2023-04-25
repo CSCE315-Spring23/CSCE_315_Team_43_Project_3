@@ -12,3 +12,9 @@ const testDB = async () => {
     const response = await fetch(url, request);
     const parsed = await response.json();
 }
+
+const testPairs = async () => {
+  const url = `http://localhost:8080/smook/pairs`;
+  const response = await fetch(url);
+  const parsed = await response.json();
+}
