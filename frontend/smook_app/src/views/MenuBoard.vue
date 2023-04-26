@@ -10,11 +10,18 @@ function httpGet(url) {
     return xmlHttp.responseText;
 }
 
+// Update the weather every minute
+setInterval(setWeather, 1 * 1000);
+
 function getWeather() {
     let resp = httpGet(weatherUrl);
     const weather = JSON.parse(resp);
     let forecast = weather.list[0];
-    return `${forecast.weather[0].description}, ${forecast.main.temp}°`
+    return `${forecast.weather[0].description}, ${forecast.main.temp}°`;
+}
+
+function setWeather() {
+    document.getElementById("weatherMsg").textContent = getWeather();
 }
 
 </script>
@@ -23,7 +30,7 @@ function getWeather() {
     <main>
         <div id="main">
             <h1>Menu</h1>
-            <h2>{{ getWeather() }}</h2>
+            <h2 id="weatherMsg">{{ getWeather() }}</h2>
             <div class="menu-items">
                 <!-- Placeholder for menu items -->
             </div>
