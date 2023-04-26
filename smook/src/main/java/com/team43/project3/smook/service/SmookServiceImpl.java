@@ -155,8 +155,8 @@ public class SmookServiceImpl implements SmookService{
         return inv;
     }
 
-    public Inventory addInventoryItem(long inventoryId, String name, float price, float quantity, String measurement_type) {
-        Inventory inv = new Inventory(inventoryId, name, price, quantity, measurement_type);
+    public Inventory addInventoryItem(String name, float price, float quantity, String measurement_type) {
+        Inventory inv = new Inventory(inventoryRepository.findCurrentId(), name, price, quantity, measurement_type);
         inventoryRepository.save(inv);
         return inv;
     }
@@ -191,10 +191,11 @@ public class SmookServiceImpl implements SmookService{
         return item;
     }
 
-    public Menu_Item addMenuItem(long menuItemId, String name, String type, float price, int ingredientAmount, List<Integer> ingredientIds, List<Integer> ingredientQuantity) {
-        Menu_Item item = new Menu_Item(menuItemId, name, type, price, ingredientAmount);
+    public Menu_Item addMenuItem(String name, String type, float price, int ingredientAmount, List<Integer> ingredientIds, List<Integer> ingredientQuantity) {
+        long tempId = menuItemRepository.findCurrentId();
+        Menu_Item item = new Menu_Item(tempId, name, type, price, ingredientAmount);
         for(int i = 0; i < ingredientIds.size(); i++) {
-            Ingredient_List ingList = new Ingredient_List(ingredientIds.get(i), menuItemId, ingredientQuantity.get(i));
+            Ingredient_List ingList = new Ingredient_List(ingredientIds.get(i), tempId, ingredientQuantity.get(i));
             ingredientListRepository.save(ingList);
         }
         menuItemRepository.save(item);
@@ -208,32 +209,33 @@ public class SmookServiceImpl implements SmookService{
         Employee emp = employeeRepository.getReferenceById(employeeId);
         Date now = new Date();
         Timestamp timeOfPurchase = new Timestamp(now.getTime());
-        System.out.println("got time");
+        // System.out.println("got time");
         long transactionId = transactionRepository.findCurrentId() + 1;
-        System.out.println("got transid: " + transactionId);
+        // System.out.println("got transid: " + transactionId);
         System.out.println(transactionId + " " + emp + " " + purchaser + " " + price + " " + timeOfPurchase);
         Transaction trans = new Transaction(transactionId, emp, purchaser, price, timeOfPurchase);
         transactionRepository.save(trans);
-        long transItemId = transactionItemRepository.findCurrentId() + 1;
-        System.out.println("got transitemid: " + transItemId);
         int i = 0;
+        long transItemId = transactionItemRepository.findCurrentId() + 1;
+        System.out.println("Size of list: " + itemList.size());
         for(Inventory item : itemList) {
-            // if(item.getClass() == Inventory.class) {
-                System.out.println(transItemId + " " + item + " " + trans + " " + quantityList.get(i));
-                Transaction_Item transItem = new Transaction_Item(transItemId, item, trans, quantityList.get(i));
-                transactionItemRepository.save(transItem);
-            // }
-            // else if(item.getClass() == Menu_Item.class) {
-            //     List<Pair<Integer, Integer>> ingListKeys = ingredientListRepository.findInventoryAndQuantityByMenu((int)((Menu_Item)item).getMenuId());
-            //     for(Pair<Integer, Integer> pair : ingListKeys) {
-            //         Inventory inv = inventoryRepository.getReferenceById((long)pair.getLeft());
-            //         Transaction_Item transItem = new Transaction_Item(transItemId, inv, trans, quantityList.get(i) * pair.getRight());
-            //         transactionItemRepository.save(transItem);
-            //     }
-            // }
-            i++;
+            System.out.println(transItemId + " " + item + " " + trans + " " + quantityList.get(i));
+            Transaction_Item transItem = new Transaction_Item(transItemId, item, trans, quantityList.get(i));
+            transactionItemRepository.save(transItem);
+            i++;    
+            transItemId++;
         }
         return trans;
+    }
+
+    /*
+     * Reports
+     */
+    public void createSalesReport(Timestamp start, Timestamp end) {
+        long startId = transactionRepository.findMinIdInTime(start, end);
+        long endId = transactionRepository.findMaxIdInTime(start, end);
+        //fill list with transaction_items or menu_id + amount pairs
+        //increment inventory amounts in upstream table for tracking
     }
 
     /*
@@ -266,6 +268,10 @@ public class SmookServiceImpl implements SmookService{
 
     public List<String> getAllIngredients() {
         return inventoryRepository.findAllValidIngredients();
+    }
+
+    public List<Inventory> getAllValidInventory() {
+        return inventoryRepository.findAllValidInventory();
     }
 
     public float getPriceofMenuItem(String name) {
