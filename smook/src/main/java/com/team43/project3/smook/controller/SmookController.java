@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.team43.project3.smook.model.Employee;
 import com.team43.project3.smook.model.Inventory;
+import com.team43.project3.smook.model.Menu_Item;
 import com.team43.project3.smook.model.Transaction;
 import com.team43.project3.smook.service.InventoryUsage;
 import com.team43.project3.smook.service.SmookServiceImpl;
@@ -48,25 +49,22 @@ public class SmookController {
 
     @PostMapping(value = "/transaction")
     @ResponseBody
-    public void testTransaction(@RequestParam long employeeId, @RequestParam String name, @RequestParam String size, @RequestParam float price, @RequestParam String smoothieName, @RequestParam int numIngredients, @RequestParam String ingredientName, @RequestParam int itemQuantity) {
+    public void testTransaction(@RequestParam long employeeId, @RequestParam String name, @RequestParam String size, @RequestParam float price, @RequestParam String smoothieName, @RequestParam int numIngredients, @RequestParam List<String> ingredientName, @RequestParam List<Integer> itemQuantity) {
         System.out.println("starting test transaction");
-        Inventory item = loveGameService.getInventoryItemByName(ingredientName);
-        System.out.println("start adding item");
         List<Inventory> itemList = new ArrayList<Inventory>();
-        itemList.add(item);
-        System.out.println("start adding itemlist");
         List<Integer> sizeList = new ArrayList<Integer>();
-        if(size.equals("small")){
-            sizeList.add(1);
-            System.out.println("added 1");
-        }
-        else if(size.equals("medium")){
-            sizeList.add(2);
-            System.out.println("added 2");
-        }
-        else {
-            sizeList.add(3);
-            System.out.println("added 3");
+        for(int i = 0; i < numIngredients; i++) {
+            Inventory item = loveGameService.getInventoryItemByName(ingredientName.get(i));
+            itemList.add(item);
+            if(size.equals("small")){
+                sizeList.add(itemQuantity.get(i));
+            }
+            else if(size.equals("medium")){
+                sizeList.add(2*itemQuantity.get(i));
+            }
+            else {
+                sizeList.add(3*itemQuantity.get(i));
+            }
         }
         System.out.println("start adding transaction");
         Transaction temp = loveGameService.addTransaction(employeeId, name, price, itemList, sizeList);
@@ -126,4 +124,49 @@ public class SmookController {
     // {
         
     // }
+
+    /*
+     * manager
+     */
+    @RequestMapping(value = "/validInventory", method = RequestMethod.GET)
+    @ResponseBody
+    public List<Inventory> sendValidInventory()
+    {
+        return loveGameService.getAllValidInventory();
+    }
+
+    @RequestMapping(value = "/validInventory", method = RequestMethod.GET)
+    @ResponseBody
+    public List<Menu_Item> sendMenu_Items()
+    {
+        return loveGameService.viewMenuItems();
+    }
+
+    @RequestMapping(value = "/addItem", method = RequestMethod.POST)
+    @ResponseBody
+    public Menu_Item addMenu_Item(long menuItemId, String name, String type, float price, int ingredientAmount, List<Integer> ingredientIds, List<Integer> ingredientQuantity)
+    {
+        return loveGameService.addMenuItem(name, type, price, ingredientAmount, ingredientIds, ingredientQuantity);
+    }
+
+    @RequestMapping(value = "/addInventory", method = RequestMethod.POST)
+    @ResponseBody
+    public Inventory addInventory(long inventoryId, String name, float price, float quantity, String measurement_type)
+    {
+        return loveGameService.addInventoryItem(name, price, quantity, measurement_type);
+    }
+
+    @RequestMapping(value = "/editItem", method = RequestMethod.POST)
+    @ResponseBody
+    public Menu_Item editMenu_Item(long menuItemId, String name, String type, float price, int ingredientAmount, List<Long> ingredientIds, List<Long> ingredientQuantity)
+    {
+        return loveGameService.editMenuItem(menuItemId, name, type, price, ingredientAmount, ingredientIds, ingredientQuantity);
+    }
+
+    @RequestMapping(value = "/editInventory", method = RequestMethod.POST)
+    @ResponseBody
+    public Inventory editInventory(long inventoryId, String name, float price, float quantity, String measurement_type)
+    {
+        return loveGameService.editInventoryItem(inventoryId, name, price, quantity, measurement_type);
+    }
 }

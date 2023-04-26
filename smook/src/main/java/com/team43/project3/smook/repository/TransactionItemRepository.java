@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import com.team43.project3.smook.model.Transaction;
 import com.team43.project3.smook.model.Transaction_Item;
 
 @Repository
@@ -17,4 +18,7 @@ public interface TransactionItemRepository extends JpaRepository<Transaction_Ite
 
     @Query(value = "SELECT MAX(transaction_item_id) FROM transaction_item", nativeQuery = true)
     long findCurrentId();
+
+    @Query(value = "SELECT * FROM transaction_item WHERE transaction_id BETWEEN ?1 AND ?2", nativeQuery = true)
+    List<Transaction> findTransactionsInRange(long transId1, long transId2);
 }

@@ -18,6 +18,12 @@ public interface InventoryRepository extends JpaRepository<Inventory, Long> {
     @Query(value = "SELECT name FROM inventory WHERE name NOT IN ('Small Cup', 'Medium Cup', 'Large Cup', 'Small Straw', 'Large Straw', 'Assorted Snacks', 'Dummy Item')", nativeQuery = true)
     List<String> findAllValidIngredients();
 
+    @Query(value = "SELECT * FROM inventory WHERE name NOT IN ('Small Cup', 'Medium Cup', 'Large Cup', 'Small Straw', 'Large Straw', 'Assorted Snacks', 'Dummy Item')", nativeQuery = true)
+    List<Inventory> findAllValidInventory();
+
     @Query(value = "SELECT * FROM inventory WHERE name = ?1", nativeQuery = true)
     List<Inventory> findByName(String name);
+
+    @Query(value = "SELECT MAX(inventory_id) FROM inventory", nativeQuery = true)
+    long findCurrentId();
 }
