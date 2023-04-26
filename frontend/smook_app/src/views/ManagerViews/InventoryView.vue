@@ -2,6 +2,25 @@
     import VuetifyDatatable from "../../components/managerPanels/InventoryTable.vue";
     import NavBar from '../../components/managerPanels/ManagerNavBar.vue';
     import axios from 'axios';
+
+    async function getInventory() {
+    axios.get('/api/category', {
+    })
+      .then(response => {
+        const categories = response.data;
+        for (let i = 0; i<categories.length; i++){
+          if (categories[categories.length-i-1] == "Other")
+          continue
+          if (categories[categories.length-i-1] == "Enhance")
+          continue
+          itemTypes.push(categories[categories.length-i-1]);
+        }
+      })
+      .catch(error => {
+        console.error(error);
+      });
+    }
+    getInventory();
 </script>
 
 <script>
