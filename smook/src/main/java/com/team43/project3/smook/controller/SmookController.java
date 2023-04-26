@@ -135,7 +135,7 @@ public class SmookController {
         return loveGameService.getAllValidInventory();
     }
 
-    @RequestMapping(value = "/validInventory", method = RequestMethod.GET)
+    @RequestMapping(value = "/menu_items", method = RequestMethod.GET)
     @ResponseBody
     public List<Menu_Item> sendMenu_Items()
     {
