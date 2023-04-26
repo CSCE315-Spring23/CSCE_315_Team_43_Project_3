@@ -20,6 +20,32 @@ function getWeather() {
 </script>
 <template>
     <Heading />
-    <h1>Menu</h1>
-    <h2>{{ getWeather() }}</h2>
+    <main>
+        <div id="main">
+            <h1>Menu</h1>
+            <h2>{{ getWeather() }}</h2>
+            <div class="menu-items">
+                <!-- Placeholder for menu items -->
+            </div>
+        </div>
+    </main>
 </template>
+
+<style scoped>
+main {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top:0;
+  left:0;
+}
+#main {
+  /* margin-top: 80px;
+  height: 100%; */
+  height: 89%;
+  width: 100%;
+  position: absolute;
+  top: 75px;
+  /* height: 1000px; */
+}
+</style>
