@@ -1,5 +1,7 @@
 package com.team43.project3.smook.model;
 
+import org.hibernate.annotations.Mutability;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

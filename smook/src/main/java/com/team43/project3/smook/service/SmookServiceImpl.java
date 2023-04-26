@@ -1,11 +1,13 @@
 package com.team43.project3.smook.service;
 
-import java.sql.Date;
+import java.util.Date;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.plaf.metal.MetalBorders.MenuItemBorder;
 
+import org.apache.commons.lang3.tuple.Pair;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -56,6 +58,7 @@ public class SmookServiceImpl implements SmookService{
     @Autowired 
     private TransactionRepository transactionRepository;
 
+    private List<InventoryUsage> inventoryUsage = new ArrayList<InventoryUsage>();
 
     /*
      *Test Functions
@@ -76,12 +79,17 @@ public class SmookServiceImpl implements SmookService{
         employeeRepository.save(newEmployee);
     }
 
-    public List<List<Integer>> testPairs() {
-        Date start = Date.valueOf("2022-01-01");
-        Date end = Date.valueOf("2022-05-08");
-        List<List<Integer>> pairs = transactionItemRepository.findPairs(start, end);
-        System.out.println(pairs);
-        return pairs;
+    // public List<List<Integer>> testPairs() {
+    //     Date start = Date.valueOf("2022-01-01");
+    //     Date end = Date.valueOf("2022-05-08");
+    //     List<List<Integer>> pairs = transactionItemRepository.findPairs(start, end);
+    //     System.out.println(pairs);
+    //     return pairs;
+    // }
+
+    public List<InventoryUsage> testInventoryUsage() {
+        inventoryUsage.add(new InventoryUsage(Timestamp.valueOf("2022-01-01"), 1, 18));
+        return inventoryUsage;
     }
 
 
@@ -131,6 +139,12 @@ public class SmookServiceImpl implements SmookService{
         return inventoryRepository.getReferenceById(inventoryId);
     }
 
+    public Inventory getInventoryItemByName(String name) {
+        List<Inventory> inventory = inventoryRepository.findByName(name);
+        System.out.println(inventory);
+        return inventory.get(0);
+    }
+
     public Inventory editInventoryItem(long inventoryId, String name, float price, float quantity, String measurement_type) {
         Inventory inv = inventoryRepository.getReferenceById(inventoryId);
         inv.setName(name);
@@ -141,8 +155,8 @@ public class SmookServiceImpl implements SmookService{
         return inv;
     }
 
-    public Inventory addInventoryItem(long inventoryId, String name, float price, float quantity, String measurement_type) {
-        Inventory inv = new Inventory(inventoryId, name, price, quantity, measurement_type);
+    public Inventory addInventoryItem(String name, float price, float quantity, String measurement_type) {
+        Inventory inv = new Inventory(inventoryRepository.findCurrentId(), name, price, quantity, measurement_type);
         inventoryRepository.save(inv);
         return inv;
     }
@@ -177,14 +191,51 @@ public class SmookServiceImpl implements SmookService{
         return item;
     }
 
-    public Menu_Item addMenuItem(long menuItemId, String name, String type, float price, int ingredientAmount, List<Integer> ingredientIds, List<Integer> ingredientQuantity) {
-        Menu_Item item = new Menu_Item(menuItemId, name, type, price, ingredientAmount);
+    public Menu_Item addMenuItem(String name, String type, float price, int ingredientAmount, List<Integer> ingredientIds, List<Integer> ingredientQuantity) {
+        long tempId = menuItemRepository.findCurrentId();
+        Menu_Item item = new Menu_Item(tempId, name, type, price, ingredientAmount);
         for(int i = 0; i < ingredientIds.size(); i++) {
-            Ingredient_List ingList = new Ingredient_List(ingredientIds.get(i), menuItemId, ingredientQuantity.get(i));
+            Ingredient_List ingList = new Ingredient_List(ingredientIds.get(i), tempId, ingredientQuantity.get(i));
             ingredientListRepository.save(ingList);
         }
         menuItemRepository.save(item);
         return item;
+    }
+
+    /*
+     * Transaction
+     */
+    public Transaction addTransaction(long employeeId, String purchaser, float price, List<Inventory> itemList, List<Integer> quantityList) {
+        Employee emp = employeeRepository.getReferenceById(employeeId);
+        Date now = new Date();
+        Timestamp timeOfPurchase = new Timestamp(now.getTime());
+        // System.out.println("got time");
+        long transactionId = transactionRepository.findCurrentId() + 1;
+        // System.out.println("got transid: " + transactionId);
+        System.out.println(transactionId + " " + emp + " " + purchaser + " " + price + " " + timeOfPurchase);
+        Transaction trans = new Transaction(transactionId, emp, purchaser, price, timeOfPurchase);
+        transactionRepository.save(trans);
+        int i = 0;
+        long transItemId = transactionItemRepository.findCurrentId() + 1;
+        System.out.println("Size of list: " + itemList.size());
+        for(Inventory item : itemList) {
+            System.out.println(transItemId + " " + item + " " + trans + " " + quantityList.get(i));
+            Transaction_Item transItem = new Transaction_Item(transItemId, item, trans, quantityList.get(i));
+            transactionItemRepository.save(transItem);
+            i++;    
+            transItemId++;
+        }
+        return trans;
+    }
+
+    /*
+     * Reports
+     */
+    public void createSalesReport(Timestamp start, Timestamp end) {
+        long startId = transactionRepository.findMinIdInTime(start, end);
+        long endId = transactionRepository.findMaxIdInTime(start, end);
+        //fill list with transaction_items or menu_id + amount pairs
+        //increment inventory amounts in upstream table for tracking
     }
 
     /*
@@ -217,6 +268,10 @@ public class SmookServiceImpl implements SmookService{
 
     public List<String> getAllIngredients() {
         return inventoryRepository.findAllValidIngredients();
+    }
+
+    public List<Inventory> getAllValidInventory() {
+        return inventoryRepository.findAllValidInventory();
     }
 
     public float getPriceofMenuItem(String name) {
