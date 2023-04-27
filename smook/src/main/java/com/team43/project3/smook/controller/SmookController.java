@@ -144,14 +144,14 @@ public class SmookController {
 
     @RequestMapping(value = "/addItem", method = RequestMethod.POST)
     @ResponseBody
-    public Menu_Item addMenu_Item(long menuItemId, String name, String type, float price, int ingredientAmount, List<Integer> ingredientIds, List<Integer> ingredientQuantity)
+    public Menu_Item addMenu_Item(String name, String type, float price, int ingredientAmount, List<Integer> ingredientIds, List<Integer> ingredientQuantity)
     {
         return loveGameService.addMenuItem(name, type, price, ingredientAmount, ingredientIds, ingredientQuantity);
     }
 
     @RequestMapping(value = "/addInventory", method = RequestMethod.POST)
     @ResponseBody
-    public Inventory addInventory(long inventoryId, String name, float price, float quantity, String measurement_type)
+    public Inventory addInventory(String name, float price, float quantity, String measurement_type)
     {
         return loveGameService.addInventoryItem(name, price, quantity, measurement_type);
     }

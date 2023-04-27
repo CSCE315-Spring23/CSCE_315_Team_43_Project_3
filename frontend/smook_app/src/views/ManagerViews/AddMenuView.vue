@@ -2,21 +2,26 @@
 import { useRouter } from 'vue-router'
 // import {ref } from 'vue'
 import { ref } from 'vue'
+import axios from 'axios';
 
 const router = useRouter()
 
-const user = ref('')
-
-const pass = ref('')
+const name = ref('')
+const type = ref('')
+const price = ref('')
+const ingredientAmount = ref('')
 
 const err = ref('')
 
-function login() {
-    console.log(user.value);
-    if (user.value == "server")
-        router.replace('/server')
-    else if (user.value == "manager")
-        router.replace('/manager')
+async function login() {
+    console.log(name.value);
+    if (name.value != "" && type.value != "" && price.value != "" && ingredientAmount.value != ""){
+        await axios
+          .post('http://localhost:8080/api/addItem?name='+name.value+'&type='+type.value+'&price='+price.value+'&ingredientAmount='+ingredientAmount.value)
+          .then(response => {
+          })
+          .catch(error => console.log(error))
+    }
     else
         err.value = 'bad';
     console.log(err);
@@ -32,8 +37,8 @@ function login() {
         <input type="text" v-model="type" class="formIn"><br>
         <label for="price">Price</label>
         <input type="text" v-model="price" class="formIn"><br>
-        <label for="ingredient_amount">Ingredient Amount</label>
-        <input type="text" v-model="ingredient_amount" class="formIn"><br>
+        <label for="ingredientAmount">Ingredient Amount</label>
+        <input type="text" v-model="ingredientAmount" class="formIn"><br>
         <input type="submit" value="Add to Menu" id="sub">
         <p class="error" v-show="err=='bad'">Error: You must login as type "manager" or "server"</p>
         </form>

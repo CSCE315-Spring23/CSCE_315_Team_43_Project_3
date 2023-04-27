@@ -25,11 +25,11 @@ export default {
     data: () => ({
         search: "",
         headers: [
-            { title: 'Inventory ID', align: 'start', sortable: true, key: 'inventoryID' },
+            { title: 'Inventory ID', align: 'start', sortable: true, key: 'inventoryId' },
             { title: 'Name', key: 'name' },
             { title: 'Price', key: 'price' },
-            { title: 'Quantity', key: 'quantity'},
             { title: 'Measurement Type', key: 'measurementType'},
+            { title: 'Quantity', key: 'quantity'},
         ],
     })
 };

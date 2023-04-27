@@ -2,21 +2,27 @@
 import { useRouter } from 'vue-router'
 // import {ref } from 'vue'
 import { ref } from 'vue'
+import axios from 'axios';
+
 
 const router = useRouter()
 
-const user = ref('')
-
-const pass = ref('')
+const name = ref('')
+const price = ref('')
+const quantity = ref('')
+const measurement_type = ref('')
 
 const err = ref('')
 
-function login() {
-    console.log(user.value);
-    if (user.value == "server")
-        router.replace('/server')
-    else if (user.value == "manager")
-        router.replace('/manager')
+async function login() {
+    console.log(name.value);
+    if (name.value != "" && price.value != "" && quantity.value != "" && measurement_type.value != ""){
+        await axios
+          .post('http://localhost:8080/api/addInventory?name='+name.value+'&price='+price.value+'&quantity='+quantity.value+'&measurement_type='+measurement_type.value)
+          .then(response => {
+          })
+          .catch(error => console.log(error))
+    }
     else
         err.value = 'bad';
     console.log(err);
