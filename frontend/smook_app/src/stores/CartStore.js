@@ -1,5 +1,5 @@
 import { defineStore } from "pinia";
-
+import axios from 'axios';
 export const useCartStore = defineStore('cart', {
     state: () => ({
         cart: []
@@ -27,7 +27,30 @@ export const useCartStore = defineStore('cart', {
             }
         },
         send(name){
-            console.log(name);
+            let str = '';
+            str += name;
+            str += ',' + this.cart.length + ',';
+            for (let i = 0; i<this.cart.length; i++) {
+                let thisItem = this.cart[i];
+                str += thisItem.name + ',';
+                let thisItemIng = thisItem.ingredients;
+                str += thisItemIng.length + ',';
+                for (let j = 0; j<thisItemIng.length; j++){
+                    str += thisItemIng[j] + ',';
+                }
+            }
+            console.log(str);
+            axios.post('/api/transaction', str, {
+                headers: {
+                    'Content-Type': 'text/plain'
+                  }
+            })
+            .then(function (response) {
+                console.log(response);
+              })
+              .catch(function (error) {
+                console.log(error);
+              });
         }
     }
 })

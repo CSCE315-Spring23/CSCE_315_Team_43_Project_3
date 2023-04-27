@@ -95,11 +95,8 @@ public class SmookController {
     @RequestMapping(value = "/transaction", method = RequestMethod.POST)
     @CrossOrigin(origins = "http://localhost:5173/")
     @ResponseBody
-    public boolean receiveTransaction(@RequestBody String body){
-        System.out.println(body);
-        if (body == null){
-            return false;
-        }
+    public boolean receiveTransaction(@RequestParam String customerName, @RequestParam int smoothieCount, @RequestParam List<String> smootheNames, @RequestParam List<String> ingredientLists){
+        System.out.println(customerName);
         return true;
     }
     // @RequestMapping(value = "/transaction", method = RequestMethod.POST)

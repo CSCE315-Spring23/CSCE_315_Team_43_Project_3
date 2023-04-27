@@ -29,6 +29,13 @@ cartStore.addItem(smoothie);
 itemStore.$reset();
 router.back();
 }
+function scroll(){
+  document.getElementById('app').classList.add('scroll-to-top');
+    setTimeout(() => {
+      document.getElementById('app').classList.remove('scroll-to-top');
+      window.scrollTo(0, 0);
+    }, 1000);
+}
 </script>
 
 <template>
@@ -52,8 +59,10 @@ router.back();
           <p><span v-for="ing in itemStore.ingredients">{{ ing }}, </span></p>
         </div>
         <div id="orderingPanels">
-        <Size/>
-        <AddOn v-if="itemStore.size != 'none'"/>
+        <Size
+        @scrollNow.once="scroll"
+        />
+        <AddOn/>
         </div>
         <!-- <div id="leftside">
         <div id="ingredients">
@@ -92,6 +101,10 @@ main {
   display: flex;
   justify-content: space-between;
   margin: 10px;
+  position: fixed;
+left: 0;
+width: 100%;
+z-index: 1000;
 }
 #itemHeading div {
   display: flex;
@@ -137,9 +150,8 @@ main {
   padding: 10px;
 }
 #titlePanel {
-  /* position: fixed; */
+  position: fixed;
   width: 100%;
-  margin-top: -3%;
   z-index: -1;
 }
 #titlePanel h1 {
@@ -151,6 +163,7 @@ main {
 }
 #ingredientsPanel {
   width: 100%;
+  margin-top: 60px;
 }
 #ingredientsPanel p {
   text-align: center;
@@ -174,5 +187,9 @@ main {
   margin-top: 10px;
   padding: 5px;
   cursor: pointer;
+}
+.scroll-to-top {
+  scroll-behavior: smooth;
+  /* any other styles you want to apply */
 }
 </style>
