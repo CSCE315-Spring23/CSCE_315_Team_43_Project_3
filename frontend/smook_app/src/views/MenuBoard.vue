@@ -11,7 +11,7 @@ function httpGet(url) {
 }
 
 // Update the weather every minute
-setInterval(setWeather, 1 * 1000);
+setInterval(setWeather, 60 * 1000);
 
 function getWeather() {
     let resp = httpGet(weatherUrl);
