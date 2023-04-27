@@ -1,5 +1,8 @@
 import { defineStore } from "pinia";
 import axios from 'axios';
+  
+  // Add cors middleware
+  
 export const useCartStore = defineStore('cart', {
     state: () => ({
         cart: []
@@ -27,6 +30,17 @@ export const useCartStore = defineStore('cart', {
             }
         },
         send(name){
+            const api = axios.create({
+                baseURL: '/api',
+                headers: {
+                  common: {
+                    'Access-Control-Allow-Origin': '*',
+                  },
+                  post: {
+                    'Content-Type': 'text/plain'
+                  }
+                }
+              });
             let str = '';
             str += name;
             str += ',' + this.cart.length + ',';
@@ -40,11 +54,7 @@ export const useCartStore = defineStore('cart', {
                 }
             }
             console.log(str);
-            axios.post('/api/transaction', str, {
-                headers: {
-                    'Content-Type': 'text/plain'
-                  }
-            })
+            api.post('/transaction', str)
             .then(function (response) {
                 console.log(response);
               })
