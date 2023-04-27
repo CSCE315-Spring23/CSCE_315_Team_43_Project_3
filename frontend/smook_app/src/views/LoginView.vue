@@ -42,6 +42,11 @@ async function login() {
     console.log(err);
 }
 
+async function oauthLogin() {
+  console.log('Clicked!');
+  // TODO: route back?
+}
+
 </script>
 <template>
     <Heading true/>
@@ -53,6 +58,9 @@ async function login() {
         <label for="password">Password</label>
         <input type="password" name="password" id="password" class="formIn" v-model="pass"><br>
         <input type="submit" value="Login" id="sub">
+        <a id="google-login" href="http://localhost:8080/oauth2/authorization/google">
+          <b-button @click="oauthLogin">Login with Google</b-button>
+        </a>
         <p class="error" v-show="err=='bad'">Error: You must login as type "manager" or "server"</p>
         </form>
     </div>
@@ -112,5 +120,8 @@ input[type="password"] {
 
 #sub:hover {
   background-color: #3e8e41;
+}
+#google-login {
+  padding-left: 10px;
 }
 </style>
