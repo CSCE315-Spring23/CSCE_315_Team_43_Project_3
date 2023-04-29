@@ -59,11 +59,19 @@ async function getMenuItemsByCategory(category) {
             for (let menuItem of menuItems) {
                 let item = {
                     name: menuItem,
-                    price: "",
+                    price: 0,
                 };
                 menuData.value.get(category).push(item);
-                // menuData.value.set(category, menuItems);
+                getMenuItemPriceByName(category, item.name);
             }
+        }
+    })
+}
+
+async function getMenuItemPriceByName(category, name) {
+    client.sendPriceOfItem(name, (error, price, resp) => {
+        if (price) {
+            menuData.value.get(category).find(x => x.name === name).price = price;
         }
     })
 }
@@ -81,7 +89,7 @@ getCategories();
                 <div v-for="[cat, _] in menuData" class="category-container">
                     <h3>{{ cat }}</h3>
                     <ul>
-                        <li v-for="menuItem in menuData.get(cat)">{{ menuItem.name }}</li>
+                        <li v-for="menuItem in menuData.get(cat)">{{ menuItem.name }} - $<b>{{ menuItem.price }}</b></li>
                     </ul>
                 </div>
             </div>
