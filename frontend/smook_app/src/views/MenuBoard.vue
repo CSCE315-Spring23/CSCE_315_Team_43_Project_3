@@ -14,6 +14,8 @@ function httpGet(url) {
     return xmlHttp.responseText;
 }
 
+const weatherMsg = ref(getWeather());
+
 function getWeather() {
     let resp = httpGet(weatherUrl);
     const weather = JSON.parse(resp);
@@ -22,7 +24,8 @@ function getWeather() {
 }
 
 function setWeather() {
-    document.getElementById("weatherMsg").textContent = getWeather();
+    // document.getElementById("weatherMsg").textContent = getWeather();
+    weatherMsg.value = getWeather();
 }
 
 let curIntervalId = null;
@@ -37,12 +40,30 @@ onUnmounted(() => {
     clearInterval(curIntervalId);
 })
 
-const categories = ref([]);
+const menuData = ref(new Map());
 
 async function getCategories() {
-    client.sendCategories((error, data, resp) => {
-        if (data) {
-            categories.value = data;
+    client.sendCategories((error, categories, resp) => {
+        if (categories) {
+            for (let category of categories) {
+                menuData.value.set(category, []);
+                getMenuItemsByCategory(category)
+            }
+        }
+    })
+}
+
+async function getMenuItemsByCategory(category) {
+    client.sendItemsInCategory(category, (error, menuItems, resp) => {
+        if (menuItems) {
+            for (let menuItem of menuItems) {
+                let item = {
+                    name: menuItem,
+                    price: "",
+                };
+                menuData.value.get(category).push(item);
+                // menuData.value.set(category, menuItems);
+            }
         }
     })
 }
@@ -55,11 +76,14 @@ getCategories();
     <main>
         <div id="main">
             <h1>Menu</h1>
-            <h2 id="weatherMsg">{{ getWeather() }}</h2>
+            <h2 id="weatherMsg">{{ weatherMsg }}</h2>
             <div class="menu-items">
-                <ul>
-                    <li v-for="cat in categories">{{ cat }}</li>
-                </ul>
+                <div v-for="[cat, _] in menuData" class="category-container">
+                    <h3>{{ cat }}</h3>
+                    <ul>
+                        <li v-for="menuItem in menuData.get(cat)">{{ menuItem.name }}</li>
+                    </ul>
+                </div>
             </div>
         </div>
     </main>
@@ -81,5 +105,13 @@ main {
   position: absolute;
   top: 75px;
   /* height: 1000px; */
+}
+
+.menu-items {
+    display: flex;
+    width: 100%;
+    justify-content: space-evenly;
+    flex-direction: row;
+    align-items: flex-start;
 }
 </style>
