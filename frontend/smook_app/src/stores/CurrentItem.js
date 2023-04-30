@@ -6,7 +6,8 @@ export const useItemStore = defineStore('itemStore', {
         name: "",
         size: 'none',
         ingredients: [],
-        price: 0.0
+        price: 0.0,
+        initialCount: 0
     }),
     getters: {
         getPrice: (state) => state.price.toLocaleString('en-US', {
@@ -23,6 +24,7 @@ export const useItemStore = defineStore('itemStore', {
               for (let i = 0; i<stuff.length; i++){
                 this.ingredients.push(stuff[stuff.length-i-1]);
               }
+              this.initialCount = this.ingredients.length;
             })
             .catch(error => {
               console.error(error);
@@ -30,7 +32,19 @@ export const useItemStore = defineStore('itemStore', {
         },
         pushIngredient(ingredient) {
           this.ingredients.push(ingredient);
+          if (this.ingredients.length >= this.initialCount)
           this.price += .99;
+        },
+        removeItem(item) {
+          console.log("item");
+          if (this.ingredients.length >= this.initialCount)
+          this.price -= .99;
+          for (let i = 0; i<this.ingredients.length; i++){
+            if (this.ingredients[i] == item){
+              this.ingredients.splice(i,1);
+              console.log("Fuck2.0")
+            }
+          }
         },
         async changeSize(s) {
           console.log("size called");
