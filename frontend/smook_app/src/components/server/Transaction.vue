@@ -34,7 +34,6 @@ function submit() {
     if (name != null){
       cartStore.send(name);
       cartStore.$reset();
-      router.replace('/customer');
     }
 }
 </script>
@@ -69,7 +68,6 @@ h3 {
   display: inline;
 }
 #main {
-  top: 75px;
   padding: 12px;
 }
 #cartItems {
