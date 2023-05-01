@@ -21,7 +21,7 @@ public interface SmookService {
 
     //Inventory
     public Inventory getInventoryItem(long inventoryId);
-    public Inventory editInventoryItem(long inventoryId, String name, float price, float quantity, String measurement_type);
+    public Inventory editInventoryItem(long inventoryId, String name, float price, float quantity, String measurement_type, Integer restockAmount);
     public Inventory addInventoryItem(String name, float price, float quantity, String measurement_type);
     public List<String> getAllIngredients();
 

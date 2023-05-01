@@ -26,4 +26,7 @@ public interface InventoryRepository extends JpaRepository<Inventory, Long> {
 
     @Query(value = "SELECT MAX(inventory_id) FROM inventory", nativeQuery = true)
     long findCurrentId();
+
+    @Query(value = "SELECT COUNT(*) FROM inventory WHERE name NOT IN ('Small Cup', 'Medium Cup', 'Large Cup', 'Small Straw', 'Large Straw', 'Assorted Snacks', 'Dummy Item')", nativeQuery = true)
+    Integer findInventoryCount();
 }

@@ -101,6 +101,25 @@ public class SmookController {
         return tempList;
     }
 
+    @RequestMapping(value = "/ExcessReport", method = RequestMethod.GET)
+    @ResponseBody
+    public Map<?,?> testExcessReport()
+    {
+        Date now = new Date();
+        Timestamp start = new Timestamp(now.getTime()-999999999); //this is 1 hour ago
+        Timestamp end = new Timestamp(now.getTime());
+        Map<?,?> tempList = loveGameService.createExcessReport(start, end);
+        return tempList;
+    }
+
+    @RequestMapping(value = "/RestockReport", method = RequestMethod.GET)
+    @ResponseBody
+    public Map<?,?> testRestockReport()
+    {
+        Map<?,?> tempList = loveGameService.createRestockReport();
+        return tempList;
+    }
+
     /*
      * Employee
      */
@@ -195,8 +214,8 @@ public class SmookController {
 
     @RequestMapping(value = "/editInventory", method = RequestMethod.POST)
     @ResponseBody
-    public Inventory editInventory(long inventoryId, String name, float price, float quantity, String measurement_type)
+    public Inventory editInventory(long inventoryId, String name, float price, float quantity, String measurement_type, Integer restockAmount)
     {
-        return loveGameService.editInventoryItem(inventoryId, name, price, quantity, measurement_type);
+        return loveGameService.editInventoryItem(inventoryId, name, price, quantity, measurement_type, restockAmount);
     }
 }
