@@ -87,7 +87,7 @@ getCategories();
             <h2 id="weatherMsg">{{ weatherMsg }}</h2>
             <div class="menu-items">
                 <div v-for="[cat, _] in menuData" class="category-container">
-                    <h3>{{ cat }}</h3>
+                    <h2>{{ cat }}</h2>
                     <ul>
                         <li v-for="menuItem in menuData.get(cat)">{{ menuItem.name }} - $<b>{{ menuItem.price }}</b></li>
                     </ul>
