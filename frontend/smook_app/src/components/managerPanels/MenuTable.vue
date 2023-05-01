@@ -25,11 +25,11 @@ export default {
     data: () => ({
         search: "",
         headers: [
-            { title: 'Menu ID', align: 'start', sortable: true, key: 'menuId' },
             { title: 'Ingredient Amount', key: 'ingredientAmount'},
+            { title: 'Menu ID', align: 'start', sortable: true, key: 'menuId' },
             { title: 'Name', key: 'name' },
             { title: 'Price', key: 'price'},
-            { title: 'Type', key: 'type' },
+            { title: 'Type', key: 'type' }
         ],
     })
 };

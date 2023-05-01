@@ -2,13 +2,17 @@
     import VuetifyDatatable from "../../components/managerPanels/MenuTable.vue";
     import NavBar from '../../components/managerPanels/ManagerNavBar.vue';
     import axios from 'axios';
+    import { reactive } from 'vue'
 
-    let posts = [];
+    let posts = reactive([]);
     async function getMenu() {
-    axios.get('http://localhost:8080/api/menu_items', {
+    await axios.get('https://smook-app.uc.r.appspot.com/api/menu_items', {
     })
       .then(response => {
-        posts = response.data;
+        const menu = response.data;
+        for (let i = 0; i< menu.length; i++){
+          posts.push(menu[menu.length-i-1]);
+        }
         console.log(posts);
       })
       .catch(error => {

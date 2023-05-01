@@ -2,13 +2,18 @@
     import VuetifyDatatable from "../../components/managerPanels/InventoryTable.vue";
     import NavBar from '../../components/managerPanels/ManagerNavBar.vue';
     import axios from 'axios';
+    import { reactive } from 'vue'
 
-    let posts = [];
+    let posts = reactive([]);
     async function getInventory() {
-    axios.get('http://localhost:8080/api/validInventory', {
+    await axios.get('https://smook-app.uc.r.appspot.com/api/validInventory', {
     })
       .then(response => {
-        posts = response.data;
+        const inventory = response.data;
+        // posts = response.data;
+        for (let i = 0; i< inventory.length; i++){
+          posts.push(inventory[inventory.length-i-1]);
+        }
         console.log(posts);
       })
       .catch(error => {

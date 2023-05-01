@@ -2,7 +2,7 @@
   <v-app>
     <v-main>
       <v-container>
-        <h2>Inventory</h2>
+        <h2>X Report</h2>
           <v-row>
             <v-col>
                 <v-data-table 
@@ -20,19 +20,17 @@
 </template>
 
 <script>
-console.log("here");
 export default {
     props: ["posts"], 
-      data: () => ({
-          search: "",
-          headers: [
-              { title: 'Inventory ID', align: 'start', sortable: true, key: 'inventoryId' },
-              { title: 'Measurement Type', key: 'measurementType'},
-              { title: 'Name', key: 'name' },
-              { title: 'Price', key: 'price' },
-              { title: 'Quantity', key: 'quantity'},
-              { title: 'Restock Amount', key: 'restockAmount'}  
-          ],
-      })
+    data: () => ({
+        search: "",
+        headers: [
+            { title: 'ID', key: 'id'},
+            { title: 'Name', align: 'start', sortable: true, key: 'name' },
+            { title: 'Type', key: 'type' },
+            { title: 'Price', key: 'price'},
+            { title: 'Quantity Sold', key: 'quantitySold' }
+        ],
+    })
 };
 </script>
