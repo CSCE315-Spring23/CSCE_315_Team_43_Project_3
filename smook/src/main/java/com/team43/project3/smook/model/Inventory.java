@@ -11,6 +11,7 @@ import jakarta.persistence.Inheritance;
 import jakarta.persistence.InheritanceType;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import java.util.Objects;
 
 @Entity
 @Table(name = "inventory")
@@ -32,6 +33,20 @@ public class Inventory {
     @Column(name = "measurement_type")
     String measurementType;
 
+    @Column(name = "restock_amount")
+    Integer restockAmount;
+
+    public Inventory() {
+    }
+
+    public Inventory(long inventoryId, String name, float price, float quantity, String measurementType) {
+        this.inventoryId = inventoryId;
+        this.name = name;
+        this.price = price;
+        this.quantity = quantity;
+        this.measurementType = measurementType;
+        this.restockAmount = 100;
+    }
 
     public long getInventoryId() {
         return this.inventoryId;
@@ -73,15 +88,25 @@ public class Inventory {
         this.measurementType = measurementType;
     }
 
-    public Inventory(long inventoryId, String name, float price, float quantity, String measurementType) {
-        this.inventoryId = inventoryId;
-        this.name = name;
-        this.price = price;
-        this.quantity = quantity;
-        this.measurementType = measurementType;
+    public Integer getRestockAmount() {
+        return this.restockAmount;
     }
 
-    public Inventory() {
+    public void setRestockAmount(Integer restockAmount) {
+        this.restockAmount = restockAmount;
     }
+
+    @Override
+    public String toString() {
+        return "{" +
+            " inventoryId='" + getInventoryId() + "'" +
+            ", name='" + getName() + "'" +
+            ", price='" + getPrice() + "'" +
+            ", quantity='" + getQuantity() + "'" +
+            ", measurementType='" + getMeasurementType() + "'" +
+            ", restockAmount='" + getRestockAmount() + "'" +
+            "}";
+    }
+
 
 }

@@ -1,6 +1,7 @@
 package com.team43.project3.smook.service;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -8,10 +9,11 @@ import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Map;
 
 import javax.swing.plaf.metal.MetalBorders.MenuItemBorder;
 
-import org.apache.commons.lang3.tuple.Pair;
+import org.apache.commons.lang3.tuple.MutablePair;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -160,12 +162,13 @@ public class SmookServiceImpl implements SmookService{
         return inventory.get(0);
     }
 
-    public Inventory editInventoryItem(long inventoryId, String name, float price, float quantity, String measurement_type) {
+    public Inventory editInventoryItem(long inventoryId, String name, float price, float quantity, String measurement_type, Integer restockAmount) {
         Inventory inv = inventoryRepository.getReferenceById(inventoryId);
         inv.setName(name);
         inv.setPrice(price);
         inv.setQuantity(quantity);
         inv.setMeasurementType(measurement_type);
+        inv.setRestockAmount(restockAmount);
         inventoryRepository.save(inv);
         return inv;
     }
@@ -292,6 +295,47 @@ public class SmookServiceImpl implements SmookService{
         List<Item> zReport = createSalesReport(start, now);
         setTime(now);
         return zReport;
+    }
+
+    public Map<String, Float> createExcessReport(Timestamp start, Timestamp end) {
+        Integer inventoryCount = inventoryRepository.findInventoryCount();
+        Map<Inventory, Float> tempLists = new HashMap<Inventory, Float>(inventoryCount);
+        for(int i = 1; i <= inventoryCount; i++) {
+            Inventory tempInventory = inventoryRepository.getReferenceById((long)i);
+            tempLists.put(tempInventory, 0f);
+        }
+        Long maxId = transactionRepository.findMaxIdInTime(start, end);
+        Long minId = transactionRepository.findMinIdInTime(start, end);
+        List<Transaction_Item> transItemList = transactionItemRepository.findTransactionsInRange(minId, maxId);
+        for(Transaction_Item transItem : transItemList) {
+            Inventory inv = transItem.getInventory();
+            tempLists.put(inv, tempLists.get(inv)+transItem.getQuantity());
+        }
+        Map<String, Float> excessReport = new HashMap<String, Float>();
+        for(Inventory inv : tempLists.keySet()) {
+            float percentage = 100 * tempLists.get(inv) / (tempLists.get(inv) + inv.getQuantity());
+            if(percentage < 10.0) {
+                excessReport.put(inv.getName(), percentage);
+            }
+        }
+        return excessReport;
+    }
+
+    public Map<String, Float> createRestockReport() {
+        Integer inventoryCount = inventoryRepository.findInventoryCount();
+        Map<String, Float> restockReport = new HashMap<String, Float>();
+        for(int i = 1; i <= inventoryCount; i++) {
+            Inventory tempInventory = inventoryRepository.getReferenceById((long)i);
+            if(tempInventory.getRestockAmount() > tempInventory.getQuantity())
+                restockReport.put(tempInventory.getName(), tempInventory.getQuantity());
+        }
+        return restockReport;
+    }
+
+    public void restockInventoryItem(String name, Integer amount) {
+        Inventory inv = inventoryRepository.findByName(name).get(0);
+        inv.setQuantity(amount);
+        inventoryRepository.save(inv);
     }
 
     /*
