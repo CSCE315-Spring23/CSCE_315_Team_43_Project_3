@@ -28,8 +28,8 @@ export default {
             { title: 'Inventory ID', align: 'start', sortable: true, key: 'inventoryId' },
             { title: 'Name', key: 'name' },
             { title: 'Price', key: 'price' },
-            { title: 'Measurement Type', key: 'measurementType'},
             { title: 'Quantity', key: 'quantity'},
+            { title: 'Measurement Type', key: 'measurementType'},
         ],
     })
 };

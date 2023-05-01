@@ -132,6 +132,7 @@ public class SmookController {
     @ResponseBody
     public List<Inventory> sendValidInventory()
     {
+        System.out.println("here");
         return loveGameService.getAllValidInventory();
     }
 
@@ -146,7 +147,14 @@ public class SmookController {
     @ResponseBody
     public Menu_Item addMenu_Item(String name, String type, float price, int ingredientAmount, List<Integer> ingredientIds, List<Integer> ingredientQuantity)
     {
-        return loveGameService.addMenuItem(name, type, price, ingredientAmount, ingredientIds, ingredientQuantity);
+        System.out.println("here");
+        try {
+            return loveGameService.addMenuItem(name, type, price, ingredientAmount, ingredientIds, ingredientQuantity);
+        }
+        catch(Exception e) {
+            System.out.println(e);
+            return null;
+        }
     }
 
     @RequestMapping(value = "/addInventory", method = RequestMethod.POST)

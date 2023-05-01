@@ -31,6 +31,7 @@ async function login() {
 <template>
     <div id="mainFormDiv" class="centered-div">
         <form @submit.prevent="login" data-testid="loginControl">
+        <br><br><br><br><br><br>
         <label for="name">Name</label>
         <input type="text" v-model="name" class="formIn"><br>
         <label for="type">Type</label>
@@ -39,6 +40,10 @@ async function login() {
         <input type="text" v-model="price" class="formIn"><br>
         <label for="ingredientAmount">Ingredient Amount</label>
         <input type="text" v-model="ingredientAmount" class="formIn"><br>
+        <label for="ingredientIds">Ingredient IDs</label>
+        <input type="text" v-model="ingredientIds" class="formIn"><br>
+        <label for="ingredientQuantity">Ingredient Quantities</label>
+        <input type="text" v-model="ingredientQuantity" class="formIn"><br>
         <input type="submit" value="Add to Menu" id="sub">
         <p class="error" v-show="err=='bad'">Error: You must login as type "manager" or "server"</p>
         </form>

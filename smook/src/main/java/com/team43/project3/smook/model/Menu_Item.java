@@ -30,7 +30,7 @@ public class Menu_Item {
     @Column(name = "ingredient_amount")
     long ingredientAmount;
 
-
+    
     public long getMenuId() {
         return this.menuId;
     }

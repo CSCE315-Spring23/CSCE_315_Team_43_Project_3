@@ -28,8 +28,7 @@ function login() {
     <div id="mainFormDiv" class="centered-div">
         <form @submit.prevent="login" data-testid="loginControl">
         <label for="ingredient">Ingredient</label>
-        <!-- <input type="text" v-model="ingredient" class="formIn"><br> -->
-        <SearchDropdown/>
+        <input type="text" v-model="ingredient" class="formIn"><br>
         <label for="amount">Amount</label>
         <input type="text" v-model="amount" class="formIn"><br>
         <input type="submit" value="Add to Order" id="sub">
