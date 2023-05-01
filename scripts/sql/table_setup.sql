@@ -105,3 +105,18 @@ CREATE TABLE Inventory_Usage (
         FOREIGN KEY(Inventory_ID)
         REFERENCES Inventory(Inventory_ID)
 );
+
+CREATE TABLE Menu_Tracker (
+    Menu_Tracker_ID INT PRIMARY KEY,
+    Transaction_ID INT,
+    Menu_ID INT,
+    Time TIMESTAMP,
+
+    CONSTRAINT FK_Transaction_ID
+        FOREIGN KEY(Transaction_ID)
+        REFERENCES Transaction(Transaction_ID),
+
+    CONSTRAINT FK_Menu_ID
+        FOREIGN KEY(Menu_ID)
+        REFERENCES Menu_Item(Menu_ID)
+)

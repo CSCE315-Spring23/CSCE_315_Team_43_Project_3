@@ -17,9 +17,9 @@ public interface IngredientListRepository extends JpaRepository<Ingredient_List,
     
 
     //returns ingredientlist entires for some reason???????
-    @Query(value = "SELECT inventory_id FROM ingredient_list WHERE menu_id = ?1", nativeQuery = true)
+    @Query(value = "SELECT inventory_id FROM ingredient_list WHERE menu_id = ?1 ORDER BY inventory_id ASC", nativeQuery = true)
     List<Integer> findInventoryByMenu(Integer menuId);
 
-    @Query(value = "SELECT inventory_id, quantity FROM ingredient_list WHERE menu_id = ?1", nativeQuery = true)
+    @Query(value = "SELECT inventory_id, quantity FROM ingredient_list WHERE menu_id = ?1 ORDER BY inventory_id ASC", nativeQuery = true)
     List<Pair<Integer, Integer>> findInventoryAndQuantityByMenu(Integer menuId);
 }
