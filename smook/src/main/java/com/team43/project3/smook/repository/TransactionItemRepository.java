@@ -19,6 +19,9 @@ public interface TransactionItemRepository extends JpaRepository<Transaction_Ite
     @Query(value = "SELECT MAX(transaction_item_id) FROM transaction_item", nativeQuery = true)
     long findCurrentId();
 
-    @Query(value = "SELECT * FROM transaction_item WHERE transaction_id BETWEEN ?1 AND ?2", nativeQuery = true)
-    List<Transaction> findTransactionsInRange(long transId1, long transId2);
+    @Query(value = "SELECT * FROM transaction_item WHERE transaction_id BETWEEN ?1 AND ?2 ORDER BY transaction_id", nativeQuery = true)
+    List<Transaction_Item> findTransactionsInRange(long transId1, long transId2);
+
+    @Query(value = "SELECT inventory_id FROM transaction_item WHERE transaction_id BETWEEN ?1 AND ?2 ORDER BY transaction_id", nativeQuery = true)
+    List<Long> findInventoryIdInRange(long transId1, long transId2);
 }

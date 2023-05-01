@@ -1,6 +1,7 @@
 package com.team43.project3.smook.controller;
 
-import java.sql.Date;
+import java.util.Date;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -19,7 +20,7 @@ import com.team43.project3.smook.model.Employee;
 import com.team43.project3.smook.model.Inventory;
 import com.team43.project3.smook.model.Menu_Item;
 import com.team43.project3.smook.model.Transaction;
-import com.team43.project3.smook.service.InventoryUsage;
+import com.team43.project3.smook.service.Item;
 import com.team43.project3.smook.service.SmookServiceImpl;
 
 @RequestMapping("/api")
@@ -41,34 +42,82 @@ public class SmookController {
         loveGameService.testDBConnection();
     }
 
-    @RequestMapping(value = "/usage", method = RequestMethod.GET)
-    @ResponseBody
-    public List<InventoryUsage> testInventoryUse() {
-        return loveGameService.testInventoryUsage();
-    }
-
     @PostMapping(value = "/transaction")
     @ResponseBody
-    public void testTransaction(@RequestParam long employeeId, @RequestParam String name, @RequestParam String size, @RequestParam float price, @RequestParam String smoothieName, @RequestParam int numIngredients, @RequestParam List<String> ingredientName, @RequestParam List<Integer> itemQuantity) {
+    public void testTransaction(@RequestParam Integer smoothieQuantity, @RequestParam long employeeId, @RequestParam String name, @RequestParam String size, @RequestParam float price, @RequestParam List<String> smoothieName, @RequestParam List<Integer> numIngredients, @RequestParam List<String> ingredientName, @RequestParam List<Integer> itemQuantity) {
         System.out.println("starting test transaction");
         List<Inventory> itemList = new ArrayList<Inventory>();
         List<Integer> sizeList = new ArrayList<Integer>();
-        for(int i = 0; i < numIngredients; i++) {
-            Inventory item = loveGameService.getInventoryItemByName(ingredientName.get(i));
-            itemList.add(item);
-            if(size.equals("small")){
-                sizeList.add(itemQuantity.get(i));
+        Integer start = 0;
+        Integer end = numIngredients.get(0);
+        for(int j = 0; j < smoothieQuantity; j++) {
+            for(int i = start; i < end; i++) {
+                Inventory item = loveGameService.getInventoryItemByName(ingredientName.get(i));
+                itemList.add(item);
+                if(size.equals("small")){
+                    sizeList.add(itemQuantity.get(i));
+                }
+                else if(size.equals("medium")){
+                    sizeList.add(2*itemQuantity.get(i));
+                }
+                else {
+                    sizeList.add(3*itemQuantity.get(i));
+                }
             }
-            else if(size.equals("medium")){
-                sizeList.add(2*itemQuantity.get(i));
-            }
-            else {
-                sizeList.add(3*itemQuantity.get(i));
+            if(j+1 < smoothieQuantity) {
+                start = end;
+                end += numIngredients.get(j+1);
             }
         }
+    
         System.out.println("start adding transaction");
-        Transaction temp = loveGameService.addTransaction(employeeId, name, price, itemList, sizeList);
+        Transaction temp = loveGameService.addTransaction(employeeId, name, price, smoothieName, itemList, sizeList);
         System.out.println(temp);
+    }
+
+    @RequestMapping(value = "/salesReport", method = RequestMethod.GET)
+    @ResponseBody
+    public List<?> testSalesReport()
+    {
+        Date now = new Date();
+        Timestamp start = new Timestamp(now.getTime()-3600000); //this is 1 hour ago
+        Timestamp end = new Timestamp(now.getTime());
+        return loveGameService.createSalesReport(start, end);
+    }
+
+    @RequestMapping(value = "/XReport", method = RequestMethod.GET)
+    @ResponseBody
+    public List<?> testXReport()
+    {
+        List<?> tempList = loveGameService.createXReport();
+        return tempList;
+    }
+
+    @RequestMapping(value = "/ZReport", method = RequestMethod.GET)
+    @ResponseBody
+    public List<?> testZReport()
+    {
+        List<?> tempList = loveGameService.createZReport();
+        return tempList;
+    }
+
+    @RequestMapping(value = "/ExcessReport", method = RequestMethod.GET)
+    @ResponseBody
+    public Map<?,?> testExcessReport()
+    {
+        Date now = new Date();
+        Timestamp start = new Timestamp(now.getTime()-999999999); //this is 1 hour ago
+        Timestamp end = new Timestamp(now.getTime());
+        Map<?,?> tempList = loveGameService.createExcessReport(start, end);
+        return tempList;
+    }
+
+    @RequestMapping(value = "/RestockReport", method = RequestMethod.GET)
+    @ResponseBody
+    public Map<?,?> testRestockReport()
+    {
+        Map<?,?> tempList = loveGameService.createRestockReport();
+        return tempList;
     }
 
     /*
@@ -173,8 +222,8 @@ public class SmookController {
 
     @RequestMapping(value = "/editInventory", method = RequestMethod.POST)
     @ResponseBody
-    public Inventory editInventory(long inventoryId, String name, float price, float quantity, String measurement_type)
+    public Inventory editInventory(long inventoryId, String name, float price, float quantity, String measurement_type, Integer restockAmount)
     {
-        return loveGameService.editInventoryItem(inventoryId, name, price, quantity, measurement_type);
+        return loveGameService.editInventoryItem(inventoryId, name, price, quantity, measurement_type, restockAmount);
     }
 }
