@@ -38,12 +38,14 @@ transactionItem = open('transaction_item.csv', 'w', newline='')
 orderList = open('order_item.csv', 'w', newline='')
 orderLedger = open('order_list.csv', 'w', newline='')
 inventoryUsage = open('inventory_usage.csv', 'w', newline='')
+menuTracker = open('menu_tracker.csv', 'w', newline='')
 
 transactionWriter = csv.writer(transaction)
 transactionItemWriter = csv.writer(transactionItem)
 orderWriter = csv.writer(orderList)
 orderLedgerWriter = csv.writer(orderLedger)
 inventoryUsageWriter = csv.writer(inventoryUsage)
+menuTrackerWriter = csv.writer(menuTracker)
 
 timeInc = timedelta(days=1)
 
@@ -58,6 +60,7 @@ transID = 0
 orderID = 0
 usageID = 0
 orderLedgerID = 0
+trackerID = 0
 
 for i in range(0,365):
     usageList = []  
@@ -94,13 +97,19 @@ for i in range(0,365):
         #pick random line from menu_item, add cost to transaction, decrement inventory
         alreadySelectedItems = []
         for k in range(numberItems):
-            item = menu_item[random.randrange(1,68)]
+            item = menu_item[random.randrange(1,61)]
             while item[0] in alreadySelectedItems:
-                item = menu_item[random.randrange(1,68)]
+                item = menu_item[random.randrange(1,61)]
             alreadySelectedItems.append(item[0])
             costTransaction += float(item[3]) * int(item[4])
             #write associated menu item to the ledger for the transaction
-
+            tracker = []
+            tracker.append(trackerID)
+            tracker.append(transID)
+            tracker.append(item[0])
+            tracker.append(dt)
+            menuTrackerWriter.writerow(tracker)
+            trackerID += 1
             #UPDATE INVENTORY
             #find all ingredients associated with id and quantity
             ingredients_bridge = []

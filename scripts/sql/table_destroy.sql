@@ -7,3 +7,4 @@ DROP TABLE Transaction CASCADE;
 DROP TABLE Transaction_Item CASCADE;
 DROP TABLE Employee CASCADE;
 DROP TABLE Inventory_Usage CASCADE;
+DROP TABLE Menu_Tracker CASCADE;
