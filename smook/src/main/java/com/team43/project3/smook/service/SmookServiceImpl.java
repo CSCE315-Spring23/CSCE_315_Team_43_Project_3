@@ -312,13 +312,20 @@ public class SmookServiceImpl implements SmookService{
             tempLists.put(inv, tempLists.get(inv)+transItem.getQuantity());
         }
         Map<String, Float> excessReport = new HashMap<String, Float>();
+        Boolean foundExcess = false;
         for(Inventory inv : tempLists.keySet()) {
             float percentage = 100 * tempLists.get(inv) / (tempLists.get(inv) + inv.getQuantity());
             if(percentage < 10.0) {
                 excessReport.put(inv.getName(), percentage);
+                foundExcess = true;
             }
         }
-        return excessReport;
+        if(foundExcess == true) {
+            return excessReport;
+        }
+        else {
+            return null;
+        }
     }
 
     public Map<String, Float> createRestockReport() {

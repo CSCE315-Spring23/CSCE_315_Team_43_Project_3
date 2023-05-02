@@ -2,6 +2,10 @@ package com.team43.project3.smook.controller;
 
 import java.util.Date;
 import java.sql.Timestamp;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -80,7 +84,8 @@ public class SmookController {
     public List<?> testSalesReport()
     {
         Date now = new Date();
-        Timestamp start = new Timestamp(now.getTime()-3600000); //this is 1 hour ago
+        Date then = new Date(0);
+        Timestamp start = new Timestamp(then.getTime()); //this is 1 hour ago
         Timestamp end = new Timestamp(now.getTime());
         return loveGameService.createSalesReport(start, end);
     }
