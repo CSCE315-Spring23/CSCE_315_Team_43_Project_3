@@ -30,37 +30,8 @@ export const useCartStore = defineStore('cart', {
             }
         },
         send(name){
-            const api = axios.create({
-                baseURL: '/api',
-                headers: {
-                  common: {
-                    'Access-Control-Allow-Origin': '*',
-                  },
-                  post: {
-                    'Content-Type': 'text/plain'
-                  }
-                }
-              });
-            let str = '';
-            str += name;
-            str += ',' + this.cart.length + ',';
-            for (let i = 0; i<this.cart.length; i++) {
-                let thisItem = this.cart[i];
-                str += thisItem.name + ',';
-                let thisItemIng = thisItem.ingredients;
-                str += thisItemIng.length + ',';
-                for (let j = 0; j<thisItemIng.length; j++){
-                    str += thisItemIng[j] + ',';
-                }
-            }
-            console.log(str);
-            api.post('/transaction', str)
-            .then(function (response) {
-                console.log(response);
-              })
-              .catch(function (error) {
-                console.log(error);
-              });
+            console.log("sending" + name);
+            axios.post("/api/transaction?smoothieQuantity=2&employeeId=1&name=Fred&size=small&price=6.19&smoothieName=Gladiator%20Coffee%20Cold%20Brew&numIngredients=2&ingredientName=Gladiator%20Protein%20Chocolate&ingredientName=Bananas&itemQuantity=1&itemQuantity=2&smoothieName=Gladiator%20Coffee%20Espresso&numIngredients=3&ingredientName=Gladiator%20Protein%20Chocolate&ingredientName=Bananas&ingredientName=Espresso&itemQuantity=1&itemQuantity=1&itemQuantity=1");
         }
     }
 })
