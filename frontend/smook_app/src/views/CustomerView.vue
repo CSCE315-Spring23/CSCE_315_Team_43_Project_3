@@ -10,14 +10,16 @@ import axios from 'axios';
 
 const itemTypes = reactive(['Feel Energized', 'Get Fit','Manage Weight','Have Fun']);
 
-// axios.get('http://localhost:8080/category')
-//   .then(response => {
-//     const categories = response.data;
-//     console.log(categories); // Prints the array of strings to the console
-//   })
-//   .catch(error => {
-//     console.error(error);
-//   });
+async function getCategories() {
+    axios.get('http://localhost:8080/category')
+  .then(response => {
+    const categories = response.data;
+    console.log(categories); // Prints the array of strings to the console
+  })
+  .catch(error => {
+    console.error(error);
+  });
+}
 </script>
 
 <template>
@@ -27,6 +29,7 @@ const itemTypes = reactive(['Feel Energized', 'Get Fit','Manage Weight','Have Fu
         <header>
             <h1>Smoothie Time!!!</h1>
         </header>
+        <button @click="getCategories">TEST BUTTON DON'T CLICK WILL EXPLODE</button>
         <div id="orderPanel">
             <Category 
                 v-for="item in itemTypes"
