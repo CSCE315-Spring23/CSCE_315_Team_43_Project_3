@@ -24,6 +24,7 @@ import com.team43.project3.smook.model.Employee;
 import com.team43.project3.smook.model.Inventory;
 import com.team43.project3.smook.model.Menu_Item;
 import com.team43.project3.smook.model.Transaction;
+import com.team43.project3.smook.service.Excess;
 import com.team43.project3.smook.service.Item;
 import com.team43.project3.smook.service.SmookServiceImpl;
 
@@ -108,12 +109,12 @@ public class SmookController {
 
     @RequestMapping(value = "/ExcessReport", method = RequestMethod.GET)
     @ResponseBody
-    public Map<?,?> testExcessReport()
+    public List<Excess> testExcessReport()
     {
         Date now = new Date();
         Timestamp start = new Timestamp(now.getTime()-999999999); //this is 1 hour ago
         Timestamp end = new Timestamp(now.getTime());
-        Map<?,?> tempList = loveGameService.createExcessReport(start, end);
+        List<Excess> tempList = loveGameService.createExcessReport(start, end);
         return tempList;
     }
 

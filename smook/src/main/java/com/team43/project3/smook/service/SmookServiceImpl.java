@@ -297,7 +297,7 @@ public class SmookServiceImpl implements SmookService{
         return zReport;
     }
 
-    public Map<String, Float> createExcessReport(Timestamp start, Timestamp end) {
+    public List<Excess> createExcessReport(Timestamp start, Timestamp end) {
         Integer inventoryCount = inventoryRepository.findInventoryCount();
         Map<Inventory, Float> tempLists = new HashMap<Inventory, Float>(inventoryCount);
         for(int i = 1; i <= inventoryCount; i++) {
@@ -311,12 +311,12 @@ public class SmookServiceImpl implements SmookService{
             Inventory inv = transItem.getInventory();
             tempLists.put(inv, tempLists.get(inv)+transItem.getQuantity());
         }
-        Map<String, Float> excessReport = new HashMap<String, Float>();
+        List<Excess> excessReport = new ArrayList<Excess>();
         Boolean foundExcess = false;
         for(Inventory inv : tempLists.keySet()) {
             float percentage = 100 * tempLists.get(inv) / (tempLists.get(inv) + inv.getQuantity());
             if(percentage < 10.0) {
-                excessReport.put(inv.getName(), percentage);
+                excessReport.add(new Excess(inv.getName(), percentage));
                 foundExcess = true;
             }
         }
