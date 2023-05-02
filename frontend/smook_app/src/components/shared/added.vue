@@ -4,9 +4,9 @@
 </script>
 
 <template>
-    <!-- <div id="currentIngredient">
-        <
-    </div> -->
+    <div id="currentIngredient">
+        <h5 class="currIng"></h5>
+    </div>
 </template>
 
 <style scoped>

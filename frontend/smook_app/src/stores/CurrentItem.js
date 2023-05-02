@@ -37,7 +37,7 @@ export const useItemStore = defineStore('itemStore', {
         },
         removeItem(item) {
           console.log("item");
-          if (this.ingredients.length >= this.initialCount)
+          if (this.ingredients.length > this.initialCount)
           this.price -= .99;
           for (let i = 0; i<this.ingredients.length; i++){
             if (this.ingredients[i] == item){

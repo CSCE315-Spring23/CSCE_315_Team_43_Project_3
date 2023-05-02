@@ -1,5 +1,6 @@
 <script setup>
 import { useItemStore } from '@/stores/CurrentItem';
+import ingredients from "../shared/ingredients.vue"
 const itemStore = useItemStore();
 const emit = defineEmits(['eventt','carted'])
 
@@ -18,10 +19,13 @@ function size(s) {
         console.log(itemStore.size);
         console.log(itemStore.price);
     }
+    function remove (item) {
+      itemStore.removeItem(item);
+    }
 </script>
 <template>
     <div id="custom">
-      <div class="close-button" @click="closeThis">
+      <div class="close-button" @click="closeThis" role="button" aria-label="Close">
         X
       </div>
       <h2>{{ itemStore.name }}</h2>
@@ -34,10 +38,11 @@ function size(s) {
         </div>
         <div id="curr">
           <h4>Current Ingredients:</h4>
-          <div class="currIng" v-for="ing in itemStore.ingredients">{{ ing }}</div>
+          <div class="currIng" v-for="ing in itemStore.ingredients">{{ ing }}<span @click="remove(ing)" class="delete">X</span></div>
         </div>
         <div id="future">
-          <h4>Addons:</h4>
+          <h4>Customizations:</h4>
+          <ingredients />
         </div>
         </div>
         <div id="sub" @click="cart()">Add-<span>{{ itemStore.getPrice }}</span></div>
@@ -85,10 +90,12 @@ function size(s) {
     flex: 1;
     }
     #addOn div {
-      flex-grow: 1;
+      flex-grow: 7;
+      max-width: 50%;
     }
     #sizeButtons {
         margin-left: 20px;
+        flex-grow: 1 !important;
     }
     #sizeButtons button {
         display: block;
@@ -123,5 +130,30 @@ function size(s) {
 }
 .currIng {
   font-size: 20px;
+  border: 1px black dotted;
+  padding: 5px;
+  margin-top: 7px;
+  width: 90%;
+  max-width: 100% !important;
+}
+#curr {
+  flex-grow: 2 !important;
+  border-right: 3px black solid;
+  overflow: auto;
+}
+
+#future {
+  flex-grow: 7;
+  max-width: 50%;
+  overflow: auto;
+}
+.delete {
+  color: red;
+  cursor: pointer;
+  position: absolute;
+  right: 7%;
+}
+#future h4 {
+  text-align: center;
 }
   </style>

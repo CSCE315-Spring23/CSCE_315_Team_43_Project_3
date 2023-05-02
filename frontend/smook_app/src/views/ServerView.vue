@@ -129,7 +129,7 @@ getCatagories();
             {{ smoothie }}
           </div>
         </div>
-        <h3>OrderPanel</h3>
+        <!-- <h3>OrderPanel</h3> -->
       </div>
       <Transaction/>
     </div>
