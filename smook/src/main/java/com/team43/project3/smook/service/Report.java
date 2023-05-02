@@ -3,15 +3,15 @@ package com.team43.project3.smook.service;
 import java.io.Serializable;
 import java.util.Objects;
 
-public class Excess implements Serializable {
+public class Report implements Serializable {
     String name;
     Float excess;
     
 
-    public Excess() {
+    public Report() {
     }
 
-    public Excess(String name, Float excess) {
+    public Report(String name, Float excess) {
         this.name = name;
         this.excess = excess;
     }

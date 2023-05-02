@@ -297,7 +297,7 @@ public class SmookServiceImpl implements SmookService{
         return zReport;
     }
 
-    public List<Excess> createExcessReport(Timestamp start, Timestamp end) {
+    public List<Report> createExcessReport(Timestamp start, Timestamp end) {
         Integer inventoryCount = inventoryRepository.findInventoryCount();
         Map<Inventory, Float> tempLists = new HashMap<Inventory, Float>(inventoryCount);
         for(int i = 1; i <= inventoryCount; i++) {
@@ -311,12 +311,12 @@ public class SmookServiceImpl implements SmookService{
             Inventory inv = transItem.getInventory();
             tempLists.put(inv, tempLists.get(inv)+transItem.getQuantity());
         }
-        List<Excess> excessReport = new ArrayList<Excess>();
+        List<Report> excessReport = new ArrayList<Report>();
         Boolean foundExcess = false;
         for(Inventory inv : tempLists.keySet()) {
             float percentage = 100 * tempLists.get(inv) / (tempLists.get(inv) + inv.getQuantity());
             if(percentage < 10.0) {
-                excessReport.add(new Excess(inv.getName(), percentage));
+                excessReport.add(new Report(inv.getName(), percentage));
                 foundExcess = true;
             }
         }
@@ -328,13 +328,13 @@ public class SmookServiceImpl implements SmookService{
         }
     }
 
-    public Map<String, Float> createRestockReport() {
+    public List<Report> createRestockReport() {
         Integer inventoryCount = inventoryRepository.findInventoryCount();
-        Map<String, Float> restockReport = new HashMap<String, Float>();
+        List<Report> restockReport = new ArrayList<Report>();
         for(int i = 1; i <= inventoryCount; i++) {
             Inventory tempInventory = inventoryRepository.getReferenceById((long)i);
             if(tempInventory.getRestockAmount() > tempInventory.getQuantity())
-                restockReport.put(tempInventory.getName(), tempInventory.getQuantity());
+                restockReport.add(new Report(tempInventory.getName(), tempInventory.getQuantity()));
         }
         return restockReport;
     }

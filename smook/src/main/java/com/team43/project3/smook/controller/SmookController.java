@@ -24,7 +24,7 @@ import com.team43.project3.smook.model.Employee;
 import com.team43.project3.smook.model.Inventory;
 import com.team43.project3.smook.model.Menu_Item;
 import com.team43.project3.smook.model.Transaction;
-import com.team43.project3.smook.service.Excess;
+import com.team43.project3.smook.service.Report;
 import com.team43.project3.smook.service.Item;
 import com.team43.project3.smook.service.SmookServiceImpl;
 
@@ -49,7 +49,7 @@ public class SmookController {
 
     @PostMapping(value = "/transaction")
     @ResponseBody
-    public void testTransaction(@RequestParam Integer smoothieQuantity, @RequestParam long employeeId, @RequestParam String name, @RequestParam String size, @RequestParam float price, @RequestParam List<String> smoothieName, @RequestParam List<Integer> numIngredients, @RequestParam List<String> ingredientName, @RequestParam List<Integer> itemQuantity) {
+    public void testTransaction(@RequestParam Integer smoothieQuantity, @RequestParam long employeeId, @RequestParam String name, @RequestParam List<String> size, @RequestParam float price, @RequestParam List<String> smoothieName, @RequestParam List<Integer> numIngredients, @RequestParam List<String> ingredientName, @RequestParam List<Integer> itemQuantity) {
         System.out.println("starting test transaction");
         List<Inventory> itemList = new ArrayList<Inventory>();
         List<Integer> sizeList = new ArrayList<Integer>();
@@ -59,10 +59,10 @@ public class SmookController {
             for(int i = start; i < end; i++) {
                 Inventory item = loveGameService.getInventoryItemByName(ingredientName.get(i));
                 itemList.add(item);
-                if(size.equals("small")){
+                if(size.get(j).equals("small")){
                     sizeList.add(itemQuantity.get(i));
                 }
-                else if(size.equals("medium")){
+                else if(size.get(j).equals("medium")){
                     sizeList.add(2*itemQuantity.get(i));
                 }
                 else {
@@ -109,20 +109,20 @@ public class SmookController {
 
     @RequestMapping(value = "/ExcessReport", method = RequestMethod.GET)
     @ResponseBody
-    public List<Excess> testExcessReport()
+    public List<Report> testExcessReport()
     {
         Date now = new Date();
         Timestamp start = new Timestamp(now.getTime()-999999999); //this is 1 hour ago
         Timestamp end = new Timestamp(now.getTime());
-        List<Excess> tempList = loveGameService.createExcessReport(start, end);
+        List<Report> tempList = loveGameService.createExcessReport(start, end);
         return tempList;
     }
 
     @RequestMapping(value = "/RestockReport", method = RequestMethod.GET)
     @ResponseBody
-    public Map<?,?> testRestockReport()
+    public List<Report> testRestockReport()
     {
-        Map<?,?> tempList = loveGameService.createRestockReport();
+        List<Report> tempList = loveGameService.createRestockReport();
         return tempList;
     }
 
