@@ -42,13 +42,18 @@ export const useItemStore = defineStore('itemStore', {
           for (let i = 0; i<this.ingredients.length; i++){
             if (this.ingredients[i] == item){
               this.ingredients.splice(i,1);
-              console.log("Fuck2.0")
             }
           }
         },
         async changeSize(s) {
           console.log("size called");
           this.size = s;
+          if (s == 'small')
+            this.size = 'S';
+          else if (s == 'medium')
+            this.size = 'M';
+          else if (s == 'large')
+            this.size = 'L';
           try {
             const response = await axios.get('/api/price', { params: { name: this.name } });
             console.log("Response" + response.data);

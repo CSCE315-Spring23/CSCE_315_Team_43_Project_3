@@ -112,7 +112,7 @@ getCatagories();
             @keydown.arrowright.prevent="switchRight(i)"
             @keydown.arrowleft.prevent="switchLeft(i)"
             role="button"
-            aria-label="Select item type"
+            aria-label="Select smoothie type"
           >
             {{ itemType.category }}
           </div>
@@ -123,6 +123,8 @@ getCatagories();
             :key="'smoothie-' + i"
             class="smook"
             @click="clicked(smoothie)"
+            role="button"
+            aria-label="Select smoothie"
           >
             {{ smoothie }}
           </div>
@@ -137,7 +139,6 @@ getCatagories();
     @carted="cart"
     />
   </main>
-  <cartButton />
 </template>
 <style scoped>
 main {

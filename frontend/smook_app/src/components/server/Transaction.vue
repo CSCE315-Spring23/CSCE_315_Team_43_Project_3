@@ -6,6 +6,7 @@ const subtotal = ref(0.0);
 const tax = ref(0.0);
 const total = ref(0.0);
 function totaler() {
+  console.log("Totaller");
   subtotal.value = 0.0;
   tax.value = 0.0;
   total.value = 0.0;
@@ -30,7 +31,7 @@ function totaler() {
 }
 totaler();
 function submit() {
-    let name = prompt("What's your name?");
+    let name = prompt("What's their name?");
     if (name != null){
       cartStore.send(name);
       cartStore.$reset();
@@ -63,6 +64,9 @@ function submit() {
 <style scoped>
 #xButton {
     display: inline;
+    padding: 0;
+    background-color: red !important;
+    margin-left: 10px;
 }
 h3 {
   display: inline;
