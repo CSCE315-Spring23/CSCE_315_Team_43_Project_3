@@ -84,8 +84,8 @@ export const useCartStore = defineStore('cart', {
                 str += "&price=" + price;
                 str += "&numIngredients=" + ingredients.length;
                 for (let f = 0; f<ingredients.length; f++){
-                    str += "&ingredientName=" + ingredients[f].replace(/ /g, "%20");
-                    str += "&itemQuantity=" + 1;
+                    str += "&ingredientName=" + ingredients[f].name.replace(/ /g, "%20");
+                    str += "&itemQuantity=" + ingredients[f].quantity;
                 }
             }
             console.log(str);

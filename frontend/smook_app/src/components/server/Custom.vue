@@ -1,5 +1,6 @@
 <script setup>
 import { useItemStore } from '@/stores/CurrentItem';
+import Added from '../shared/added.vue'
 const itemStore = useItemStore();
 const emit = defineEmits(['eventt','carted'])
 
@@ -32,10 +33,11 @@ function size(s) {
             <button @click="size('medium')" id="medium">Medium</button>
             <button @click="size('large')" id="large">Large</button>
         </div>
-        <div id="curr">
+        <!-- <div id="curr">
           <h4>Current Ingredients:</h4>
-          <div class="currIng" v-for="ing in itemStore.ingredients">{{ ing }}</div>
-        </div>
+          <div class="currIng" v-for="ing in itemStore.ingredients">{{ ing.name }}</div>
+        </div> -->
+        <added />
         <div id="future">
           <h4>Addons:</h4>
         </div>

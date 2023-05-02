@@ -22,7 +22,7 @@ export const useItemStore = defineStore('itemStore', {
             .then(response => {
               const stuff = response.data;
               for (let i = 0; i<stuff.length; i++){
-                this.ingredients.push(stuff[stuff.length-i-1]);
+                this.ingredients.push({name: stuff[stuff.length-i-1], quantity: 2});
               }
               this.initialCount = this.ingredients.length;
             })
@@ -31,7 +31,7 @@ export const useItemStore = defineStore('itemStore', {
             });
         },
         pushIngredient(ingredient) {
-          this.ingredients.push(ingredient);
+          this.ingredients.push({name: ingredient, quantity: 2});
           if (this.ingredients.length >= this.initialCount)
           this.price += .99;
         },
