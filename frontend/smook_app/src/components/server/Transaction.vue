@@ -2,34 +2,34 @@
 import {useCartStore} from '@/stores/CartStore';
 import { ref } from 'vue';
 const cartStore = useCartStore();
-const subtotal = ref(0.0);
-const tax = ref(0.0);
-const total = ref(0.0);
-function totaler() {
-  console.log("Totaller");
-  subtotal.value = 0.0;
-  tax.value = 0.0;
-  total.value = 0.0;
-    for(let i = 0; i<cartStore.cart.length; i++){
-        let item = cartStore.cart[i];
-        subtotal.value += item.price;
-    }
-    tax.value = subtotal.value*.0825;
-    total.value = tax.value + subtotal.value;
-    subtotal.value = subtotal.value.toLocaleString('en-US', {
-            style: 'currency',
-            currency: 'USD'
-          })
-    tax.value = tax.value.toLocaleString('en-US', {
-        style: 'currency',
-        currency: 'USD'
-        })
-    total.value = total.value.toLocaleString('en-US', {
-            style: 'currency',
-            currency: 'USD'
-          })
-}
-totaler();
+// const subtotal = ref(0.0);
+// const tax = ref(0.0);
+// const total = ref(0.0);
+// function totaler() {
+//   console.log("Totaller");
+//   subtotal.value = 0.0;
+//   tax.value = 0.0;
+//   total.value = 0.0;
+//     for(let i = 0; i<cartStore.cart.length; i++){
+//         let item = cartStore.cart[i];
+//         subtotal.value += item.price;
+//     }
+//     tax.value = subtotal.value*.0825;
+//     total.value = tax.value + subtotal.value;
+//     subtotal.value = subtotal.value.toLocaleString('en-US', {
+//             style: 'currency',
+//             currency: 'USD'
+//           })
+//     tax.value = tax.value.toLocaleString('en-US', {
+//         style: 'currency',
+//         currency: 'USD'
+//         })
+//     total.value = total.value.toLocaleString('en-US', {
+//             style: 'currency',
+//             currency: 'USD'
+//           })
+// }
+// totaler();
 function submit() {
     let name = prompt("What's their name?");
     if (name != null){
@@ -53,9 +53,9 @@ function submit() {
         </div>
     </div>
     <div id="price">
-        <h5>Subtotal: {{ subtotal }}</h5>
-        <h5>Tax: {{ tax }}</h5>
-        <h5>Total: {{ total }}</h5>
+        <h5>Subtotal: {{ cartStore.getSubtotal }}</h5>
+        <h5>Tax: {{ cartStore.getTax }}</h5>
+        <h5>Total: {{ cartStore.getTotal }}</h5>
     </div>
     <button @click="submit">Pay and Order</button>
   </div>
