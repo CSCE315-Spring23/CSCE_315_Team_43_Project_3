@@ -61,7 +61,7 @@ export const useCartStore = defineStore('cart', {
         },
         async send(name){
             console.log("sending" + name);
-            let str = "https://smook-app.uc.r.appspot.com/api/transaction?";
+            let str = "https://smook-app.uc.r.appspot.com/api/addTransaction?";
             str += "smoothieQuantity=" + this.cart.length + "&employeeId=1&name=" + name;
             for (let i = 0; i<this.cart.length; i++){
                 let Sname = this.cart[i].name;
