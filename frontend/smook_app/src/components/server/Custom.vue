@@ -91,7 +91,7 @@ function size(s) {
     }
     #addOn div {
       flex-grow: 7;
-      max-width: 50%;
+      max-width: 40%;
     }
     #sizeButtons {
         margin-left: 20px;
