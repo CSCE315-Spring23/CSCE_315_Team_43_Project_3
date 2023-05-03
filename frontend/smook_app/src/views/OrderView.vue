@@ -3,7 +3,7 @@ import Heading from '../components/Heading.vue';
 import Size from '../components/customer/Size.vue'
 import AddOn from '../components/customer/addOn.vue'
 import cartButton from '../components/customer/cartButton.vue'
-
+import SmoothieImg from '../components/customer/SmoothieImg.vue';
 import { RouterLink, useRouter } from 'vue-router';
 import { useItemStore } from '@/stores/CurrentItem';
 import {useCartStore} from '@/stores/CartStore';
@@ -52,29 +52,12 @@ function scroll(){
             <button id="addToCart2" v-if="itemStore.size != 'none'" @click="cart">Add to Cart</button>
           </div>
         </div>
+        <div id="mainContent">
         <div id="titlePanel">
           <h1>{{ itemStore.name }}</h1>
+          <SmoothieImg />
         </div>
-        <div id="ingredientsPanel">
-          <p><span v-for="ing in itemStore.ingredients">{{ ing }}, </span></p>
-        </div>
-        <div id="orderingPanels">
-        <Size
-        @scrollNow.once="scroll"
-        />
-        <AddOn/>
-        </div>
-        <!-- <div id="leftside">
-        <div id="ingredients">
-          <h3>Ingredients:</h3>
-          <p>
-          <span v-for="ing in itemStore.ingredients">{{ ing }},</span>
-          </p>
-        </div>
-        <div id="adds">
-          &lt;- Subsitutions/Addons
-        </div>
-      </div> -->
+      </div>
     </div>
   </main>
   <cartButton />
@@ -89,22 +72,19 @@ main {
   left:0;
 }
 #main {
-  /* margin-top: 80px;
-  height: 100%; */
   height: 89%;
   width: 100%;
   position: absolute;
   top: 75px;
-  /* height: 1000px; */
 }
 #itemHeading {
   display: flex;
   justify-content: space-between;
   margin: 10px;
   position: fixed;
-left: 0;
-width: 100%;
-z-index: 1000;
+  left: 0;
+  width: 100%;
+  z-index: 1000;
 }
 #itemHeading div {
   display: flex;
@@ -116,7 +96,6 @@ z-index: 1000;
   padding-left: 9px;
   padding-right: 9px;
   border-radius: 9px;
-  /* text-decoration: underline black; */
   font-style: bold;
   cursor: pointer;
 }
@@ -149,47 +128,19 @@ z-index: 1000;
   align-items: center;
   padding: 10px;
 }
-#titlePanel {
-  position: fixed;
-  width: 100%;
+/* #titlePanel {
+  top: 60px;
+  width: 45%;
   z-index: -1;
-}
+} */
 #titlePanel h1 {
   text-align: center;
+  font-size: 40px;
+  margin-bottom: 30px;
 }
-#orderingPanels {
-  display: flex;
-  justify-content: center;
-}
-#ingredientsPanel {
-  width: 100%;
-  margin-top: 60px;
-}
-#ingredientsPanel p {
-  text-align: center;
-  margin-top: 19px;
-}
-#leftside {
-  position: absolute;
-  left: 2%;
-  top: 30%;
-  width: 15%;
-}
-#ingredients {
-  border: 1px solid black;
-  padding: 5px;
-}
-#ingredients p span {
-  display: inline-block;
-}
-#adds {
-  border: 1px solid black;
-  margin-top: 10px;
-  padding: 5px;
-  cursor: pointer;
-}
-.scroll-to-top {
-  scroll-behavior: smooth;
-  /* any other styles you want to apply */
+#mainContent {
+  padding-left: 15%;
+  padding-right: 15%;
+  top: 63px;
 }
 </style>
