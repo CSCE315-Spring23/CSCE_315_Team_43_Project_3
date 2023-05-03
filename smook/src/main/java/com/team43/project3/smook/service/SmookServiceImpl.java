@@ -333,14 +333,14 @@ public class SmookServiceImpl implements SmookService{
     @param quantity a list of quantities for the corresponding inventory.
     @return the newly created Order_Item object.
     */
-    public Order_Item addOrderItem(Float cost, List<String> inventory, List<Integer> quantity) {
+    public Order_Item addOrderItem(List<String> inventory, List<Integer> quantity) {
         Date now = new Date();
         Timestamp datePlaced = new Timestamp(now.getTime());
         List<Inventory> invList = new ArrayList<Inventory>();
         for(String temp : inventory) {
             invList.add(inventoryRepository.findByName(temp).get(0));
         }
-        Order_Item orderItem = new Order_Item(orderItemRepository.findCurrentId()+1, datePlaced, 0);
+        Order_Item orderItem = new Order_Item(orderItemRepository.findCurrentId()+1, datePlaced);
         orderItemRepository.save(orderItem);
         Long orderListId = orderListRepository.findCurrentId()+1;
         int i = 0;
@@ -361,13 +361,12 @@ public class SmookServiceImpl implements SmookService{
     @param quantity a list of quantities for the corresponding inventory.
     @return the updated Order_Item object.
     */
-    public Order_Item editOrderItem(Long id, Float cost, List<String> inventory, List<Integer> quantity) {
+    public Order_Item editOrderItem(Long id, List<String> inventory, List<Integer> quantity) {
         List<Inventory> invList = new ArrayList<Inventory>();
         for(String temp : inventory) {
             invList.add(inventoryRepository.findByName(temp).get(0));
         }
         Order_Item orderItem = orderItemRepository.getReferenceById(id);
-        orderItem.setCost(cost);
         orderItemRepository.save(orderItem);
         Long orderListId = orderListRepository.findCurrentId()+1;
         List<Order_List> orderList = orderListRepository.findByOrderId(orderListId);

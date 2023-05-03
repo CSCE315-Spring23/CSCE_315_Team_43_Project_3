@@ -179,9 +179,9 @@ public class SmookController {
 
     @RequestMapping(value = "/addOrder", method = RequestMethod.POST)
     @ResponseBody
-    public Order_Item addOrder(@RequestParam Float cost, @RequestParam List<String> invList, @RequestParam List<Integer> quantity)
+    public Order_Item addOrder(@RequestParam List<String> invList, @RequestParam List<Integer> quantity)
     {
-        return loveGameService.addOrderItem(cost, invList, quantity);
+        return loveGameService.addOrderItem(invList, quantity);
     }
 
     @PostMapping(value = "/addTransaction")
@@ -231,8 +231,8 @@ public class SmookController {
 
     @RequestMapping(value = "/editOrder", method = RequestMethod.POST)
     @ResponseBody
-    public Order_Item editOrder(@RequestParam Long id, @RequestParam Float cost, @RequestParam List<String> invList, @RequestParam List<Integer> quantity)
+    public Order_Item editOrder(@RequestParam Long id, @RequestParam List<String> invList, @RequestParam List<Integer> quantity)
     {
-        return loveGameService.editOrderItem(id, cost, invList, quantity);
+        return loveGameService.editOrderItem(id, invList, quantity);
     }
 }

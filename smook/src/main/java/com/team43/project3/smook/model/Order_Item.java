@@ -23,9 +23,6 @@ public class Order_Item {
     @Column(name = "date_placed", nullable = false)
     Timestamp datePlaced;
 
-    @Column(name = "cost", nullable = false)
-    float cost;
-
 
     public long getOrderId() {
         return this.orderId;
@@ -43,18 +40,9 @@ public class Order_Item {
         this.datePlaced = date_placed;
     }
 
-    public float getCost() {
-        return this.cost;
-    }
-
-    public void setCost(float cost) {
-        this.cost = cost;
-    }
-
-    public Order_Item(long orderId, Timestamp datePlaced, float cost) {
+    public Order_Item(long orderId, Timestamp datePlaced) {
         this.orderId = orderId;
         this.datePlaced = datePlaced;
-        this.cost = cost;
     }
 
     public Order_Item() {
