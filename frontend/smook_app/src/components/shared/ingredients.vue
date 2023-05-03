@@ -67,7 +67,7 @@ async function open(n) {
   arr.value = 1;
   namee.value = n;
   ingredientCurrent.splice(0,ingredientCurrent.length);
-  await axios.get('/api/allingredients')
+  await axios.get('https://smook-app.uc.r.appspot.com/api/allingredients')
    .then(response => {
         const stuff = response.data;
         for (let i = 0; i<stuff.length; i++){
@@ -140,6 +140,9 @@ function pick(item) {
 }
 .buttonz:hover {
   background-color: #418c6b;
+}
+h3 {
+  font-size: 24px;
 }
 .buttonz:focus {
   outline: none;

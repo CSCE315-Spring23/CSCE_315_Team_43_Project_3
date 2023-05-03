@@ -1,19 +1,17 @@
 <script setup>
 import Heading from '../components/Heading.vue';
-import Size from '../components/customer/Size.vue'
-import AddOn from '../components/customer/addOn.vue'
-import cartButton from '../components/customer/cartButton.vue'
-
+import Ingredients from '../components/shared/Ingredients.vue'
+import cartButton from '../components/customer/cartButton.vue';
+import SmoothieImg from '../components/customer/SmoothieImg.vue';
+import Size from '../components/customer/Size.vue';
 import { RouterLink, useRouter } from 'vue-router';
 import { useItemStore } from '@/stores/CurrentItem';
 import {useCartStore} from '@/stores/CartStore';
 import { ref } from 'vue';
 const router = useRouter();
-
 const itemStore = useItemStore();
 const cartStore = useCartStore();
 const screen1 = ref(true);
-
 // console.log("Test:" + itemStore.getPrice())
 function back() {
     router.back();
@@ -45,24 +43,30 @@ router.back();
             <button id="addToCart2" v-if="itemStore.size != 'none'" @click="cart">Add to Cart</button>
           </div>
         </div>
-        <div id="titlePanel">
-          <h1>{{ itemStore.name }}</h1>
-        </div>
-        <div id="orderingPanels">
-        <Size/>
-        <AddOn v-if="itemStore.size != 'none'"/>
-        </div>
-        <!-- <div id="leftside">
-        <div id="ingredients">
-          <h3>Ingredients:</h3>
-          <p>
-          <span v-for="ing in itemStore.ingredients">{{ ing }},</span>
-          </p>
-        </div>
-        <div id="adds">
-          &lt;- Subsitutions/Addons
-        </div>
-      </div> -->
+        <div id="mainContent">
+          <div id="titlePanel">
+            <h1>{{ itemStore.name }}</h1>
+            <SmoothieImg />
+          </div>
+          <div id="editPanel">
+            <div class="scrollable-content">
+            <div id="size">
+              <h3 class="editHeader">1. Size</h3>
+              <Size />
+            </div>
+            <div id="currentRecipe">
+              <h3 class="editHeader">2. Current Recipe</h3>
+              <div class="centeringCurr">
+                <div class="currIng" v-for="ing in itemStore.ingredients">{{ ing }}<span @click="remove(ing)" class="delete">X</span></div>
+              </div>
+            </div>
+            <div id="addOns">
+              <h3 class="editHeader">3. Add Ons (+$.99 per)</h3>
+              <Ingredients />
+            </div>
+          </div>
+          </div>
+      </div>
     </div>
   </main>
   <cartButton />
@@ -77,18 +81,19 @@ main {
   left:0;
 }
 #main {
-  /* margin-top: 80px;
-  height: 100%; */
   height: 89%;
   width: 100%;
   position: absolute;
   top: 75px;
-  /* height: 1000px; */
 }
 #itemHeading {
   display: flex;
   justify-content: space-between;
   margin: 10px;
+  position: fixed;
+  left: 0;
+  width: 100%;
+  z-index: 1000;
 }
 #itemHeading div {
   display: flex;
@@ -100,7 +105,6 @@ main {
   padding-left: 9px;
   padding-right: 9px;
   border-radius: 9px;
-  /* text-decoration: underline black; */
   font-style: bold;
   cursor: pointer;
 }
@@ -114,6 +118,10 @@ main {
   color: white;
   cursor: pointer;
   padding: 10px;
+}
+h3 {
+  font-size: 30px;
+  text-decoration: underline;
 }
 #addToCart2 {
   border-radius: 0;
@@ -133,30 +141,52 @@ main {
   align-items: center;
   padding: 10px;
 }
+#titlePanel {
+  flex-grow: 1;
+}
 #titlePanel h1 {
   text-align: center;
+  font-size: 40px;
+  margin-bottom: 30px;
 }
-#orderingPanels {
+#mainContent {
+  padding-left: 10%;
+  padding-right: 10%;
+  top: 63px;
   display: flex;
-  justify-content: center;
+  flex-direction: row;
+  flex: 1;
+  justify-content: space-between;
 }
-#leftside {
-  position: absolute;
-  left: 2%;
-  top: 30%;
-  width: 15%;
+#editPanel {
+  flex-grow: 5;
+  padding-top: 30px;
+  margin-left: 70px;
+  max-width: 703px;
 }
-#ingredients {
-  border: 1px solid black;
+.currIng {
+  font-size: 20px;
+  border: 1px black dotted;
   padding: 5px;
+  margin-top: 7px;
+  width: 74%;
+  max-width: 100% !important;
 }
-#ingredients p span {
-  display: inline-block;
-}
-#adds {
-  border: 1px solid black;
-  margin-top: 10px;
-  padding: 5px;
+.delete {
+  color: red;
   cursor: pointer;
+  position: absolute;
+  right: 7%;
+}
+.scrollable-content {
+  overflow-y: scroll;
+}
+.scrollable-content  > div {
+  margin-bottom: 10px;
+}
+.centeringCurr {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 </style>
