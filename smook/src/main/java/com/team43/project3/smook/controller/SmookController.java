@@ -30,7 +30,7 @@ import com.team43.project3.smook.service.Item;
 import com.team43.project3.smook.service.SmookServiceImpl;
 
 @RequestMapping("/api")
-@CrossOrigin(origins = "http://localhost:5173")
+@CrossOrigin(origins = "*")
 @RestController
 public class SmookController {
 
