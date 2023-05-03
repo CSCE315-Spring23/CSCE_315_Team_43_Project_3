@@ -75,14 +75,14 @@ for i in range(0,365):
 
     #inventory list (format is [InventoryID,Name,Type,Price,Quantity,Measurement_Type])
     inventory = []
-    inventoryEndRows = []
+    inventoryStartRows = []
     with open('inventory.csv', newline='') as inventoryList:
         inventoryReader = csv.reader(inventoryList, delimiter=',')
         for row in inventoryReader:
-            if inventoryReader.line_num < 73:
+            if inventoryReader.line_num > 7:
                 inventory.append(row)
             else:
-                inventoryEndRows.append(row)
+                inventoryStartRows.append(row)
     inventoryItem = open('inventory.csv', 'w+', newline='')
     inventoryWriter = csv.writer(inventoryItem)
 
@@ -118,24 +118,13 @@ for i in range(0,365):
                     ingredients_bridge.append(x)
                     transactionItemWriter.writerow([transItemID, x[0], transID, x[2]])
                     transItemID += 1
-                if float(x[0]) == 68:
-                    ingredients_bridge.append(x)
-                    transactionItemWriter.writerow([transItemID, x[0], transID, x[2]])
-                    transItemID += 1
-                if float(x[0]) == 71:
-                    ingredients_bridge.append(x)
-                    transactionItemWriter.writerow([transItemID, x[0], transID, x[2]])
-                    transItemID += 1
             #subtract quantity from associated ingredient in inventory
             for x in inventory:
                 for y in ingredients_bridge:
                     #for every match between inventory and ingredients
                     if int(x[0]) == int(y[0]):
                         #subtract the amount used from the inventory if not dummy
-                        if int(x[0]) == 74:  
-                            tempIngredient = inventory[0]
-                        else:
-                            tempIngredient = x
+                        tempIngredient = x
                         tempIngredient[3] = int(tempIngredient[3]) - int(y[2])
                         usageList[int(tempIngredient[0])-1][2] += int(y[2])
                         x = tempIngredient
@@ -167,8 +156,8 @@ for i in range(0,365):
         orderWriter.writerow([orderID, dt, orderSum])
         orderLedgerWriter.writerows(order_ledger)
         orderID += 1
+    inventoryWriter.writerows(inventoryStartRows)
     inventoryWriter.writerows(inventory)
-    inventoryWriter.writerows(inventoryEndRows)
     inventoryUsageWriter.writerows(usageList)
     inventoryItem.close()
     #account for gamedays

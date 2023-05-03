@@ -23,7 +23,7 @@ public interface MenuItemRepository extends JpaRepository<Menu_Item, Long> {
     @Query(value = "SELECT price FROM menu_item WHERE name = ?1 ORDER BY price ASC", nativeQuery = true)
     List<Float> findPriceByMenu(String name);
 
-    @Query(value = "SELECT MAX(menu_item_id) FROM menu_item", nativeQuery = true)
+    @Query(value = "SELECT MAX(menu_id) FROM menu_item", nativeQuery = true)
     long findCurrentId();
 
     @Query(value = "SELECT * FROM menu_item WHERE name = ?1 ORDER BY name ASC", nativeQuery = true)

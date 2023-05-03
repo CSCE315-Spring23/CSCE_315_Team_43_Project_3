@@ -19,6 +19,7 @@
     "popper.js": "^1.16.1",
     "roboto-fontface": "*",
     "search-dropdown-vue": "^1.0.3",
+    "superagent": "^8.0.9",
     "vue": "^3.2.47",
     "vue-axios": "^3.5.2",
     "vue-router": "^4.1.6",
