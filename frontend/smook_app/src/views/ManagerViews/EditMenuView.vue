@@ -3,6 +3,8 @@ import { useRouter } from 'vue-router'
 // import {ref } from 'vue'
 import { ref } from 'vue'
 import axios from 'axios';
+import Heading from '../../components/Heading.vue';
+import NavBar from '../../components/managerPanels/Back.vue';
 
 const router = useRouter()
 
@@ -30,6 +32,14 @@ async function login() {
 </script>
 
 <template>
+    <Heading true/>
+    <br>
+    <br>
+    <br>
+    <NavBar/>
+    <br>
+    <br>
+    <br>
     <div id="mainFormDiv" class="centered-div">
         <form @submit.prevent="login" data-testid="loginControl">
         <label for="id">Menu ID</label>

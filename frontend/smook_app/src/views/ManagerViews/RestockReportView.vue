@@ -1,21 +1,19 @@
 <script setup>
-    import VuetifyDatatable from "../../components/managerPanels/InventoryTable.vue";
+    import VuetifyDatatable from "../../components/managerPanels/RestockTable.vue";
     import NavBar from '../../components/managerPanels/Back.vue';
     import axios from 'axios';
     import { reactive } from 'vue'
     import Heading from '../../components/Heading.vue';
 
-    
-
     let posts = reactive([]);
     async function getInventory() {
-    await axios.get('https://smook-app.uc.r.appspot.com/api/validInventory', {
+    await axios.get('https://smook-app.uc.r.appspot.com/api/RestockReport', {
     })
       .then(response => {
-        const inventory = response.data;
+        const restock = response.data;
         // posts = response.data;
-        for (let i = 0; i< inventory.length; i++){
-          posts.push(inventory[inventory.length-i-1]);
+        for (let i = 0; i< restock.length; i++){
+          posts.push(restock[restock.length-i-1]);
         }
         console.log(posts);
       })
@@ -25,13 +23,14 @@
     }
     getInventory();
 </script>
+
+
 <template>
   <Heading true/>
   <br>
-  <br>
-  <br>
+  <h1>Manager</h1>
   <div>
     <NavBar/>
     <VuetifyDatatable :posts="posts" />
   </div>
-</template> 
+</template>

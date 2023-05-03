@@ -88,6 +88,21 @@ const router = createRouter({
       component: () => import('../views/ManagerViews/ZReportView.vue')
     },
     {
+      path: '/ExcessReport',
+      name: 'excessReport',
+      component: () => import('../views/ManagerViews/ExcessReportView.vue')
+    },
+    {
+      path: '/RestockReport',
+      name: 'restockReport',
+      component: () => import('../views/ManagerViews/RestockReportView.vue')
+    },
+    {
+      path: '/SalesReport',
+      name: 'salesReport',
+      component: () => import('../views/ManagerViews/SalesReportView.vue')
+    },
+    {
       path: '/customer/OrderPage',
       name: 'order',
       component: () => import('../views/OrderView.vue')

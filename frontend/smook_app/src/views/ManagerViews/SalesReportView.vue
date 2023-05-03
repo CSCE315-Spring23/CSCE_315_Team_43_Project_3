@@ -3,23 +3,20 @@ import { useRouter } from 'vue-router'
 // import {ref } from 'vue'
 import { ref } from 'vue'
 import axios from 'axios';
+import SearchDropdown from "../../components/managerPanels/SearchDropdown.vue";
 import Heading from '../../components/Heading.vue';
 import NavBar from '../../components/managerPanels/Back.vue';
+import VuetifyDatatable from "../../components/managerPanels/SalesTable.vue";
 
 const router = useRouter()
 
-const name = ref('')
-const type = ref('')
-const price = ref('')
-const ingredientAmount = ref('')
-
-const err = ref('')
+const ingredient = ref('')
+const amount = ref('')
 
 async function login() {
-    console.log(name.value);
-    if (name.value != "" && type.value != "" && price.value != "" && ingredientAmount.value != ""){
+    if (ingredient.value != "" && amount.value != ""){
         await axios
-          .post('http://localhost:8080/api/addItem?name='+name.value+'&type='+type.value+'&price='+price.value+'&ingredientAmount='+ingredientAmount.value)
+          .post('https://smook-app.uc.r.appspot.com/api/orderInventory?ingredient='+ingredient.value+'&amount='+amount.value)
           .then(response => {
           })
           .catch(error => console.log(error))
@@ -36,27 +33,24 @@ async function login() {
     <br>
     <br>
     <NavBar/>
-    <br>
-    <br>
+    <div>
+        <VuetifyDatatable :posts="posts" />
+    </div>
     <div id="mainFormDiv" class="centered-div">
         <form @submit.prevent="login" data-testid="loginControl">
-        <label for="name">Name</label>
-        <input type="text" v-model="name" class="formIn"><br>
-        <label for="type">Type</label>
-        <input type="text" v-model="type" class="formIn"><br>
-        <label for="price">Price</label>
-        <input type="text" v-model="price" class="formIn"><br>
-        <label for="ingredientAmount">Ingredient Amount</label>
-        <input type="text" v-model="ingredientAmount" class="formIn"><br>
-        <label for="ingredientIds">Ingredient IDs</label>
-        <input type="text" v-model="ingredientIds" class="formIn"><br>
-        <label for="ingredientQuantity">Ingredient Quantities</label>
-        <input type="text" v-model="ingredientQuantity" class="formIn"><br>
-        <input type="submit" value="Add to Menu" id="sub">
-        <p class="error" v-show="err=='bad'">Error: You must login as type "manager" or "server"</p>
+        <label for="start_date">Start Date</label>
+        <input type="text" v-model="start_date" class="formIn"><br>
+        <label for="end_date">End Date</label>
+        <input type="text" v-model="end_date" class="formIn"><br>
+        <input type="submit" value="Generate" id="sub">
+        <p class="error" v-show="err=='bad'">Error: Dates are not valid.</p>
         </form>
     </div>
 </template>
+
+<style>
+@import url(https://cdn.syncfusion.com/ej2/material.css);
+</style>
 
 <style scoped>
 .centered-div {

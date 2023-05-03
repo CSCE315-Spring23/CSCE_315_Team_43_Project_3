@@ -1,19 +1,6 @@
-<script setup>
-
-    function switch_page() {
-        console.log(user.value);
-        if (user.value == "server")
-            router.replace('/server')
-        else if (user.value == "manager")
-            router.replace('/manager')
-        else
-            err.value = 'bad';
-        console.log(err);
-    }
-</script>
 
 <template>
-    <ul class="nav_bar">
+    <!-- <ul class="nav_bar">
         <li class="nav_elem"><a href="Inventory">Inventory</a></li>
         <li class="nav_elem"><a href="Menu">Menu</a></li>
         <li class="nav_elem"><a href="EditMenu">Edit Menu Item</a></li>
@@ -24,7 +11,9 @@
         <li class="nav_elem"><a href="ZReport">Z Report</a></li>
         <li class="nav_elem"><a href="ExcessReport">Excess Report</a></li>
         <li class="nav_elem"><a href="RestockReport">Restock Report</a></li>
-        <li class="nav_elem"><a href="SalesReport">Sales Report</a></li>
+    </ul> -->
+    <ul class="nav_bar">
+        <li class="nav_elem"><a href="Manager">	◄</a></li>
     </ul>
 </template>
 <style scoped>
@@ -39,10 +28,10 @@
         list-style-type: none;
         margin: 0;
         padding: 0;
-        width: 12%;
+        width: 3%;
         background-color: #c2c2c2;
         height: 100%;
-        position: fixed;
+        position: relative;
         overflow: auto;
     }
     .nav_elem{

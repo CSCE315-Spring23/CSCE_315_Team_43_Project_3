@@ -2,22 +2,24 @@
 import { useRouter } from 'vue-router'
 // import {ref } from 'vue'
 import { ref } from 'vue'
+import axios from 'axios';
 import SearchDropdown from "../../components/managerPanels/SearchDropdown.vue";
+import Heading from '../../components/Heading.vue';
+import NavBar from '../../components/managerPanels/Back.vue';
 
 const router = useRouter()
 
-const user = ref('')
+const ingredient = ref('')
+const amount = ref('')
 
-const pass = ref('')
-
-const err = ref('')
-
-function login() {
-    console.log(user.value);
-    if (user.value == "server")
-        router.replace('/server')
-    else if (user.value == "manager")
-        router.replace('/manager')
+async function login() {
+    if (ingredient.value != "" && amount.value != ""){
+        await axios
+          .post('https://smook-app.uc.r.appspot.com/api/orderInventory?ingredient='+ingredient.value+'&amount='+amount.value)
+          .then(response => {
+          })
+          .catch(error => console.log(error))
+    }
     else
         err.value = 'bad';
     console.log(err);
@@ -25,6 +27,11 @@ function login() {
 </script>
 
 <template>
+    <Heading true/>
+    <br>
+    <br>
+    <br>
+    <NavBar/>
     <div id="mainFormDiv" class="centered-div">
         <form @submit.prevent="login" data-testid="loginControl">
         <label for="ingredient">Ingredient</label>

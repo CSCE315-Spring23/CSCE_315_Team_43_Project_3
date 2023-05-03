@@ -1,21 +1,19 @@
 <script setup>
-    import VuetifyDatatable from "../../components/managerPanels/InventoryTable.vue";
+    import VuetifyDatatable from "../../components/managerPanels/ExcessTable.vue";
     import NavBar from '../../components/managerPanels/Back.vue';
     import axios from 'axios';
     import { reactive } from 'vue'
     import Heading from '../../components/Heading.vue';
 
-    
-
     let posts = reactive([]);
     async function getInventory() {
-    await axios.get('https://smook-app.uc.r.appspot.com/api/validInventory', {
+    await axios.get('https://smook-app.uc.r.appspot.com/api/ExcessReport', {
     })
       .then(response => {
-        const inventory = response.data;
+        const excess = response.data;
         // posts = response.data;
-        for (let i = 0; i< inventory.length; i++){
-          posts.push(inventory[inventory.length-i-1]);
+        for (let i = 0; i< excess.length; i++){
+          posts.push(excess[excess.length-i-1]);
         }
         console.log(posts);
       })
@@ -25,13 +23,14 @@
     }
     getInventory();
 </script>
+
+
 <template>
   <Heading true/>
   <br>
-  <br>
-  <br>
+  <h1>Manager</h1>
   <div>
     <NavBar/>
     <VuetifyDatatable :posts="posts" />
   </div>
-</template> 
+</template>

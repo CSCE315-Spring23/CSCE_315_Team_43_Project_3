@@ -3,6 +3,8 @@ import { useRouter } from 'vue-router'
 // import {ref } from 'vue'
 import { ref } from 'vue'
 import axios from 'axios';
+import Heading from '../../components/Heading.vue';
+import NavBar from '../../components/managerPanels/Back.vue';
 
 
 const router = useRouter()
@@ -11,6 +13,7 @@ const name = ref('')
 const price = ref('')
 const quantity = ref('')
 const measurement_type = ref('')
+const restock_amount = ref('')
 
 const err = ref('')
 
@@ -18,7 +21,7 @@ async function login() {
     console.log(name.value);
     if (name.value != "" && price.value != "" && quantity.value != "" && measurement_type.value != ""){
         await axios
-          .post('http://localhost:8080/api/addInventory?name='+name.value+'&price='+price.value+'&quantity='+quantity.value+'&measurement_type='+measurement_type.value)
+          .post('https://smook-app.uc.r.appspot.com/api/addInventory?name='+name.value+'&price='+price.value+'&quantity='+quantity.value+'&measurement_type='+measurement_type.value)
           .then(response => {
           })
           .catch(error => console.log(error))
@@ -30,6 +33,11 @@ async function login() {
 </script>
 
 <template>
+    <Heading true/>
+    <br>
+    <br>
+    <br>
+    <NavBar/>
     <div id="mainFormDiv" class="centered-div">
         <form @submit.prevent="login" data-testid="loginControl">
         <label for="name">Name</label>
