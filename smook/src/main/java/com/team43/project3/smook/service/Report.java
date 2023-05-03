@@ -5,7 +5,7 @@ import java.util.Objects;
 
 public class Report implements Serializable {
     String name;
-    Float excess;
+    Float amount;
     
 
     public Report() {
@@ -13,7 +13,7 @@ public class Report implements Serializable {
 
     public Report(String name, Float excess) {
         this.name = name;
-        this.excess = excess;
+        this.amount = excess;
     }
 
     public String getName() {
@@ -24,19 +24,19 @@ public class Report implements Serializable {
         this.name = name;
     }
 
-    public Float getExcess() {
-        return this.excess;
+    public Float getAmount() {
+        return this.amount;
     }
 
-    public void setExcess(Float excess) {
-        this.excess = excess;
+    public void setAmount(Float excess) {
+        this.amount = excess;
     }
 
     @Override
     public String toString() {
         return "{" +
             " name='" + getName() + "'" +
-            ", excess='" + getExcess() + "'" +
+            ", excess='" + getAmount() + "'" +
             "}";
     }
     
