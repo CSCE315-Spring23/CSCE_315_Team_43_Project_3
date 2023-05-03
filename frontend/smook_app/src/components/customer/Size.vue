@@ -17,7 +17,7 @@ const emit = defineEmits(['scrollNow']);
 <template>
     <div id="main3">
     <div id="img">
-        <img src="./imgs/smoothie1.png" alt="Ayo">
+        <img src="./imgs/smoothie1.png" alt="Image of Smoothie">
     </div>
         <div class="centerer">
         <div id="sizeButtons">

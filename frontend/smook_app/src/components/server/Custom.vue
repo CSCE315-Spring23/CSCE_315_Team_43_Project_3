@@ -87,7 +87,7 @@ function size(s) {
         display: flex;
         justify-content: center;
         margin-top: 20px;
-    flex: 1;
+      flex: 1;
     }
     #addOn div {
       flex-grow: 7;

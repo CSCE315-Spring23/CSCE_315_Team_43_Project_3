@@ -6,6 +6,7 @@ module.exports = {
             '/api': {
                 target: 'https://smook-app.uc.r.appspot.com/api',
                 ws: true,
+                secure: false, 
                 changeOrigin: true
             }
         }

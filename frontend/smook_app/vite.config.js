@@ -14,6 +14,8 @@ export default defineConfig({
       '/api': {
         target: 'https://smook-app.uc.r.appspot.com/api',
         changeOrigin: true,
+        secure: false, 
+        ws: true,
         rewrite: (path) => path.replace(/^\/api/, ''),
       },
     },

@@ -63,21 +63,23 @@ const itemStore = useItemStore();
 const arr = ref(0);
 const namee = ref("");
 const ingredientCurrent = reactive([]);
-function open(n) {
+async function open(n) {
   arr.value = 1;
   namee.value = n;
   ingredientCurrent.splice(0,ingredientCurrent.length);
-  axios.get('/api/allingredients')
+  await axios.get('/api/allingredients')
    .then(response => {
         const stuff = response.data;
         for (let i = 0; i<stuff.length; i++){
+          console.log(stuff[i] + "=>" + smoothieKingIngredients.get(stuff[i]));
+          console.log(namee);
           if (itemStore.ingredients.includes(stuff[i]))
           continue;
           if (namee.value == 'Extras' && !smoothieKingIngredients.has(stuff[i])){
-            ingredientCurrent.push(stuff[stuff.length-i-1]);
+            ingredientCurrent.push(stuff[i]);
           }
-          else if (namee.value != 'Extras' && smoothieKingIngredients.get(stuff[i]) == namee)
-            ingredientCurrent.push(stuff[stuff.length-i-1]);
+          else if (namee.value != 'Extras' && smoothieKingIngredients.get(stuff[i]) == namee.value)
+            ingredientCurrent.push(stuff[i]);
         }
     })
     .catch(error => {
