@@ -143,7 +143,9 @@ function pick(item) {
 .buttonz:hover {
   background-color: #418c6b;
 }
-
+h3 {
+  font-size: 24px;
+}
 .buttonz:focus {
   outline: none;
   box-shadow: 0 0 0 2px #88c9a1;

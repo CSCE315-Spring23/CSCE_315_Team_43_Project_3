@@ -1,6 +1,6 @@
 <script setup>
 import { useItemStore } from '@/stores/CurrentItem';
-import ingredients from "../shared/ingredients.vue"
+import Ingredients from "../shared/Ingredients.vue"
 const itemStore = useItemStore();
 const emit = defineEmits(['eventt','carted'])
 
@@ -42,7 +42,7 @@ function size(s) {
         </div>
         <div id="future">
           <h4>Customizations:</h4>
-          <ingredients />
+          <Ingredients />
         </div>
         </div>
         <div id="sub" @click="cart()">Add-<span>{{ itemStore.getPrice }}</span></div>

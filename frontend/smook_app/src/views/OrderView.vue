@@ -1,9 +1,9 @@
 <script setup>
 import Heading from '../components/Heading.vue';
-import Size from '../components/customer/Size.vue'
-import AddOn from '../components/customer/addOn.vue'
-import cartButton from '../components/customer/cartButton.vue'
+import Ingredients from '../components/shared/Ingredients.vue'
+import cartButton from '../components/customer/cartButton.vue';
 import SmoothieImg from '../components/customer/SmoothieImg.vue';
+import Size from '../components/customer/Size.vue';
 import { RouterLink, useRouter } from 'vue-router';
 import { useItemStore } from '@/stores/CurrentItem';
 import {useCartStore} from '@/stores/CartStore';
@@ -29,13 +29,6 @@ cartStore.addItem(smoothie);
 itemStore.$reset();
 router.back();
 }
-function scroll(){
-  document.getElementById('app').classList.add('scroll-to-top');
-    setTimeout(() => {
-      document.getElementById('app').classList.remove('scroll-to-top');
-      window.scrollTo(0, 0);
-    }, 1000);
-}
 </script>
 
 <template>
@@ -53,10 +46,28 @@ function scroll(){
           </div>
         </div>
         <div id="mainContent">
-        <div id="titlePanel">
-          <h1>{{ itemStore.name }}</h1>
-          <SmoothieImg />
-        </div>
+          <div id="titlePanel">
+            <h1>{{ itemStore.name }}</h1>
+            <SmoothieImg />
+          </div>
+          <div id="editPanel">
+            <div class="scrollable-content">
+            <div id="size">
+              <h3 class="editHeader">1. Size</h3>
+              <Size />
+            </div>
+            <div id="currentRecipe">
+              <h3 class="editHeader">2. Current Recipe</h3>
+              <div class="centeringCurr">
+                <div class="currIng" v-for="ing in itemStore.ingredients">{{ ing }}<span @click="remove(ing)" class="delete">X</span></div>
+              </div>
+            </div>
+            <div id="addOns">
+              <h3 class="editHeader">3. Add Ons (+$.99 per)</h3>
+              <Ingredients />
+            </div>
+          </div>
+          </div>
       </div>
     </div>
   </main>
@@ -110,6 +121,10 @@ main {
   cursor: pointer;
   padding: 10px;
 }
+h3 {
+  font-size: 30px;
+  text-decoration: underline;
+}
 #addToCart2 {
   border-radius: 0;
   background-color: #2196F3; ;
@@ -128,19 +143,52 @@ main {
   align-items: center;
   padding: 10px;
 }
-/* #titlePanel {
-  top: 60px;
-  width: 45%;
-  z-index: -1;
-} */
+#titlePanel {
+  flex-grow: 1;
+}
 #titlePanel h1 {
   text-align: center;
   font-size: 40px;
   margin-bottom: 30px;
 }
 #mainContent {
-  padding-left: 15%;
-  padding-right: 15%;
+  padding-left: 10%;
+  padding-right: 10%;
   top: 63px;
+  display: flex;
+  flex-direction: row;
+  flex: 1;
+  justify-content: space-between;
+}
+#editPanel {
+  flex-grow: 5;
+  padding-top: 30px;
+  margin-left: 70px;
+  max-width: 703px;
+}
+.currIng {
+  font-size: 20px;
+  border: 1px black dotted;
+  padding: 5px;
+  margin-top: 7px;
+  width: 74%;
+  max-width: 100% !important;
+}
+.delete {
+  color: red;
+  cursor: pointer;
+  position: absolute;
+  right: 7%;
+}
+.scrollable-content {
+  overflow-y: scroll;
+}
+.scrollable-content  > div {
+  margin-bottom: 10px;
+}
+.centeringCurr {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 </style>
