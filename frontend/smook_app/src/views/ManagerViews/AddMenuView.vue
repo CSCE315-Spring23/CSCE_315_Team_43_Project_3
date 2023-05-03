@@ -12,17 +12,20 @@ const name = ref('')
 const type = ref('')
 const price = ref('')
 const ingredientAmount = ref('')
+const ingredientIds = ref('')
+const ingredientQuantity = ref('')
 
 const err = ref('')
 
 async function login() {
     console.log(name.value);
-    if (name.value != "" && type.value != "" && price.value != "" && ingredientAmount.value != ""){
+    if (name.value != "" && type.value != "" && price.value != "" && ingredientAmount.value != "" && ingredientIds.value != "" && ingredientQuantity.value != ""){
         await axios
-          .post('http://localhost:8080/api/addItem?name='+name.value+'&type='+type.value+'&price='+price.value+'&ingredientAmount='+ingredientAmount.value)
+          .post('https://smook-app.uc.r.appspot.com/api/addItem?name='+name.value+'&type='+type.value+'&price='+price.value+'&ingredientAmount='+ingredientAmount.value+'&ingredientIds='+ingredientIds.value+'&ingredientQuantity='+ingredientQuantity.value)
           .then(response => {
           })
           .catch(error => console.log(error))
+        router.replace('/manager')
     }
     else
         err.value = 'bad';
