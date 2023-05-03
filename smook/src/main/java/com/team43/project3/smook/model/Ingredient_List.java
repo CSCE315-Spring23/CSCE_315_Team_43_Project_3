@@ -60,6 +60,8 @@ public class Ingredient_List {
     }
 
     public Ingredient_List(long inventoryId, long menuId, float quantity) {
+        Ingredient_List_Key key = new Ingredient_List_Key(inventoryId, menuId);
+        this.ingredient_list_key = key;
         this.setInventory(inventory);
         this.setMenu(menu);
         this.quantity = quantity;
