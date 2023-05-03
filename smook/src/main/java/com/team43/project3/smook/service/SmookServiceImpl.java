@@ -326,6 +326,13 @@ public class SmookServiceImpl implements SmookService{
 
     //Order
 
+    /**
+    Adds an order item to the database.
+    @param cost the cost of the order item.
+    @param inventory a list of inventory names for the order item.
+    @param quantity a list of quantities for the corresponding inventory.
+    @return the newly created Order_Item object.
+    */
     public Order_Item addOrderItem(Float cost, List<String> inventory, List<Integer> quantity) {
         Date now = new Date();
         Timestamp datePlaced = new Timestamp(now.getTime());
@@ -346,6 +353,14 @@ public class SmookServiceImpl implements SmookService{
         return orderItem;
     }
 
+    /**
+    Edits an order item in the database.
+    @param id the ID of the order item to be edited.
+    @param cost the new cost of the order item.
+    @param inventory a list of inventory names for the order item.
+    @param quantity a list of quantities for the corresponding inventory.
+    @return the updated Order_Item object.
+    */
     public Order_Item editOrderItem(Long id, Float cost, List<String> inventory, List<Integer> quantity) {
         List<Inventory> invList = new ArrayList<Inventory>();
         for(String temp : inventory) {
