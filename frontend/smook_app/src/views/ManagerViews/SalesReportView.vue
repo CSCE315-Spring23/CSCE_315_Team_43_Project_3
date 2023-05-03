@@ -7,23 +7,28 @@ import SearchDropdown from "../../components/managerPanels/SearchDropdown.vue";
 import Heading from '../../components/Heading.vue';
 import NavBar from '../../components/managerPanels/Back.vue';
 import VuetifyDatatable from "../../components/managerPanels/SalesTable.vue";
+import { reactive } from 'vue'
 
 const router = useRouter()
 
-const ingredient = ref('')
-const amount = ref('')
+const start_date = ref('2023-05-1 16:34:26.666')
+const end_date = ref('2023-05-2 16:34:26.666')
 
+let posts = reactive([]);
 async function login() {
-    if (ingredient.value != "" && amount.value != ""){
+    if (start_date.value != "" && end_date.value != ""){
         await axios
-          .post('https://smook-app.uc.r.appspot.com/api/orderInventory?ingredient='+ingredient.value+'&amount='+amount.value)
+          .get('https://smook-app.uc.r.appspot.com/api/salesReport?startTime='+start_date.value+'&endTime='+end_date.value)
           .then(response => {
+            const report = response.data;
+            for (let i = 0; i< report.length; i++){
+              posts.push(report[report.length-i-1]);
+            }
           })
           .catch(error => console.log(error))
     }
     else
         err.value = 'bad';
-    console.log(err);
 }
 </script>
 
