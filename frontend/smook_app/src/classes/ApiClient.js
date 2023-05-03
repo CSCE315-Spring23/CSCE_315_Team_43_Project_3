@@ -33,11 +33,11 @@ class ApiClient {
      * Overrides the default value set in spec file if present
      * @param {String} basePath
      */
-    constructor(basePath = 'http://localhost:8080') {
+    constructor(basePath = 'https://smook-app.uc.r.appspot.com/api') {
         /**
          * The base URL against which to resolve every API call's (relative) path.
          * @type {String}
-         * @default http://localhost:8080
+         * @default https://smook-app.uc.r.appspot.com
          */
         this.basePath = basePath.replace(/\/+$/, '');
 

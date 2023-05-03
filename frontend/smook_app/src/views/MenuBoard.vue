@@ -2,7 +2,7 @@
 import Heading from '../components/Heading.vue';
 import SmookControllerApi from '../classes/api/SmookControllerApi';
 import { ref, onMounted, onUnmounted } from 'vue';
-const apikey = import.meta.env.VITE_OPENWEATHERMAP_API_KEY;
+const apikey = "77d7af00a098e224eca5ce31cafde321";
 const weatherUrl = `https://api.openweathermap.org/data/2.5/forecast?lat=30.6212&lon=-96.3404&appid=${apikey}&units=imperial&cnt=1`
 
 let client = new SmookControllerApi();
@@ -48,6 +48,7 @@ async function getCategories() {
             for (let category of categories) {
                 menuData.value.set(category, []);
                 getMenuItemsByCategory(category)
+                console.log(categories)
             }
         }
     })
