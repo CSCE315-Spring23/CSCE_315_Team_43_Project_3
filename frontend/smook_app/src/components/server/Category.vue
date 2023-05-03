@@ -10,7 +10,7 @@ const props = defineProps({
 })
 const smoothies = reactive([]);
 async function getSmoothies() {
-    axios.get('https://smook-app.uc.r.appspot.com/api/items', { params: { category: props.catName } })
+    axios.get('https://smook-app.uc.r.appspot.com/items', { params: { category: props.catName } })
   .then(response => {
     console.log("Response" + response.data);
     const drinks = response.data;
@@ -18,6 +18,15 @@ async function getSmoothies() {
         //console.log(drinks[drinks.length-i-1]);
         smoothies.push(drinks[drinks.length-i-1]);
     }
+    smoothies.sort((a, b) => {
+  if (a.startsWith('The ')) {
+    a = a.substr(4);
+  }
+  if (b.startsWith('The ')) {
+    b = b.substr(4);
+  }
+  return a.localeCompare(b);
+});
     //console.log(categories); // Prints the array of strings to the console
   })
   .catch(error => {
@@ -45,6 +54,9 @@ getSmoothies();
     </div>
 </template>
 <style scoped>
+#cat {
+    width: 15%;
+}
     .divider {
         width: 100%;
         background-color: lightcoral;
@@ -59,8 +71,9 @@ getSmoothies();
     }
     .items {
         display: flex;
+        flex-direction: column;
         /* flex-wrap: wrap; */
         /* justify-content: space-between; */
-        overflow: scroll;
+        overflow: visible;
     }
 </style>

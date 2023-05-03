@@ -2,7 +2,9 @@
 import { useItemStore } from '@/stores/CurrentItem';
 import { ref } from 'vue';
 const itemStore = useItemStore();
+const emit = defineEmits(['scrollNow']);
     function size(s) {
+        emit('scrollNow');
         document.getElementById('small').style.backgroundColor = "#FF6B6B";
         document.getElementById('medium').style.backgroundColor = "#FF6B6B";
         document.getElementById('large').style.backgroundColor = "#FF6B6B";
@@ -15,7 +17,7 @@ const itemStore = useItemStore();
 <template>
     <div id="main3">
     <div id="img">
-        <img src="./imgs/smoothie1.png" alt="Ayo">
+        <img src="./imgs/smoothie1.png" alt="Image of Smoothie">
     </div>
         <div class="centerer">
         <div id="sizeButtons">
@@ -43,6 +45,7 @@ const itemStore = useItemStore();
     .centerer {
         display: flex;
         justify-content: center;
+        margin-top: 50px;
     }
     #sizeButtons button {
         margin-left: 12px;

@@ -15,7 +15,7 @@
     "bootstrap": "^5.2.3",
     "bootstrap-vue": "^2.23.1",
     "jquery": "^3.6.4",
-    "pinia": "^2.0.32",
+    "pinia": "^2.0.35",
     "popper.js": "^1.16.1",
     "roboto-fontface": "*",
     "search-dropdown-vue": "^1.0.3",
