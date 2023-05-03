@@ -4,7 +4,8 @@ CREATE TABLE Inventory (
     Name VARCHAR(255),
     Price FLOAT,
     Quantity FLOAT,
-    Measurement_Type VARCHAR(255)
+    Measurement_Type VARCHAR(255),
+    Restock_Amount INT
 );
 
 /* Order_Item */
