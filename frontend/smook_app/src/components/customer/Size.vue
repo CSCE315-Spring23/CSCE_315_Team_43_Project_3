@@ -13,10 +13,7 @@ const itemStore = useItemStore();
     }
 </script>
 <template>
-    <div id="main3">
-    <div id="img">
-        <img src="./imgs/smoothie1.png" alt="Ayo">
-    </div>
+    <div id="sizer">
         <div class="centerer">
         <div id="sizeButtons">
             <button @click="size('small')" id="small">Small</button>
@@ -27,19 +24,9 @@ const itemStore = useItemStore();
     </div>
 </template>
 <style scoped>
-    #main3 {
-        margin-top: 32px;
-    }
-    #id {
-        width: 100%;
-    }
-    img {
-        display: block;
-        margin: 0 auto;
-    }
-    #sizeButtons {
+    /* #sizeButtons {
         margin-top: 5%;
-    }
+    } */
     .centerer {
         display: flex;
         justify-content: center;
@@ -48,7 +35,7 @@ const itemStore = useItemStore();
         margin-left: 12px;
         background-color: #FF6B6B; 
         color: #FFFFFF; 
-        border-radius: 50px; 
+        /* border-radius: 50px;  */
         padding: 15px 40px; 
         font-size: 20px; 
         font-weight: bold; 

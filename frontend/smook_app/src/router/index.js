@@ -43,6 +43,66 @@ const router = createRouter({
       component: () => import('../views/LoginView.vue')
     },
     {
+      path: '/Inventory',
+      name: 'inventory',
+      component: () => import('../views/ManagerViews/InventoryView.vue')
+    },
+    {
+      path: '/OrderInventory',
+      name: 'orderInventory',
+      component: () => import('../views/ManagerViews/OrderInventory.vue')
+    },
+    {
+      path: '/Menu',
+      name: 'menu',
+      component: () => import('../views/ManagerViews/MenuView.vue')
+    },
+    {
+      path: '/EditMenu',
+      name: 'editMenu',
+      component: () => import('../views/ManagerViews/EditMenuView.vue')
+    },
+    {
+      path: '/AddMenu',
+      name: 'addMenu',
+      component: () => import('../views/ManagerViews/AddMenuView.vue')
+    },
+    {
+      path: '/OrderInventory',
+      name: 'orderInventory',
+      component: () => import('../views/ManagerViews/OrderInventory.vue')
+    },
+    {
+      path: '/AddInventory',
+      name: 'addInventory',
+      component: () => import('../views/ManagerViews/AddInventoryView.vue')
+    },
+    {
+      path: '/XReport',
+      name: 'xReport',
+      component: () => import('../views/ManagerViews/XReportView.vue')
+    },
+    {
+      path: '/ZReport',
+      name: 'zReport',
+      component: () => import('../views/ManagerViews/ZReportView.vue')
+    },
+    {
+      path: '/ExcessReport',
+      name: 'excessReport',
+      component: () => import('../views/ManagerViews/ExcessReportView.vue')
+    },
+    {
+      path: '/RestockReport',
+      name: 'restockReport',
+      component: () => import('../views/ManagerViews/RestockReportView.vue')
+    },
+    {
+      path: '/SalesReport',
+      name: 'salesReport',
+      component: () => import('../views/ManagerViews/SalesReportView.vue')
+    },
+    {
       path: '/customer/OrderPage',
       name: 'order',
       component: () => import('../views/OrderView.vue')
