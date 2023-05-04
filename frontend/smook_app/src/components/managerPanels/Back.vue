@@ -12,7 +12,7 @@
         <li class="nav_elem"><a href="ExcessReport">Excess Report</a></li>
         <li class="nav_elem"><a href="RestockReport">Restock Report</a></li>
     </ul> -->
-    <ul class="nav_bar">
+    <ul class="nav_bar" aria-label="Navigate to Previous Page">
         <li class="nav_elem"><a href="Manager">	◄</a></li>
     </ul>
 </template>
