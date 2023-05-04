@@ -25,6 +25,7 @@ async function login() {
           .then(response => {
           })
           .catch(error => console.log(error))
+        router.replace('/manager')
     }
     else
         err.value = 'bad';
