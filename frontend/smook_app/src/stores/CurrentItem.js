@@ -55,7 +55,7 @@ export const useItemStore = defineStore('itemStore', {
           else if (s == 'large')
             this.size = 'L';
           try {
-            const response = await axios.get('/api/price', { params: { name: this.name } });
+            const response = await axios.get('https://smook-app.uc.r.appspot.com/api/price', { params: { name: this.name } });
             console.log("Response" + response.data);
             const p = response.data;
             this.price = p;
@@ -65,6 +65,8 @@ export const useItemStore = defineStore('itemStore', {
               this.price += 1.20;
             else
               this.price += 2.40;
+            let addon = (this.ingredients.length - this.initialCount) *.99;
+            this.price += addon > 0 ? addon : 0;
           } catch (error) {
             console.error(error);
           }

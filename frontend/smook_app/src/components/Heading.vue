@@ -1,6 +1,7 @@
 <script setup>
 
 import { useRouter } from 'vue-router'
+import {useLoginStore} from '../stores/LoginStore';
 // import {ref } from 'vue'
 
 import { ref } from 'vue'
@@ -11,10 +12,15 @@ import { ref } from 'vue'
 //     required: true
 //   }
 // })
+const loginStore = useLoginStore();
 const router = useRouter()
 
 function login() {
     router.push('/login');
+}
+function logout() {
+    router.push('/');
+    loginStore.loggedIn = false;
 }
 function gohome() {
     if (router.currentRoute.value.name=="home"){
@@ -25,12 +31,13 @@ function gohome() {
 }
 </script>
 <template>
-    <div id="head">
+    <header id="head">
         <button id="homeButton" @click="gohome()">
             <img src="..\assets\smoothie-king-logo.svg" alt="Smoothie King Logo" height="64">
         </button>
-        <button id="signin" @click="login()" v-if="!log">Sign in</button>
-    </div>
+        <button id="signin" @click="login()" v-if="!loginStore.loggedIn" aria-label="employee login">Sign in</button>
+        <button id="signOut" @click="logout()" v-if="loginStore.loggedIn" aria-label="employee logout">Log Out</button>
+    </header>
     <!-- <div id="spacer">
 
     </div> -->
@@ -54,23 +61,27 @@ function gohome() {
         margin-left: 20px;
         cursor: pointer;
     }
-    #signin {
+    #signin, #signOut {
         background-color: black;
         color: white;
         font-size: 22px;
-        padding: 10px 30px;
+        padding: 8px 15px;
         margin-top: 0;
         position: absolute;
         top:12%;
         right: 2%;
-        border-radius: 10px;
+        /* border-radius: 10px; */
         border: black 5px solid;
         box-sizing: border-box;
         cursor: pointer;
     }
-    #signin:hover {
+    
+    #signin:hover, #signOut:hover {
         background-color: white;
         color: black;
+    }
+    #signOut {
+        background-color: red !important;
     }
     /* #spacer {
         height: 72px;

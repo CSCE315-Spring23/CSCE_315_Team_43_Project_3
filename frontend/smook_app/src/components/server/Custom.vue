@@ -37,11 +37,15 @@ function size(s) {
         </div>
         <div id="curr">
           <h4>Current Ingredients:</h4>
-          <div class="currIng" v-for="ing in itemStore.ingredients">{{ ing }}<span @click="remove(ing)" class="delete">X</span></div>
+          <div aria-label="list of current ingredients in smoothie" role="list" class="listScroll">
+          <div class="currIng" v-for="ing in itemStore.ingredients" role="listitem">{{ ing }}<span @click="remove(ing)" class="delete">X</span></div>
+          </div>
         </div>
         <div id="future">
           <h4>Customizations:</h4>
+          <div aria-label="List of addon ingredients sorted by type" role="list" class="listScroll">
           <Ingredients />
+          </div>
         </div>
         </div>
         <div id="sub" @click="cart()">Add-<span>{{ itemStore.getPrice }}</span></div>
@@ -88,7 +92,7 @@ function size(s) {
         margin-top: 20px;
       flex: 1;
     }
-    #addOn div {
+    #addOn > div {
       flex-grow: 7;
       max-width: 40%;
     }
@@ -134,6 +138,21 @@ function size(s) {
   margin-top: 7px;
   width: 90%;
   max-width: 100% !important;
+}
+.currIng {
+  position: relative;
+  padding-right: 20px;
+}
+
+.currIng .delete {
+  position: absolute;
+  top: 20%;
+  right: 5%;
+}
+
+.listScroll {
+  max-height: 380px;
+  overflow-y: scroll;
 }
 #curr {
   flex-grow: 2 !important;

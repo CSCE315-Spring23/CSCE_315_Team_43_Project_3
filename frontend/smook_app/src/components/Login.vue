@@ -41,7 +41,6 @@ async function login() {
 </script>
 <template>
     <div id="mainFormDiv" class="centered-div">
-        <!-- <h1>Login</h1> -->
         <form @submit.prevent="login" data-testid="loginControl">
         <label for="username">Username</label>
         <input type="text" v-model="user" class="formIn"><br>

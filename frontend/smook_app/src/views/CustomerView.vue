@@ -2,16 +2,11 @@
 import Heading from '../components/Heading.vue';
 import { reactive } from 'vue';
 import Category from '../components/customer/Category.vue'
-import Smoothie from '../components/customer/Smoothie.vue'
 import cartButton from '../components/customer/cartButton.vue'
 import axios from 'axios';
-// axios.interceptors.request.use(config => {
-//   config.headers['Access-Control-Allow-Origin'] = '*';
-//   return config;
-// });
 const itemTypes = reactive([]);
 async function getCatagories() {
-  axios.get('https://smook-app.uc.r.appspot.com/api/category', {
+  await axios.get('https://smook-app.uc.r.appspot.com/api/category', {
 })
   .then(response => {
     const categories = response.data;
@@ -32,7 +27,6 @@ getCatagories();
 
 <template>
       <Heading />
-      <!-- <button style="z-index: 10000;" @click="getCatagories">Hello</button> -->
   <main>
     <div id="main">
         <header>
@@ -64,11 +58,13 @@ main {
   top: 75px;
 }
 #main header {
-    height: 35%;
+    height: 25%;
     background-color: lightblue;
     display: flex;
     justify-content: center;
     align-items: center;
+    /* background-image: url(../assets/employee_login.jpg);
+    background-repeat: repeat-x; */
 }
 #main header h1 {
     font-size: 100px;

@@ -211,7 +211,8 @@ main {
   cursor: pointer;
 }
 .smook:hover {
-  background-color: #FF6B6B;
+  background-color: red;
+  /*background-color: #FF6B6B;*/
 }
 #orderPanel h3 {
   bottom: 0;
