@@ -38,7 +38,7 @@ async function login() {
     <br>
     <br>
     <br>
-    <aria-label="Back" NavBar/>
+    <NavBar/>
     <br>
     <br>
     <div id="mainFormDiv" class="centered-div">
