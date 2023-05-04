@@ -466,8 +466,14 @@ public class SmookServiceImpl implements SmookService{
             Inventory tempInventory = inventoryRepository.getReferenceById((long)i);
             tempLists.put(tempInventory.getInventoryId(), 0f);
         }
-        Long maxId = transactionRepository.findMaxIdInTime(start, end);
-        Long minId = transactionRepository.findMinIdInTime(start, end);
+        Long maxId, minId;
+        try {
+            maxId = transactionRepository.findMaxIdInTime(start, end);
+            minId = transactionRepository.findMinIdInTime(start, end);
+        }
+        catch(Error error) {
+            return null;
+        }
         List<Transaction_Item> transItemList = transactionItemRepository.findTransactionsInRange(minId, maxId);
         for(Transaction_Item transItem : transItemList) {
             Inventory inv = transItem.getInventory();
