@@ -24,21 +24,21 @@ function size(s) {
 </script>
 <template>
     <div id="custom">
-      <div class="close-button" @click="closeThis" role="button" aria-label="Close">
+      <div class="close-button" @click="closeThis" role="button" aria-label="Close smoothie window" title="close smoothie window">
         X
       </div>
       <h2>{{ itemStore.name }}</h2>
       <div id="addOn">
         <div id="sizeButtons">
             <h4>Size:</h4>
-            <button @click="size('small')" id="small">Small</button>
-            <button @click="size('medium')" id="medium">Medium</button>
-            <button @click="size('large')" id="large">Large</button>
+            <button @click="size('small')" id="small" tabindex="0">Small</button>
+            <button @click="size('medium')" id="medium" tabindex="0">Medium</button>
+            <button @click="size('large')" id="large" tabindex="0">Large</button>
         </div>
         <div id="curr">
           <h4>Current Ingredients:</h4>
           <div aria-label="list of current ingredients in smoothie" role="list" class="listScroll">
-          <div class="currIng" v-for="ing in itemStore.ingredients" role="listitem">{{ ing }}<span @click="remove(ing)" class="delete">X</span></div>
+          <div class="currIng" v-for="ing in itemStore.ingredients" role="listitem">{{ ing }}<span @click="remove(ing)" class="delete" role="button" tabindex="0" aria-label="Remove ingredient from smoothie">X</span></div>
           </div>
         </div>
         <div id="future">
@@ -48,7 +48,7 @@ function size(s) {
           </div>
         </div>
         </div>
-        <div id="sub" @click="cart()">Add-<span>{{ itemStore.getPrice }}</span></div>
+        <div id="sub" @click="cart()" aria-details="adds current smoothie to cart" title="add smoothie to cart" tabindex="0">Add-<span>{{ itemStore.getPrice }}</span></div>
     </div>
   </template>
   

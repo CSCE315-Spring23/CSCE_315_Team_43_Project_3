@@ -105,8 +105,8 @@ function pick(item) {
   <div id="ingredient_specifics" v-if="arr==1">
   <h3>{{ namee }}</h3>
   <div role="list" id="ingredient_list">
-    <div role="button" aria-label="back button" class="buttonz" @click="close" id="back_butt">Back</div>
-    <div v-for="item in ingredientCurrent" class="buttonz" role="button" :aria-label="'Pick ' + item" @click="pick(item)">{{ item }}</div>
+    <div role="button" aria-label="back button" class="buttonz" @click="close" id="back_butt" tabindex="0">Back</div>
+    <div v-for="item in ingredientCurrent" class="buttonz" role="button" :aria-label="'Add ' + item + ' to ' + itemStore.name" @click="pick(item)" tabindex="0">{{ item }}</div>
   </div>
 </div>
 

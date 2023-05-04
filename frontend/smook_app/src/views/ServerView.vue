@@ -117,14 +117,15 @@ getCatagories();
             v-for="(smoothie, i) in smoothiesDisplayed"
             :key="'smoothie-' + i"
             class="smook"
+            tabindex="0"
             @click="clicked(smoothie)"
             role="button"
             aria-label="Select smoothie"
+            @keydown.enter="clicked(smoothie)"
           >
             {{ smoothie }}
           </div>
         </div>
-        <!-- <h3>OrderPanel</h3> -->
       </div>
       <Transaction/>
     </div>

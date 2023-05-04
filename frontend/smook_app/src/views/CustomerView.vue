@@ -30,7 +30,7 @@ getCatagories();
   <main>
     <div id="main">
         <header>
-            <h1>Smoothie Time!!!</h1>
+            <h1>Order Menu</h1>
         </header>
         <div id="orderPanel">
             <Category 
@@ -44,6 +44,7 @@ getCatagories();
   <cartButton />
 </template>
 <style scoped>
+@import url('https://fonts.googleapis.com/css2?family=Righteous&family=Ubuntu&display=swap');
 main {
   width: 100%;
   height: 100%;
@@ -69,6 +70,7 @@ main {
 #main header h1 {
     font-size: 100px;
     text-align: center;
+    font-family: 'Righteous', cursive;
 }
 #orderPanel {
     padding: 3%;
