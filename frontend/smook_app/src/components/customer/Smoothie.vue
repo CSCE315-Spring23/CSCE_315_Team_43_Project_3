@@ -3,11 +3,10 @@ import { useRouter } from 'vue-router'
 import { useItemStore } from '@/stores/CurrentItem';
 const props = defineProps(['item']);
 const router = useRouter();
-console.log("Ayo");
 const itemStore = useItemStore();
 itemStore.$reset();
 const smoothieClick = () => {
-  itemStore.name = props.item;
+  itemStore.changeName(props.item);
   router.push('/customer/OrderPage');
 }
 </script>

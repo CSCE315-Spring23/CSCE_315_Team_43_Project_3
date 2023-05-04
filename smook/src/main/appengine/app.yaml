@@ -1,0 +1,2 @@
+runtime: java17
+entrypoint: java -Xmx64m -jar smook-0.0.1-SNAPSHOT.jar

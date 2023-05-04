@@ -38,12 +38,14 @@ transactionItem = open('transaction_item.csv', 'w', newline='')
 orderList = open('order_item.csv', 'w', newline='')
 orderLedger = open('order_list.csv', 'w', newline='')
 inventoryUsage = open('inventory_usage.csv', 'w', newline='')
+menuTracker = open('menu_tracker.csv', 'w', newline='')
 
 transactionWriter = csv.writer(transaction)
 transactionItemWriter = csv.writer(transactionItem)
 orderWriter = csv.writer(orderList)
 orderLedgerWriter = csv.writer(orderLedger)
 inventoryUsageWriter = csv.writer(inventoryUsage)
+menuTrackerWriter = csv.writer(menuTracker)
 
 timeInc = timedelta(days=1)
 
@@ -58,6 +60,7 @@ transID = 0
 orderID = 0
 usageID = 0
 orderLedgerID = 0
+trackerID = 0
 
 for i in range(0,365):
     usageList = []  
@@ -72,14 +75,14 @@ for i in range(0,365):
 
     #inventory list (format is [InventoryID,Name,Type,Price,Quantity,Measurement_Type])
     inventory = []
-    inventoryEndRows = []
+    inventoryStartRows = []
     with open('inventory.csv', newline='') as inventoryList:
         inventoryReader = csv.reader(inventoryList, delimiter=',')
         for row in inventoryReader:
-            if inventoryReader.line_num < 73:
+            if inventoryReader.line_num > 7:
                 inventory.append(row)
             else:
-                inventoryEndRows.append(row)
+                inventoryStartRows.append(row)
     inventoryItem = open('inventory.csv', 'w+', newline='')
     inventoryWriter = csv.writer(inventoryItem)
 
@@ -94,26 +97,24 @@ for i in range(0,365):
         #pick random line from menu_item, add cost to transaction, decrement inventory
         alreadySelectedItems = []
         for k in range(numberItems):
-            item = menu_item[random.randrange(1,68)]
+            item = menu_item[random.randrange(1,61)]
             while item[0] in alreadySelectedItems:
-                item = menu_item[random.randrange(1,68)]
+                item = menu_item[random.randrange(1,61)]
             alreadySelectedItems.append(item[0])
             costTransaction += float(item[3]) * int(item[4])
             #write associated menu item to the ledger for the transaction
-
+            tracker = []
+            tracker.append(trackerID)
+            tracker.append(transID)
+            tracker.append(item[0])
+            tracker.append(dt)
+            menuTrackerWriter.writerow(tracker)
+            trackerID += 1
             #UPDATE INVENTORY
             #find all ingredients associated with id and quantity
             ingredients_bridge = []
             for x in ingredient_list:
                 if float(x[1]) == float(item[0]):
-                    ingredients_bridge.append(x)
-                    transactionItemWriter.writerow([transItemID, x[0], transID, x[2]])
-                    transItemID += 1
-                if float(x[0]) == 68:
-                    ingredients_bridge.append(x)
-                    transactionItemWriter.writerow([transItemID, x[0], transID, x[2]])
-                    transItemID += 1
-                if float(x[0]) == 71:
                     ingredients_bridge.append(x)
                     transactionItemWriter.writerow([transItemID, x[0], transID, x[2]])
                     transItemID += 1
@@ -123,10 +124,7 @@ for i in range(0,365):
                     #for every match between inventory and ingredients
                     if int(x[0]) == int(y[0]):
                         #subtract the amount used from the inventory if not dummy
-                        if int(x[0]) == 74:  
-                            tempIngredient = inventory[0]
-                        else:
-                            tempIngredient = x
+                        tempIngredient = x
                         tempIngredient[3] = int(tempIngredient[3]) - int(y[2])
                         usageList[int(tempIngredient[0])-1][2] += int(y[2])
                         x = tempIngredient
@@ -139,27 +137,25 @@ for i in range(0,365):
         #add to csv 
         transactionWriter.writerow(trans)
         transID += 1
-    #order list (format is [OrderID, Date_Placed, Price_of_Order])
-    #order ledger (format is [inventoryID, orderID, quantity])
+    #order list (format is [OrderID, Date_Placed])
+    #order ledger (format is [order_list_id, inventoryID, orderID, quantity])
     order_ledger = []
     orderNeeded = False
-    orderSum = 0
     for x in inventory:
         #arbitrary threshold to establish reorders
         if int(x[3]) <= 100:
             orderNeeded = True
             order_ledger.append([orderLedgerID, int(x[0]), orderID, 500])
             orderLedgerID += 1
-            orderSum += 500 * float(x[2])
             #refill stock since order has been placed
             x[3] = 500
 
     if orderNeeded:
-        orderWriter.writerow([orderID, dt, orderSum])
+        orderWriter.writerow([orderID, dt])
         orderLedgerWriter.writerows(order_ledger)
         orderID += 1
+    inventoryWriter.writerows(inventoryStartRows)
     inventoryWriter.writerows(inventory)
-    inventoryWriter.writerows(inventoryEndRows)
     inventoryUsageWriter.writerows(usageList)
     inventoryItem.close()
     #account for gamedays

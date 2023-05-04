@@ -1,74 +1,73 @@
-1,100% Cocoa,1,213,oz
-2,Almond Butter,1,257,oz
-3,Almonds,1,191,oz
-4,Apple Blueberry Juice Blend,1,500,oz
-5,Apple Juice Blend,1,327,oz
-6,Apple Pineapple Juice Blend,1,372,oz
-7,Bananas,1,410,items
-8,Blueberries,1,282,oz
-9,Butter Pecan Ice Cream,1,487,oz
-10,Almond Milk,1,296,oz
-11,Carrots,1,400,oz
-12,Cinnamon,1,309,oz
-13,Coconut Water,1,436,oz
-14,Cold Brew Coffee,1,356,oz
-15,Dairy Whey Blend,1,484,oz
-16,Dates,1,224,items
-17,Diet Down Enhancer,1,500,oz
-18,Electrolyte Blend,1,140,oz
-19,Energy Boost Enhancer,1,500,oz
-20,Espresso,1,297,oz
-21,Fiber Blend Enhancer,1,205,oz
-22,FITAID + Paleo Protein Enhancer,1,309,oz
-23,Ginger,1,415,items
-24,Gladiator Protein Chocolate,1,239,oz
-25,Gladiator Protein Strawberry,1,446,oz
-26,Gladiator Protein Vanilla,1,309,oz
-27,Greek Nonfat Yogurt,1,119,oz
-28,Gut Health Enhancer,1,500,oz
-29,Hulk Blend,1,192,oz
-30,Immune Support Enhancer,1,110,oz
-31,Joint Health Enhancer with Collagen,1,349,oz
-32,Kale,1,275,oz
-33,Keto Protein Blend,1,410,oz
-34,Kiwi Apple Juice Blend,1,342,oz
-35,Lean1 Chocolate Protein,1,374,oz
-36,Lean1 Vanilla Protein,1,401,oz
-37,Mangoes,1,428,items
-38,Matcha Green Tea,1,500,oz
-39,Metabolism Boost Enhancer,1,110,oz
-40,Multivitamin Enhancer,1,500,oz
-41,Muscle Builder Enhancer,1,500,oz
-42,Nonfat Milk,1,157,oz
-43,Nutrient Blend,1,103,oz
-44,Oatmilk,1,218,oz
-45,Orange Juice Blend,1,108,oz
-46,Papaya Juice Blend,1,483,oz
-47,Peanut Butter,1,372,oz
-48,Pear Juice Blend,1,212,oz
-49,Pear Passion Fruit Juice Blend,1,242,oz
-50,Pineapples,1,120,items
-51,Probiotic Powder Enhancer,1,500,oz
-52,Protein Blend,1,421,oz
-53,Pumpkin,1,500,oz
-54,Pure Recharge Enhancer,1,248,oz
-55,Raspberries,1,122,oz
-56,Spice Blend,1,106,oz
-57,Spinach,1,354,oz
-58,Stevia Plant-Based Sweetener,1,481,oz
-59,Strawberries,1,230,oz
-60,Strawberries (sugar added),1,500,oz
-61,Sunwarrior Organic Plant-Based Protein,1,277,oz
-62,Super Grains Enhancer,1,500,oz
-63,Tart Cherries,1,425,oz
-64,Turbinado,1,258,oz
-65,Vanilla Frozen Yogurt,1,246,oz
-66,Whey Protein,1,332,oz
-67,White Grape Lemon Juice Blend,1,444,oz
-68,Small Cup,0,323,items
-69,Medium Cup,2.4,500,items
-70,Large Cup,3.4,500,items
-71,Small Straw,0,323,items
-72,Large Straw,0,500,items
-73,Assorted Snacks,1,100,items
-74,Dummy Item,1,1,items
+1,Small Cup,0,500,items,100
+2,Medium Cup,2,500,items,100
+3,Large Cup,3.2,500,items,100
+4,Small Straw,0,1250,items,100
+5,Large Straw,0,1250,items,100
+6,Assorted Snacks,1,100,items,100
+7,100% Cocoa,1,350,oz,100
+8,Almond Butter,1,314,oz,100
+9,Almonds,1,226,oz,100
+10,Apple Blueberry Juice Blend,1,1198,oz,100
+11,Apple Juice Blend,1,2326,oz,100
+12,Apple Pineapple Juice Blend,1,377,oz,100
+13,Bananas,1,500,items,100
+14,Blueberries,1,252,oz,100
+15,Butter Pecan Ice Cream,1,211,oz,100
+16,Almond Milk,1,469,oz,100
+17,Carrots,1,152,oz,100
+18,Cinnamon,1,483,oz,100
+19,Coconut Water,1,481,oz,100
+20,Cold Brew Coffee,1,485,oz,100
+21,Dairy Whey Blend,1,299,oz,100
+22,Dates,1,426,items,100
+23,Diet Down Enhancer,1,1400,oz,100
+24,Electrolyte Blend,1,108,oz,100
+25,Energy Boost Enhancer,1,1400,oz,100
+26,Espresso,1,377,oz,100
+27,Fiber Blend Enhancer,1,135,oz,100
+28,FITAID + Paleo Protein Enhancer,1,329,oz,100
+29,Ginger,1,324,items,100
+30,Gladiator Protein Chocolate,1,369,oz,100
+31,Gladiator Protein Strawberry,1,335,oz,100
+32,Gladiator Protein Vanilla,1,169,oz,100
+33,Greek Nonfat Yogurt,1,3312,oz,100
+34,Gut Health Enhancer,1,1400,oz,100
+35,Hulk Blend,1,417,oz,100
+36,Immune Support Enhancer,1,344,oz,100
+37,Joint Health Enhancer with Collagen,1,338,oz,100
+38,Kale,1,343,oz,100
+39,Keto Protein Blend,1,1656,oz,100
+40,Kiwi Apple Juice Blend,1,463,oz,100
+41,Lean1 Chocolate Protein,1,2268,oz,100
+42,Lean1 Vanilla Protein,1,4477,oz,100
+43,Mangoes,1,473,items,100
+44,Matcha Green Tea,1,2800,oz,100
+45,Metabolism Boost Enhancer,1,108,oz,100
+46,Multivitamin Enhancer,1,1400,oz,100
+47,Muscle Builder Enhancer,1,1400,oz,100
+48,Nonfat Milk,1,119,oz,100
+49,Nutrient Blend,1,296,oz,100
+50,Oatmilk,1,2368,oz,100
+51,Orange Juice Blend,1,337,oz,100
+52,Papaya Juice Blend,1,383,oz,100
+53,Peanut Butter,1,407,oz,100
+54,Pear Juice Blend,1,1689,oz,100
+55,Pear Passion Fruit Juice Blend,1,264,oz,100
+56,Pineapples,1,474,items,100
+57,Probiotic Powder Enhancer,1,5600,oz,100
+58,Protein Blend,1,280,oz,100
+59,Pumpkin,1,2800,oz,100
+60,Pure Recharge Enhancer,1,347,oz,100
+61,Raspberries,1,185,oz,100
+62,Spice Blend,1,500,oz,100
+63,Spinach,1,314,oz,100
+64,Stevia Plant-Based Sweetener,1,116,oz,100
+65,Strawberries,1,280,oz,100
+66,Strawberries (sugar added),1,1400,oz,100
+67,Sunwarrior Organic Plant-Based Protein,1,403,oz,100
+68,Super Grains Enhancer,1,1400,oz,100
+69,Tart Cherries,1,399,oz,100
+70,Turbinado,1,439,oz,100
+71,Vanilla Frozen Yogurt,1,301,oz,100
+72,Whey Protein,1,365,oz,100
+73,White Grape Lemon Juice Blend,1,130,oz,100

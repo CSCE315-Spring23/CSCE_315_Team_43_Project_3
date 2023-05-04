@@ -4,14 +4,14 @@ CREATE TABLE Inventory (
     Name VARCHAR(255),
     Price FLOAT,
     Quantity FLOAT,
-    Measurement_Type VARCHAR(255)
+    Measurement_Type VARCHAR(255),
+    Restock_Amount INT
 );
 
 /* Order_Item */
 CREATE TABLE Order_Item (
     Order_ID INT PRIMARY KEY,
-    Date_Placed DATE NOT NULL DEFAULT CURRENT_DATE,
-    Cost FLOAT
+    Date_Placed TIMESTAMP NOT NULL DEFAULT CURRENT_DATE
 );
 
 /* Order_List */
@@ -77,7 +77,7 @@ CREATE TABLE Transaction (
 
     Purchaser_Name VARCHAR(255),
     Price_Of_Transaction FLOAT,
-    Time_Of_Purchase DATE NOT NULL DEFAULT CURRENT_DATE
+    Time_Of_Purchase TIMESTAMP NOT NULL DEFAULT CURRENT_DATE
 );
 
 /* Transaction_Item */
@@ -100,8 +100,23 @@ CREATE TABLE Inventory_Usage (
     Inventory_Usage_ID INT PRIMARY KEY,
     Inventory_ID INT,
     usage FLOAT,
-    Date DATE,
+    Date TIMESTAMP,
     CONSTRAINT FK_Inventory_ID
         FOREIGN KEY(Inventory_ID)
         REFERENCES Inventory(Inventory_ID)
 );
+
+CREATE TABLE Menu_Tracker (
+    Menu_Tracker_ID INT PRIMARY KEY,
+    Transaction_ID INT,
+    Menu_ID INT,
+    Time TIMESTAMP,
+
+    CONSTRAINT FK_Transaction_ID
+        FOREIGN KEY(Transaction_ID)
+        REFERENCES Transaction(Transaction_ID),
+
+    CONSTRAINT FK_Menu_ID
+        FOREIGN KEY(Menu_ID)
+        REFERENCES Menu_Item(Menu_ID)
+)
