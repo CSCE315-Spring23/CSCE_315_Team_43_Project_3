@@ -31,7 +31,7 @@
   <br>
   <br>
   <div>
-    <NavBar/>
+    <aria-label="Back" NavBar/>
     <VuetifyDatatable :posts="posts" />
   </div>
 </template> 
