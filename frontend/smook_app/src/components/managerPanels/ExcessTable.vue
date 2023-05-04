@@ -26,7 +26,7 @@ export default {
         search: "",
         headers: [
             { title: 'Name', key: 'name'},
-            { title: 'Excess', align: 'start', sortable: true, key: 'excess' },
+            { title: 'Amount', align: 'start', sortable: true, key: 'amount' },
         ],
     })
 };
