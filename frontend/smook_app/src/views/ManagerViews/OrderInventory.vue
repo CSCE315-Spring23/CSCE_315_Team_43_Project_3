@@ -15,14 +15,14 @@ const amount = ref('')
 async function login() {
     if (ingredient.value != "" && amount.value != ""){
         await axios
-          .post('https://smook-app.uc.r.appspot.com/api/orderInventory?ingredient='+ingredient.value+'&amount='+amount.value)
+          .post('https://smook-app.uc.r.appspot.com/api/addOrder?invList='+ingredient.value+'&quantity='+amount.value)
           .then(response => {
           })
           .catch(error => console.log(error))
+        router.replace('/manager')
     }
     else
         err.value = 'bad';
-    console.log(err);
 }
 </script>
 

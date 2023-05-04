@@ -11,8 +11,7 @@ CREATE TABLE Inventory (
 /* Order_Item */
 CREATE TABLE Order_Item (
     Order_ID INT PRIMARY KEY,
-    Date_Placed TIMESTAMP NOT NULL DEFAULT CURRENT_DATE,
-    Cost FLOAT
+    Date_Placed TIMESTAMP NOT NULL DEFAULT CURRENT_DATE
 );
 
 /* Order_List */

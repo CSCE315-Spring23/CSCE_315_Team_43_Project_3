@@ -137,23 +137,21 @@ for i in range(0,365):
         #add to csv 
         transactionWriter.writerow(trans)
         transID += 1
-    #order list (format is [OrderID, Date_Placed, Price_of_Order])
-    #order ledger (format is [inventoryID, orderID, quantity])
+    #order list (format is [OrderID, Date_Placed])
+    #order ledger (format is [order_list_id, inventoryID, orderID, quantity])
     order_ledger = []
     orderNeeded = False
-    orderSum = 0
     for x in inventory:
         #arbitrary threshold to establish reorders
         if int(x[3]) <= 100:
             orderNeeded = True
             order_ledger.append([orderLedgerID, int(x[0]), orderID, 500])
             orderLedgerID += 1
-            orderSum += 500 * float(x[2])
             #refill stock since order has been placed
             x[3] = 500
 
     if orderNeeded:
-        orderWriter.writerow([orderID, dt, orderSum])
+        orderWriter.writerow([orderID, dt])
         orderLedgerWriter.writerows(order_ledger)
         orderID += 1
     inventoryWriter.writerows(inventoryStartRows)
