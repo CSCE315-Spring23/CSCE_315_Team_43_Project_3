@@ -190,7 +190,7 @@ public class SmookController {
         List<Inventory> itemList = new ArrayList<Inventory>();
         List<Integer> sizeList = new ArrayList<Integer>();
         Integer start = 0;
-        Integer end = numIngredients.get(0);
+        Integer end = numIngredients.get(0)-1;
         for(int j = 0; j < smoothieQuantity; j++) {
             for(int i = start; i < end; i++) {
                 Inventory item = loveGameService.getInventoryItemByName(ingredientName.get(i));
@@ -207,7 +207,7 @@ public class SmookController {
             }
             if(j+1 < smoothieQuantity) {
                 start = end;
-                end += numIngredients.get(j+1);
+                end += numIngredients.get(j+1)-1;
             }
         }
     

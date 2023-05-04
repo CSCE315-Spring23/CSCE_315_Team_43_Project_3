@@ -347,6 +347,7 @@ public class SmookServiceImpl implements SmookService{
         for(Inventory inv : invList) {
             Order_List orderList = new Order_List(orderListId, inv, orderItem, quantity.get(i));
             orderListRepository.save(orderList);
+            inv.setQuantity(inv.getQuantity() + quantity.get(i));
             orderListId++;
             i++;
         }
