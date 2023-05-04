@@ -11,8 +11,8 @@ import { reactive } from 'vue'
 
 const router = useRouter()
 
-const start_date = ref('2023-05-1 16:34:26.666')
-const end_date = ref('2023-05-2 16:34:26.666')
+const start_date = ref('2023-05-1 0:0:0.0')
+const end_date = ref('2023-05-2 0:0:0.0')
 
 let posts = reactive([]);
 async function login() {
@@ -38,9 +38,6 @@ async function login() {
     <br>
     <br>
     <NavBar/>
-    <div>
-        <VuetifyDatatable :posts="posts" />
-    </div>
     <div id="mainFormDiv" class="centered-div">
         <form @submit.prevent="login" data-testid="loginControl">
         <label for="start_date">Start Date</label>
@@ -50,6 +47,9 @@ async function login() {
         <input type="submit" value="Generate" id="sub">
         <p class="error" v-show="err=='bad'">Error: Dates are not valid.</p>
         </form>
+    </div>
+    <div>
+        <VuetifyDatatable :posts="posts" />
     </div>
 </template>
 
