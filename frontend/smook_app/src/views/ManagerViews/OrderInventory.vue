@@ -23,7 +23,6 @@ async function login() {
     }
     else
         err.value = 'bad';
-    console.log(err);
 }
 </script>
 
