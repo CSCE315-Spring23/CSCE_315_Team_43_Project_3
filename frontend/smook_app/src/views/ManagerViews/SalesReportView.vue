@@ -37,7 +37,7 @@ async function login() {
     <br>
     <br>
     <br>
-    <NavBar/>
+    <aria-label="Back" NavBar/>
     <div id="mainFormDiv" class="centered-div">
         <form @submit.prevent="login" data-testid="loginControl">
         <label for="start_date">Start Date</label>

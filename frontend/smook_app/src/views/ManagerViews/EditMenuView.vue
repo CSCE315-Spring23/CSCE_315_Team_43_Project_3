@@ -39,7 +39,7 @@ async function login() {
     <br>
     <br>
     <br>
-    <NavBar/>
+    <aria-label="Back" NavBar/>
     <br>
     <br>
     <br>

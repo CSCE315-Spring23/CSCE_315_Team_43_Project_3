@@ -28,7 +28,7 @@
   <br>
   <h1>Manager</h1>
   <div>
-    <NavBar/>
+    <aria-label="Back" NavBar/>
     <VuetifyDatatable :posts="posts" />
   </div>
 </template>
