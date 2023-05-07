@@ -21,11 +21,11 @@ public class Order_List {
     long orderListId;
 
     @ManyToOne
-    @JoinColumn(name = "inventory_id", insertable=false, updatable=false)
+    @JoinColumn(name = "inventory_id")
     Inventory inventory;
 
     @ManyToOne
-    @JoinColumn(name = "order_id", insertable=false, updatable=false)
+    @JoinColumn(name = "order_id")
     Order_Item order;
 
     @Column(name = "quantity")

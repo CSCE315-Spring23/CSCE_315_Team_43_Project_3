@@ -99,7 +99,7 @@ public class SmookServiceImpl implements SmookService{
         Transaction testTransaction = transactionRepository.getReferenceById(1L);
         System.out.println(testEmployee.getFirstName() + ' ' + testIngredientList.getQuantity() + ' ' + testInventory.getName() + ' ' + testMenuItem.getName() + ' ' + testOrderItem.getDatePlaced() + ' ' + testOrderList.getQuantity() + ' ' + testTransactionItem.getTransactionItemId() + ' ' + testTransaction.getPurchaserName());
         
-        Employee newEmployee = new Employee(3L, "Charles", "Barkley", "employee", "cbark", "cbarksalot84");
+        Employee newEmployee = new Employee(3L, "Charles", "Barkley", "employee", "cbark", "cbarksalot84", Employee.Provider.LOCAL);
         employeeRepository.save(newEmployee);
     }
 
@@ -348,6 +348,7 @@ public class SmookServiceImpl implements SmookService{
             Order_List orderList = new Order_List(orderListId, inv, orderItem, quantity.get(i));
             orderListRepository.save(orderList);
             inv.setQuantity(inv.getQuantity() + quantity.get(i));
+            inventoryRepository.save(inv);
             orderListId++;
             i++;
         }
@@ -460,10 +461,10 @@ public class SmookServiceImpl implements SmookService{
     @return A List of Reports representing the excess inventory.
     */
     public List<Report> createExcessReport(Timestamp start, Timestamp end) {
-        Integer inventoryCount = inventoryRepository.findInventoryCount();
+        Integer inventoryCount = inventoryRepository.findInventoryCount()-1;
         Map<Long, Float> tempLists = new HashMap<Long, Float>();
-        for(int i = 7; i <= inventoryCount+6; i++) {
-            Inventory tempInventory = inventoryRepository.getReferenceById((long)i);
+        for(int i = 0; i < inventoryCount; i++) {
+            Inventory tempInventory = inventoryRepository.getReferenceById((long)i+6);
             tempLists.put(tempInventory.getInventoryId(), 0f);
         }
         Long maxId, minId;
@@ -477,7 +478,7 @@ public class SmookServiceImpl implements SmookService{
         List<Transaction_Item> transItemList = transactionItemRepository.findTransactionsInRange(minId, maxId);
         for(Transaction_Item transItem : transItemList) {
             Inventory inv = transItem.getInventory();
-            System.out.println(inv.getInventoryId() + " | " + tempLists.get(inv.getInventoryId()) + " | " + (float)transItem.getQuantity());
+            // System.out.println(inv.getInventoryId() + " | " + tempLists.get(inv.getInventoryId()) + " | " + (float)transItem.getQuantity());
             tempLists.put(inv.getInventoryId(), tempLists.get(inv.getInventoryId())+(float)transItem.getQuantity());
         }
         List<Report> excessReport = new ArrayList<Report>();
@@ -505,7 +506,7 @@ public class SmookServiceImpl implements SmookService{
     public List<Report> createRestockReport() {
         Integer inventoryCount = inventoryRepository.findInventoryCount();
         List<Report> restockReport = new ArrayList<Report>();
-        for(int i = 1; i <= inventoryCount; i++) {
+        for(int i = 7; i <= inventoryCount; i++) {
             Inventory tempInventory = inventoryRepository.getReferenceById((long)i);
             if(tempInventory.getRestockAmount() > tempInventory.getQuantity())
                 restockReport.add(new Report(tempInventory.getName(), tempInventory.getQuantity()));

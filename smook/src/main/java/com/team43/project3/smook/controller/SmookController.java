@@ -217,9 +217,9 @@ public class SmookController {
 
     @RequestMapping(value = "/editItem", method = RequestMethod.POST)
     @ResponseBody
-    public Menu_Item editMenu_Item(@RequestParam long menuItemId, @RequestParam String name, @RequestParam String type, @RequestParam float price, @RequestParam int ingredientAmount, @RequestParam List<Long> ingredientIds, @RequestParam List<Long> ingredientQuantity)
+    public Menu_Item editMenu_Item(@RequestParam long id, @RequestParam String name, @RequestParam String type, @RequestParam float price, @RequestParam int ingredientAmount, @RequestParam List<Long> ingredientIds, @RequestParam List<Long> ingredientQuantity)
     {
-        return loveGameService.editMenuItem(menuItemId, name, type, price, ingredientAmount, ingredientIds, ingredientQuantity);
+        return loveGameService.editMenuItem(id, name, type, price, ingredientAmount, ingredientIds, ingredientQuantity);
     }
 
     @RequestMapping(value = "/editInventory", method = RequestMethod.POST)

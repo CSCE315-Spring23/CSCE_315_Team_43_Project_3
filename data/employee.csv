@@ -1,3 +1,3 @@
-0,Dave,Smith,employee,davesmith,password
-1,Mary,Cooper,employee,mary123,cats
-2,George,Tamlin,manager,gtamlin,tree34
+0,Dave,Smith,employee,davesmith,password,LOCAL
+1,Mary,Cooper,employee,mary123,cats,LOCAL
+2,George,Tamlin,manager,gtamlin,tree34,LOCAL

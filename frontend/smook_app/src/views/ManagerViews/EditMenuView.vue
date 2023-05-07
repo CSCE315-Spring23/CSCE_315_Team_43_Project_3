@@ -22,7 +22,7 @@ async function login() {
     console.log(name.value);
     if (name.value != "" && type.value != "" && price.value != "" && ingredientAmount.value != ""  && ingredientIds.value != "" && ingredientQuantity.value != ""){
         await axios
-          .post('https://smook-app.uc.r.appspot.com/api/addItem?name='+name.value+'&type='+type.value+'&price='+price.value+'&ingredientAmount='+ingredientAmount.value+'&ingredientIds='+ingredientIds.value+'&ingredientQuantity='+ingredientQuantity.value)
+          .post('https://smook-app.uc.r.appspot.com/api/editItem?id='+id.value+'&name='+name.value+'&type='+type.value+'&price='+price.value+'&ingredientAmount='+ingredientAmount.value+'&ingredientIds='+ingredientIds.value+'&ingredientQuantity='+ingredientQuantity.value)
           .then(response => {
           })
           .catch(error => console.log(error))
