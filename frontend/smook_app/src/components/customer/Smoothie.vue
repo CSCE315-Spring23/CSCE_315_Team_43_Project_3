@@ -15,7 +15,7 @@ const smoothieClick = () => {
     <div id="smoothie" @click="smoothieClick" role="button" aria-label="Click to order smoothie" tabindex="0" @keydown.enter="smoothieClick">
       <div class="smoothieItem">
         <img src="./imgs/smoothie1.png" alt="Ayo">
-        <h4>{{ item }}</h4>
+        <h3>{{ item }}</h3>
         <!-- <ul v-if="ingredients.length>0">
           <li v-for="thing in ingredients" :key="thing">{{ thing }}</li>
         </ul> -->
@@ -43,7 +43,7 @@ const smoothieClick = () => {
     justify-content: center;
     align-items: center;
   }
-  .smoothieItem h4 {
+  .smoothieItem h3 {
     font-size: 20px;
     text-align: center;
   }

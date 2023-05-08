@@ -59,8 +59,8 @@ getSmoothies();
     }
     .items {
         display: flex;
-        /* flex-wrap: wrap; */
-        /* justify-content: space-between; */
-        overflow: scroll;
+        /* flex-wrap: wrap;
+        justify-content: space-between; */
+        overflow:scroll;
     }
 </style>

@@ -220,4 +220,7 @@ h3 {
   flex-direction: column;
   align-items: center;
 }
+.buttonz {
+  font-size: 22px !important;
+} 
 </style>
