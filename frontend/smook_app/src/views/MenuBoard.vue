@@ -128,29 +128,22 @@ getCategories();
         text-align: center;
     }
     .menu-items {
-        /* display: flex;
+        display: flex;
         flex-direction: column;
   flex-wrap: wrap;
+  width: 100%;
   margin: 0 auto;
-  align-content: flex-start */
-  display: flex;
-  flex-wrap: wrap;
-  height: 100vh;
+  align-content: flex-start
 }
   
     .category-container {
-        /* flex-basis: 30%;
+        flex-basis: 30%;
   max-width: 300px;
   margin: 0 10px 40px;
   padding: 15px;
   border: 1px solid #ddd;
   border-radius: 4px;
-  background-color: #f9f9f9; */
-  flex: 1 0 auto;
-  min-width: 200px;
-  height: auto;
-  background-color: #f2f2f2;
-  margin: 10px;
+  background-color: #f9f9f9;
     }
   
     .menu-item {
