@@ -62,7 +62,7 @@ usageID = 0
 orderLedgerID = 0
 trackerID = 0
 
-for i in range(0,365):
+for i in range(0,492):
     usageList = []  
     for j in range(1,74):
         usageList.append([usageID, j,0,dt])
