@@ -1,13 +1,2 @@
 runtime: java17
 entrypoint: java -Xmx64m -jar smook-0.0.1-SNAPSHOT.jar
-spring:
-  security:
-    oauth2:
-      client:
-        registration:
-         google:
-          clientId: YOUR_GOOGLE_CLIENT_ID
-          clientSecret: YOUR_GOOGLE_CLIENT_SECRET
-          scope:
-           - email
-           - profile

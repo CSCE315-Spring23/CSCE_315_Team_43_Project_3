@@ -53,7 +53,7 @@ async function login() {
         <label for="password">Password</label>
         <input type="password" name="password" id="password" class="formIn" v-model="pass"><br>
         <input type="submit" value="Login" id="sub">
-        <a id="google-login" href="https://smook-app.uc.r.appspot.com/oauth2/authorization/google">
+        <a id="google-login" href="https://smook-app.uc.r.appspot.com/api/oauth2/authorization/google">
           <b-button>Login with Google</b-button>
         </a>
         <p class="error" v-show="err=='bad'">Error: You must login as type "manager" or "server"</p>
