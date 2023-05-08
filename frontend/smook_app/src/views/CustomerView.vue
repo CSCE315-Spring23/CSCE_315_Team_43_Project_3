@@ -1,10 +1,12 @@
 <script setup>
 import Heading from '../components/Heading.vue';
 import { reactive } from 'vue';
+import {useCartStore} from '@/stores/CartStore'
 import Category from '../components/customer/Category.vue'
 import cartButton from '../components/customer/cartButton.vue'
 import axios from 'axios';
 const itemTypes = reactive([]);
+const cartStore = useCartStore();
 async function getCatagories() {
   await axios.get('https://smook-app.uc.r.appspot.com/api/category', {
 })
@@ -30,7 +32,7 @@ getCatagories();
   <main>
     <div id="main">
         <header>
-            <h1>Order Menu</h1>
+            <h1>Order a Smoothie</h1>
         </header>
         <div id="orderPanel">
             <Category 

@@ -8,7 +8,7 @@
     }
 </script>
 <template>
-    <div @click="cart" id="cartButton">
+    <div @click="cart" id="cartButton" role="button" tabindex="0" aria-label="Go to cart screen" @keydown.enter="cart">
         <img src="./imgs/cart.png" alt="Shopping Cart">
         <p>{{ cartStore.cart.length }}</p>
     </div>
