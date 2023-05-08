@@ -32,7 +32,7 @@ function gohome() {
 </script>
 <template>
     <header id="head">
-        <button id="homeButton" @click="gohome()">
+        <button id="homeButton" @click="gohome()" aria-describedby="ELEMENT ID">
             <img src="..\assets\smoothie-king-logo.svg" alt="Smoothie King Logo" height="64">
         </button>
         <button id="signin" @click="login()" v-if="!loginStore.loggedIn" aria-label="employee login">Sign in</button>
