@@ -107,7 +107,7 @@ h3 {
   cursor: pointer;
 }
 #main button:hover {
-  background-color: rgb(54, 122, 48);
+  background-color: rgb(40, 92, 36);
 }
 #main button:focus {
   outline: none;
