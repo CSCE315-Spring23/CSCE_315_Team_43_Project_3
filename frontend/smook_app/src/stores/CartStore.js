@@ -65,7 +65,7 @@ export const useCartStore = defineStore('cart', {
             str += "smoothieQuantity=" + this.cart.length + "&employeeId=1&name=" + name;
             for (let i = 0; i<this.cart.length; i++){
                 let Sname = this.cart[i].name;
-                let size = this.cart[i].length;
+                let size = this.cart[i].size;
                 let ingredients = this.cart[i].ingredients;
                 let price = this.cart[i].price;
                 str += "&smoothieName=" + Sname.replace(/ /g, "%20");
@@ -76,9 +76,12 @@ export const useCartStore = defineStore('cart', {
                         break;
                     case 'M':
                         str += 'medium';
+                        break;
                     case 'L':
                         str += 'large';
+                        break;
                     default:
+                        str += 'bruuuuuh';
                         break;
                 }
                 str += "&price=" + price;
@@ -89,7 +92,14 @@ export const useCartStore = defineStore('cart', {
                 }
             }
             console.log(str);
-            await axios.post(str);
+            try {axios.post(str);}
+            catch{
+                console.log("Thats bad");
+            }
+            this.cart.slice(0,this.cart.length);
+            this.subtotal = 0.0;
+            this.tax = 0.0;
+            this.total = 0.0;
         }
     }
 })

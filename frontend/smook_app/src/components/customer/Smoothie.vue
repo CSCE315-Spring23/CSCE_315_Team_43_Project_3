@@ -12,7 +12,7 @@ const smoothieClick = () => {
 </script>
 
 <template>
-    <div id="smoothie" @click="smoothieClick">
+    <div id="smoothie" @click="smoothieClick" role="button" aria-label="Click to order smoothie" tabindex="0" @keydown.enter="smoothieClick">
       <div class="smoothieItem">
         <img src="./imgs/smoothie1.png" alt="Ayo">
         <h4>{{ item }}</h4>

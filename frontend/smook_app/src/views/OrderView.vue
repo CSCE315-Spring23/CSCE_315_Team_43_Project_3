@@ -54,10 +54,10 @@ router.back();
               <h3 class="editHeader">1. Size</h3>
               <Size />
             </div>
-            <div id="currentRecipe">
+            <div id="currentRecipe" role="section" aria-label="Lists current composition of smoothie">
               <h3 class="editHeader">2. Current Recipe</h3>
               <div class="centeringCurr">
-                <div class="currIng" v-for="ing in itemStore.ingredients">{{ ing }}<span @click="remove(ing)" class="delete">X</span></div>
+                <div class="currIng" v-for="ing in itemStore.ingredients" role="listitem" >{{ ing }}<span @click="itemStore.removeItem(ing)" class="delete" role="button" aria-label="Button removes ingredient from smoothie">X</span></div>
               </div>
             </div>
             <div id="addOns">
@@ -150,20 +150,29 @@ h3 {
   margin-bottom: 30px;
 }
 #mainContent {
-  padding-left: 10%;
-  padding-right: 10%;
+  padding-left: 8%;
+  padding-right: 8%;
   top: 63px;
+  justify-content: space-between;
+  padding-top: 40px;
+  position: fixed;
+  left: 50%;
+  transform: translateX(-50%);
   display: flex;
   flex-direction: row;
   flex: 1;
-  justify-content: space-between;
 }
 #editPanel {
   flex-grow: 5;
-  padding-top: 30px;
   margin-left: 70px;
   max-width: 703px;
+  min-width: 630px;
+  height: 90vh; /* set a fixed height */
+  overflow-y: scroll; /* enable scrolling */
 }
+/* .scrollable-content {
+  overflow-y: scroll;
+} */
 .currIng {
   font-size: 20px;
   border: 1px black dotted;
@@ -172,17 +181,39 @@ h3 {
   width: 74%;
   max-width: 100% !important;
 }
+.currIng {
+  position: relative;
+  padding-right: 20px;
+}
+
+.currIng .delete {
+  position: absolute;
+  top: 20%;
+  right: 5%;
+}
+
+.scrollable-content {
+  position: relative;
+}
+
+#editPanel {
+  flex-grow: 5;
+  margin-left: 70px;
+  max-width: 703px;
+  min-width: 630px;
+  height: 80vh;
+  overflow: scroll;
+}
 .delete {
   color: red;
   cursor: pointer;
-  position: absolute;
-  right: 7%;
+  position:sticky;
 }
-.scrollable-content {
+/* .scrollable-content {
   overflow-y: scroll;
-}
+} */
 .scrollable-content  > div {
-  margin-bottom: 10px;
+  margin-bottom: 15px;
 }
 .centeringCurr {
   display: flex;

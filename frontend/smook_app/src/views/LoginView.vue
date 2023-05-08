@@ -5,9 +5,12 @@ import { useRouter } from 'vue-router'
 // import {ref } from 'vue'
 import Heading from '../components/Heading.vue';
 import { ref } from 'vue'
+import {useLoginStore} from '../stores/LoginStore';
 import axios from 'axios';
 
 const router = useRouter()
+
+const loginStore = useLoginStore();
 
 const user = ref('')
 
@@ -24,16 +27,26 @@ const loginVerify = ref('')
 
 async function login() {
     console.log(user.value);
-    if (user.value == "server")
-        router.replace('/server')
-    else if (user.value == "manager")
-        router.replace('/manager')
+    if (user.value == "server"){
+        router.replace('/server');
+        loginStore.loggedIn = true;
+    }
+    else if (user.value == "manager"){
+        router.replace('/manager');
+        loginStore.loggedIn = true;
+    }
     else if (user.value != "" && pass.value != "")
         axios
           .get('https://smook-app.uc.r.appspot.com/api' + '/login?username=' + user.value + '&password=' + pass.value)
           .then(response => {
-            if(response.data == 1) {router.replace('/manager');}
-            else if(response.data == 2) {router.replace('/employee');}
+            if(response.data == 1) {
+              router.replace('/manager');
+              loginStore.loggedIn = true;
+            }
+            else if(response.data == 2) {
+              router.replace('/employee');
+              loginStore.loggedIn = true;
+            }
             else {err.value = 'bad';}
           })
           .catch(error => console.log(error))
@@ -44,14 +57,14 @@ async function login() {
 
 </script>
 <template>
-    <Heading true/>
+    <Heading/>
     <div id="mainFormDiv" class="centered-div">
-        <!-- <h1>Login</h1> -->
+      <h1>Employee Login</h1>
         <form @submit.prevent="login" data-testid="loginControl">
         <label for="username">Username</label>
-        <input type="text" v-model="user" class="formIn"><br>
+        <input type="text" v-model="user" class="formIn" aria-label="Enter Username"><br>
         <label for="password">Password</label>
-        <input type="password" name="password" id="password" class="formIn" v-model="pass"><br>
+        <input type="password" name="password" id="password" class="formIn" v-model="pass" aria-label="Enter Password"><br>
         <input type="submit" value="Login" id="sub">
         <p class="error" v-show="err=='bad'">Error: You must login as type "manager" or "server"</p>
         </form>
@@ -70,9 +83,10 @@ async function login() {
     /* display: none;; */
 }
 h1 {
-  font-size: 2rem;
+  font-size: 100px;
   text-align: center;
   margin-bottom: 2rem;
+  margin-right: 70px;
 }
 
 form {
