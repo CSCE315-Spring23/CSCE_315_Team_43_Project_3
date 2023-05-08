@@ -84,13 +84,13 @@ export const useCartStore = defineStore('cart', {
                         str += 'bruuuuuh';
                         break;
                 }
-                str += "&price=" + price;
                 str += "&numIngredients=" + ingredients.length;
                 for (let f = 0; f<ingredients.length; f++){
                     str += "&ingredientName=" + ingredients[f].replace(/ /g, "%20");
                     str += "&itemQuantity=" + 1;
                 }
             }
+            str += "&price=" + this.total;
             console.log(str);
             try {axios.post(str);}
             catch{
