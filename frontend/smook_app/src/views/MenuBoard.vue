@@ -87,19 +87,19 @@ getCategories();
       <div id="main">
         <h1>Smoothie King Menu</h1>
         <!-- <h2 id="weatherMsg">{{ weatherMsg }}</h2> -->
-        <weather 
-        :msg=weatherMsg
-        />
         <div class="menu-items">
-          <div v-for="[cat, items] in menuData" class="category-container">
-            <h3>{{ cat }}</h3>
+          <span v-for="[cat, items] in menuData" class="category-container">
+            <h2>{{ cat }}</h2>
             <ul>
               <li v-for="item in items" class="menu-item">
                 <div class="item-name">{{ item.name }}</div>
                 <div class="item-price">$ {{ item.price }}</div>
               </li>
             </ul>
-          </div>
+          </span>
+          <weather 
+        :msg=weatherMsg
+        />
         </div>
       </div>
     </main>
@@ -119,35 +119,33 @@ getCategories();
       width: 100%;
       position: absolute;
       top: 75px;
+      padding-left: 10px;
+      padding-right: 10px;
     }
     h1 {
         text-align: center;
+        position: absolute;
+        top: -50px;
+        left: 35vw;
+        z-index: 99999;
+
     }
-    h3 {
+    h2 {
         font-weight: 600;
         text-align: center;
     }
     .menu-items {
-        display: flex;
-        flex-direction: row;
-        flex-wrap: nowrap;
-        justify-content: space-evenly;
-  width: 100%;
-  margin: 0 auto;
-  align-content: flex-start
+      column-count: 5; /* specify the number of columns you want */
+      column-gap: 20px;
+      margin-top: 20px;
 }
   
     .category-container {
-        flex-basis: 30%;
-  max-width: 300px;
-  margin: 0 10px 40px;
-  padding: 15px;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  background-color: #f9f9f9;
+      /* white-space: nowrap; */
     }
   
     .menu-item {
+      /* white-space: nowrap; */
       display: flex;
       justify-content: space-between;
       align-items: center;
