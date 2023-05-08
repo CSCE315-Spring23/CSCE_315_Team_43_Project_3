@@ -2,6 +2,7 @@
 import Heading from '../components/Heading.vue';
 import SmookControllerApi from '../classes/api/SmookControllerApi';
 import { ref, onMounted, onUnmounted } from 'vue';
+import weather from '../components/shared/weather.vue';
 const apikey = "77d7af00a098e224eca5ce31cafde321";
 const weatherUrl = `https://api.openweathermap.org/data/2.5/forecast?lat=30.6212&lon=-96.3404&appid=${apikey}&units=imperial&cnt=1`
 
@@ -83,44 +84,83 @@ getCategories();
 <template>
     <Heading />
     <main>
-        <div id="main">
-            <h1>Menu</h1>
-            <h2 id="weatherMsg">{{ weatherMsg }}</h2>
-            <div class="menu-items">
-                <div v-for="[cat, _] in menuData" class="category-container">
-                    <h2>{{ cat }}</h2>
-                    <ul>
-                        <li v-for="menuItem in menuData.get(cat)">{{ menuItem.name }} - $<b>{{ menuItem.price }}</b></li>
-                    </ul>
-                </div>
-            </div>
+      <div id="main">
+        <h1>Smoothie King Menu</h1>
+        <!-- <h2 id="weatherMsg">{{ weatherMsg }}</h2> -->
+        <div class="menu-items">
+          <span v-for="[cat, items] in menuData" class="category-container">
+            <h2>{{ cat }}</h2>
+            <ul>
+              <li v-for="item in items" class="menu-item">
+                <div class="item-name">{{ item.name }}</div>
+                <div class="item-price">$ {{ item.price }}</div>
+              </li>
+            </ul>
+          </span>
+          <weather 
+        :msg=weatherMsg
+        />
         </div>
+      </div>
     </main>
-</template>
+  </template>
+  
+  <style scoped>
+    main {
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      top: 0;
+      left: 0;
+    }
+  
+    #main {
+      height: 89%;
+      width: 100%;
+      position: absolute;
+      top: 75px;
+      padding-left: 10px;
+      padding-right: 10px;
+    }
+    h1 {
+        text-align: center;
+        position: absolute;
+        top: -50px;
+        left: 35vw;
+        z-index: 99999;
 
-<style scoped>
-main {
-  width: 100%;
-  height: 100%;
-  position: absolute;
-  top:0;
-  left:0;
+    }
+    h2 {
+        font-weight: 600;
+        text-align: center;
+    }
+    .menu-items {
+      column-count: 5; /* specify the number of columns you want */
+      column-gap: 20px;
+      margin-top: 20px;
 }
-#main {
-  /* margin-top: 80px;
-  height: 100%; */
-  height: 89%;
-  width: 100%;
-  position: absolute;
-  top: 75px;
-  /* height: 1000px; */
-}
-
-.menu-items {
-    display: flex;
-    width: 100%;
-    justify-content: space-evenly;
-    flex-direction: row;
-    align-items: flex-start;
-}
-</style>
+  
+    .category-container {
+      /* white-space: nowrap; */
+    }
+  
+    .menu-item {
+      /* white-space: nowrap; */
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 18px;
+      line-height: 1.5;
+      margin-bottom: 10px;
+      border-bottom: 1px black dotted;
+    }
+  
+    .item-name {
+    }
+  
+    .item-price {
+      margin-left: 5px;
+      white-space: nowrap;
+    }
+  </style>
+  

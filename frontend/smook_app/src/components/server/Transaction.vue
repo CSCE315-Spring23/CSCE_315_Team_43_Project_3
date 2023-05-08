@@ -98,7 +98,7 @@ h3 {
   font-weight: bold;
 }
 #main button {
-  background-color: #008CBA;
+  background-color: black;
   color: #fff;
   border: none;
   border-radius: 5px;
@@ -107,7 +107,7 @@ h3 {
   cursor: pointer;
 }
 #main button:hover {
-  opacity: 0.8;
+  background-color: rgb(40, 92, 36);
 }
 #main button:focus {
   outline: none;
