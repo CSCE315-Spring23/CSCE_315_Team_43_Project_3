@@ -129,8 +129,9 @@ getCategories();
     }
     .menu-items {
         display: flex;
-        flex-direction: column;
-  flex-wrap: wrap;
+        flex-direction: row;
+        flex-wrap: nowrap;
+        justify-content: space-evenly;
   width: 100%;
   margin: 0 auto;
   align-content: flex-start
